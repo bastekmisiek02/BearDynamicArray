@@ -247,46 +247,41 @@ namespace BearList
 
 		void Sort(const bool& (*SortFunc)(const T& firstElement, const T& secondElement))
 		{
+			#ifndef BEAR_LIST_NOT_EXCEPTIONS
+			if (!count)
+				throw std::exception("List is clear");
+			#endif
+
+			if (count == 1)
+				return;
+
+			ListElements* firstElement = this->firstElement;
+
 			List<T> list;
+			list.Add(*firstElement->element);
 
-			for (int i = 0; i < count; i++)
+			for (int i = 1; i < count; i++)
 			{
-				T firstItem = (*(GetFromIndex(i)));
+				firstElement = firstElement->nextElement;
+				ListElements* secondElement = firstElement;
 
-				if (firstItem == *lastElement->element)
-					break;
+				list.Add(*secondElement->element);
 
-				T secondItem = (*(GetFromIndex(i + 1)));
-				list.Add(firstItem);
+				ListElements* lePtr = firstElement;
 
-				for (int j = 0; j < list.count; j++)
+				for (int j = 0; j < list.count - 1; j++)
 				{
-					if (SortFunc(firstItem, secondItem))
+					if (!(SortFunc(*lePtr->previewElement->element, *secondElement->element)))
 					{
-						const T helpItem = firstItem;
-						firstItem = secondItem;
-						secondItem = helpItem;
+						const T helpItem = *lePtr->previewElement->element;
+						*lePtr->previewElement->element = *secondElement->element;
+						*secondElement->element = helpItem;
+
+						lePtr = lePtr->previewElement;
+						secondElement = lePtr;
 					}
 				}
 			}
-
-			for (int i = 0; i < list.Count(); i++)
-			{
-				std::cout << *list[i] << "\n";
-			}
-
-			std::cout << "------------------------------" << "\n";
-
-			//for (int i = 0; i < count; i++)
-			//{
-			//	ListElements* iterator = firstElement;
-
-			//	while (iterator->nextElement)
-			//	{
-
-			//		iterator = iterator->nextElement;
-			//	}
-			//}
 		}
 
 	public:
