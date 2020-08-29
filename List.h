@@ -1,10 +1,16 @@
 #pragma once
 
-namespace BearList
+#if __has_include(<vector>)
+	#include <vector>
+#endif
+
+namespace Bear
 {
 	template <typename T>
 	class List
 	{
+		typedef unsigned long long int BearListLongInt;
+
 		struct ListElements
 		{
 			ListElements()
@@ -32,12 +38,12 @@ namespace BearList
 		};
 
 	private:
-		unsigned long long int count;
+		BearListLongInt count;
 	private:
 		ListElements* firstElement;
 		ListElements* lastElement;
 	private:
-		const T* GetFromIndex(const unsigned long long int& index) const
+		const T* GetFromIndex(const BearListLongInt& index) const
 		{
 			#ifndef BEAR_LIST_NOT_EXCEPTIONS
 				if (index > count - 1)
@@ -50,7 +56,7 @@ namespace BearList
 					throw std::exception("List is clear");
 			#endif
 
-			int i = 0;
+			BearListLongInt i = 0;
 
 			ListElements* le = firstElement;
 
@@ -66,6 +72,17 @@ namespace BearList
 			return nullptr;
 		}
 	public:
+		#if __has_include(<vector>)
+		List(const std::vector<T>& elements)
+		{
+			for (BearListLongInt i = 0; i < elements.size(); i++)
+			{
+				Add(elements[i]);
+			}
+		}
+		#endif
+
+
 		List()
 			: count(0), firstElement(nullptr), lastElement(nullptr)
 		{
@@ -108,91 +125,91 @@ namespace BearList
 		{
 			switch (count)
 			{
-			case 0:
-				throw std::exception("List is clear");
-			case 1:
-			{
-				if (*firstElement->element == Element)
+				case 0:
+					throw std::exception("List is clear");
+				case 1:
 				{
-					delete firstElement;
-					firstElement = nullptr;
-					count--;
-				}
-				return true;
-			}
-			case 2:
-			{
-				if (*firstElement->element == Element)
-				{
-					delete firstElement;
-					firstElement = lastElement;
-
-					lastElement = nullptr;
-				}
-				else
-				{
-					delete lastElement;
-					lastElement = nullptr;
-
-					firstElement->nextElement = nullptr;
-				}
-
-				count--;
-
-				return true;
-			}
-			default:
-			{
-				if (*firstElement->element == Element)
-				{
-					firstElement->element = nullptr;
-					firstElement->nextElement->previewElement = nullptr;
-
-					ListElements* element = firstElement->nextElement;
-					delete firstElement;
-
-					firstElement = element;
-				}
-				else if (*lastElement->element == Element)
-				{
-					lastElement->element = nullptr;
-					lastElement->previewElement->nextElement = nullptr;
-
-					ListElements* element = lastElement->previewElement;
-					delete lastElement;
-
-					lastElement = element;
-				}
-				else
-				{
-					ListElements* element = firstElement;
-
-					while (element->nextElement != nullptr)
+					if (*firstElement->element == Element)
 					{
-						if (*element->element == Element)
-						{
-							ListElements* previewElement = element->previewElement;
-							ListElements* nextElement = element->nextElement;
+						delete firstElement;
+						firstElement = nullptr;
+						count--;
+					}
+					return true;
+				}
+				case 2:
+				{
+					if (*firstElement->element == Element)
+					{
+						delete firstElement;
+						firstElement = lastElement;
 
-							previewElement->nextElement = nextElement;
-							nextElement->previewElement = previewElement;
+						lastElement = nullptr;
+					}
+					else
+					{
+						delete lastElement;
+						lastElement = nullptr;
 
-							delete element;
-
-							break;
-						}
-
-						element = element->nextElement;
+						firstElement->nextElement = nullptr;
 					}
 
-					if (element == lastElement)
-						return false;
+					count--;
+
+					return true;
 				}
+				default:
+				{
+					if (*firstElement->element == Element)
+					{
+						firstElement->element = nullptr;
+						firstElement->nextElement->previewElement = nullptr;
 
-				count--;
+						ListElements* element = firstElement->nextElement;
+						delete firstElement;
 
-				return true;
-			}
+						firstElement = element;
+					}
+					else if (*lastElement->element == Element)
+					{
+						lastElement->element = nullptr;
+						lastElement->previewElement->nextElement = nullptr;
+
+						ListElements* element = lastElement->previewElement;
+						delete lastElement;
+
+						lastElement = element;
+					}
+					else
+					{
+						ListElements* element = firstElement;
+
+						while (element->nextElement != nullptr)
+						{
+							if (*element->element == Element)
+							{
+								ListElements* previewElement = element->previewElement;
+								ListElements* nextElement = element->nextElement;
+
+								previewElement->nextElement = nextElement;
+								nextElement->previewElement = previewElement;
+
+								delete element;
+
+								break;
+							}
+
+							element = element->nextElement;
+						}
+
+						if (element == lastElement)
+							return false;
+					}
+
+					count--;
+
+					return true;
+				}
 			}
 		}
 
@@ -201,32 +218,32 @@ namespace BearList
 			Delete(*(GetFromIndex(index)));
 		}
 
-		T* GetFirst() const
+		T& GetFirst() const
 		{
 			#ifndef BEAR_LIST_NOT_EXCEPTIONS
 				if (!count)
 					throw std::exception("First Element is null");
 			#endif
 
-			return firstElement->element;
+			return *firstElement->element;
 		}
 
-		T* GetLast() const
+		T& GetLast() const
 		{
 #			ifndef BEAR_LIST_NOT_EXCEPTIONS
 				if (!count)
 					throw std::exception("Last Element is null");
 			#endif
 
-			return lastElement->element;
+			return *lastElement->element;
 		}
 
-		const unsigned long long int& GetMaxCount() const
+		const BearListLongInt& GetMaxCount() const
 		{
 			return ULLONG_MAX;
 		}
 
-		const unsigned long long int& Count() const
+		const BearListLongInt& Count() const
 		{
 			return count;
 		}
@@ -245,7 +262,7 @@ namespace BearList
 			firstElement = nullptr;
 		}
 
-		void Sort(const bool& (*SortFunc)(const T& firstElement, const T& secondElement))
+		void Sort(const bool& (*SortFunc)(const T& firstElement, const T& secondElement)) const
 		{
 			#ifndef BEAR_LIST_NOT_EXCEPTIONS
 			if (!count)
@@ -260,7 +277,7 @@ namespace BearList
 			List<T> list;
 			list.Add(*firstElement->element);
 
-			for (int i = 1; i < count; i++)
+			for (BearListLongInt i = 1; i < count; i++)
 			{
 				firstElement = firstElement->nextElement;
 				ListElements* secondElement = firstElement;
@@ -269,7 +286,7 @@ namespace BearList
 
 				ListElements* lePtr = firstElement;
 
-				for (int j = 0; j < list.count - 1; j++)
+				for (BearListLongInt j = 0; j < list.count - 1; j++)
 				{
 					if (!(SortFunc(*lePtr->previewElement->element, *secondElement->element)))
 					{
@@ -285,9 +302,9 @@ namespace BearList
 		}
 
 	public:
-		T* operator[](const unsigned long long int& index)
+		T& operator[](const BearListLongInt& index)
 		{
-			return (T*)GetFromIndex(index);
+			return (T&)*GetFromIndex(index);
 		}
 	};
 }
