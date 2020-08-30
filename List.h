@@ -82,6 +82,13 @@ namespace Bear
 		}
 		#endif
 
+		List(const List<T>& elements)
+		{
+			for (BearListLongInt i = 0; i < elements.count; i++)
+			{
+				Add(*elements.GetFromIndex(i));
+			}
+		}
 
 		List()
 			: count(0), firstElement(nullptr), lastElement(nullptr)
