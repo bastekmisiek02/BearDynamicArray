@@ -189,6 +189,21 @@ namespace Bear
 			count = Count;
 		}
 
+		void Resize(const BearListLongInt& Count, const T value)
+		{
+			if (items)
+				delete[] items;
+
+			items = new T[Count];
+
+			count = Count;
+
+			for (BearListLongInt i = 0; i < Count; i++)
+			{
+				items[i] = value;
+			}
+		}
+
 		#if __has_include(<vector>)
 		std::vector<T> ToVector() const
 		{
