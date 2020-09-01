@@ -187,13 +187,10 @@ namespace Bear
 			if (count == 1)
 				return;
 
-			T* firstElement;
-			T* secondElement;
-
 			for (BearListLongInt i = 1; i < count; i++)
 			{
-				firstElement = &items[i - 1];
-				secondElement = &items[i];
+				T* firstElement = &items[i - 1];
+				T* secondElement = &items[i];
 
 				for (BearListLongInt j = 0; j < i; j++)
 				{
