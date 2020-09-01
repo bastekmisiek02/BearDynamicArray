@@ -179,6 +179,39 @@ namespace Bear
 			return items;
 		}
 
+		void Sort(const bool& (*SortFunc)(const T& firstElement, const T& secondElement)) const
+		{
+			if (!items || !count)
+				throw std::exception("List is clear");
+
+			if (count == 1)
+				return;
+
+			T* firstElement;
+			T* secondElement;
+
+			for (BearListLongInt i = 1; i < count; i++)
+			{
+				firstElement = &items[i - 1];
+				secondElement = &items[i];
+
+				for (BearListLongInt j = 0; j < i; j++)
+				{
+					if (!SortFunc(*firstElement, *secondElement))
+					{
+						const T helpItem = *firstElement;
+						*firstElement = *secondElement;
+						*secondElement = helpItem;
+
+						firstElement = &items[i - j - 2];
+						secondElement = &items[i - j - 1];
+					}
+					else
+						break;
+				}
+			}
+		}
+
 		void Resize(const BearListLongInt& Count)
 		{
 			if(items)
