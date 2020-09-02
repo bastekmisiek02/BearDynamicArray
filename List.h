@@ -1,9 +1,5 @@
 #pragma once
 
-#if __has_include(<vector>)
-	#include <vector>
-#endif
-
 namespace Bear
 {
 	template <typename T>
@@ -81,6 +77,53 @@ namespace Bear
 
 			return false;
 		}
+
+		void Add(const List<T>& Elements)
+		{
+			T* array = new T[count];
+
+			for (BearListLongInt i = 0; i < count; i++)
+				array[i] = this->items[i];
+
+			delete[] this->items;
+
+			this->items = new T[count + Elements.count];
+
+			for (BearListLongInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			for (BearListLongInt i = count; i < count + Elements.count; i++)
+				this->items[i] = Elements[i];
+
+			delete[] array;
+
+			count += Elements.count;
+		}
+
+		#if __has_include(<vector>)
+		void Add(const std::vector<T>& Elements)
+		{
+			T* array = new T[count];
+
+			for (BearListLongInt i = 0; i < count; i++)
+				array[i] = this->items[i];
+
+			delete[] this->items;
+
+			this->items = new T[count + Elements.size()];
+
+			for (BearListLongInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			for (BearListLongInt i = count; i < count + Elements.size(); i++)
+				this->items[i] = Elements[i];
+
+			delete[] array;
+
+			count += Elements.size();
+		}
+		#endif
+
 
 		void Add(const T& Element)
 		{
