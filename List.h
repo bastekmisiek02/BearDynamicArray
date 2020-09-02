@@ -179,6 +179,12 @@ namespace Bear
 			return items;
 		}
 
+		void Foreach(void(*ForeachFunc)(const T& element,const int& iterator))
+		{
+			for (BearListLongInt i = 0; i < count; i++)
+				ForeachFunc(items[i], i);
+		}
+
 		void Sort(const bool& (*SortFunc)(const T& firstElement, const T& secondElement)) const
 		{
 			if (!items || !count)
