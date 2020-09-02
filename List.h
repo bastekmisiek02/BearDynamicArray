@@ -263,7 +263,8 @@ namespace Bear
 				array[i] = items[i];
 			}
 
-			*Count = count;
+			if(Count)
+				*Count = count;
 
 			return array;
 		}
