@@ -31,16 +31,16 @@ namespace Bear
 		}
 	public:
 		#if __has_include(<vector>)
-			List(const std::vector<T>& Elements)
-				: count(Elements.size())
-			{
-				items = new T[Elements.size()];
+		List(const std::vector<T>& Elements)
+			: count(Elements.size())
+		{
+			items = new T[Elements.size()];
 
-				for (BearListLongInt i = 0; i < Elements.size(); i++)
-				{
-					items[i] = Elements[i];
-				}
+			for (BearListLongInt i = 0; i < Elements.size(); i++)
+			{
+				items[i] = Elements[i];
 			}
+		}
 		#endif
 
 		List(const List<T>& Elements)
@@ -179,7 +179,7 @@ namespace Bear
 			return items;
 		}
 
-		void Foreach(void(*ForeachFunc)(const T& element,const int& iterator))
+		void Foreach(void(*ForeachFunc)(const T& element, const int& iterator))
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 				ForeachFunc(items[i], i);
@@ -217,11 +217,11 @@ namespace Bear
 
 		void Resize(const BearListLongInt& Count)
 		{
-			if(items)
+			if (items)
 				delete[] items;
 
 			items = new T[Count];
-			
+
 			count = Count;
 		}
 
@@ -253,6 +253,20 @@ namespace Bear
 			return vector;
 		}
 		#endif
+
+		T* ToArray(BearListLongInt* Count = nullptr) const
+		{
+			T* array = new T[count];
+
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				array[i] = items[i];
+			}
+
+			*Count = count;
+
+			return array;
+		}
 
 	public:
 		T& operator[](const BearListLongInt& Index) const
