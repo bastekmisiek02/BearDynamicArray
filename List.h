@@ -222,7 +222,7 @@ namespace Bear
 			return items;
 		}
 
-		void Foreach(void(*ForeachFunc)(const T& element, const int& iterator))
+		void Foreach(void(*ForeachFunc)(const T& element, const BearListLongInt& iterator)) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 				ForeachFunc(items[i], i);
@@ -257,6 +257,36 @@ namespace Bear
 				}
 			}
 		}
+
+		void Swap(const List<T>& elements)
+		{
+			if (count != elements.count)
+				throw std::exception("List to swap haven't the same count elements that this");
+
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				const T item = items[i];
+
+				items[i] = elements[i];
+				elements[i] = item;
+			}
+		}
+
+		#if __has_include(<vector>)
+		void Swap(std::vector<T>& elements)
+		{
+			if (count != elements.size())
+				throw std::exception("Vector to swap haven't the same count elements that this");
+
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				const T item = items[i];
+
+				items[i] = elements[i];
+				elements[i] = item;
+			}
+		}
+		#endif
 
 		void Resize(const BearListLongInt& Count)
 		{
