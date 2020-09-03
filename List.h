@@ -343,6 +343,32 @@ namespace Bear
 		}
 
 	public:
+		void operator=(const List<T>& elements)
+		{
+			delete[] this->items;
+
+			items = new T[elements.count];
+
+			count = elements.count;
+
+			for (BearListLongInt i = 0; i < count; i++)
+				items[i] = elements[i];
+		}
+
+		#if __has_include(<vector>)
+		void operator=(const std::vector<T>& elements)
+		{
+			delete[] this->items;
+
+			items = new T[elements.size()];
+
+			count = elements.size();
+
+			for (BearListLongInt i = 0; i < count; i++)
+				items[i] = elements[i];
+		}
+		#endif
+
 		T& operator[](const BearListLongInt& Index) const
 		{
 			return (T&)GetFromIndex(Index);
