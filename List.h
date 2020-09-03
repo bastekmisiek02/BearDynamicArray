@@ -78,7 +78,7 @@ namespace Bear
 			return false;
 		}
 
-		void Add(const List<T>& Elements)
+		void AddCollection(const List<T>& Elements)
 		{
 			T* array = new T[count];
 
@@ -101,7 +101,7 @@ namespace Bear
 		}
 
 		#if __has_include(<vector>)
-		void Add(const std::vector<T>& Elements)
+		void AddCollection(const std::vector<T>& Elements)
 		{
 			T* array = new T[count];
 
@@ -123,7 +123,6 @@ namespace Bear
 			count += Elements.size();
 		}
 		#endif
-
 
 		void Add(const T& Element)
 		{
@@ -368,6 +367,35 @@ namespace Bear
 				items[i] = elements[i];
 		}
 		#endif
+
+		const bool& operator==(const List<T>& elements)
+		{
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return false;
+			}
+
+			return true;
+		}
+
+		#if __has_include(<vector>)
+		const bool& operator==(const std::vector<T>& elements)
+		{
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return false;
+			}
+
+			return true;
+		}
+		#endif
+
+		const bool& operator==(const T& element)
+		{
+			return Exist(element);
+		}
 
 		T& operator[](const BearListLongInt& Index) const
 		{
