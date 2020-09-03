@@ -397,6 +397,35 @@ namespace Bear
 			return Exist(element);
 		}
 
+		const bool& operator!=(const List<T>& elements)
+		{
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return true;
+			}
+
+			return false;
+		}
+
+		#if __has_include(<vector>)
+		const bool& operator!=(const std::vector<T>& elements)
+		{
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return true;
+			}
+
+			return false;
+		}
+		#endif
+
+		const bool& operator!=(const T& element)
+		{
+			return (!Exist(element));
+		}
+
 		T& operator[](const BearListLongInt& Index) const
 		{
 			return (T&)GetFromIndex(Index);
