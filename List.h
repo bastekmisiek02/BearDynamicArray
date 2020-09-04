@@ -93,7 +93,7 @@ namespace Bear
 				this->items[i] = array[i];
 
 			for (BearListLongInt i = count; i < count + Elements.count; i++)
-				this->items[i] = Elements[i];
+				this->items[i] = Elements[i - count];
 
 			delete[] array;
 
@@ -116,7 +116,7 @@ namespace Bear
 				this->items[i] = array[i];
 
 			for (BearListLongInt i = count; i < count + Elements.size(); i++)
-				this->items[i] = Elements[i];
+				this->items[i] = Elements[i - count];
 
 			delete[] array;
 
@@ -426,9 +426,26 @@ namespace Bear
 			return (!Exist(element));
 		}
 
-		T& operator[](const BearListLongInt& Index) const
+		void operator+=(const List<T>& elements)
 		{
-			return (T&)GetFromIndex(Index);
+			AddCollection(elements);
+		}
+
+		#if __has_include(<vector>)
+		void operator+=(const std::vector<T>& elements)
+		{
+			AddCollection(elements);
+		}
+		#endif
+
+		void operator+=(const T& element)
+		{
+			Add(element);
+		}
+
+		T& operator[](const BearListLongInt& index) const
+		{
+			return (T&)GetFromIndex(index);
 		}
 	};
 }
