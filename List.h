@@ -1,5 +1,9 @@
 #pragma once
 
+#if __has_include(<vector>)
+	#include <vector>
+#endif
+
 namespace Bear
 {
 	template <typename T>
