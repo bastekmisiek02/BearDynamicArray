@@ -6,11 +6,11 @@
 
 namespace Bear
 {
+	typedef unsigned long long int BearListLongInt;
+
 	template <typename T>
 	class List
 	{
-		typedef unsigned long long int BearListLongInt;
-
 	private:
 		BearListLongInt count;
 	private:
@@ -71,7 +71,7 @@ namespace Bear
 			Clear();
 		}
 	public:
-		const bool& Exist(const T& element)
+		const bool& Exist(const T& element) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -149,27 +149,21 @@ namespace Bear
 			count++;
 		}
 
-		void Delete(const T& Element, const bool& checkToExist = true)
+		void DeleteCollection(const List<T>& Elements)
 		{
 			if (!items || !count)
 				throw std::exception("List is clear");
 
-			if (checkToExist)
-			{
-				if (!Exist(Element))
-					throw std::exception("Can't find this element");
-			}
+			T* array = new T[count];
 
-			T* array = new T[count - 1];
-
-			int j = 0;
+			int iterator = 0;
 			int removeItems = 0;
 			for (BearListLongInt i = 0; i < count; i++)
 			{
-				if (this->items[i] != Element)
+				if (!Elements.Exist(items[i]))
 				{
-					array[j] = this->items[i];
-					j++;
+					array[iterator] = this->items[i];
+					iterator++;
 				}
 				else
 					removeItems++;
@@ -178,6 +172,89 @@ namespace Bear
 			delete[] this->items;
 
 			count -= removeItems;
+
+			this->items = new T[count];
+
+			for (BearListLongInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			delete[] array;
+		}
+
+		#if __has_include(<vector>)
+		void DeleteCollection(const std::vector<T>& Elements)
+		{
+			if (!items || !count)
+				throw std::exception("List is clear");
+
+			T* array = new T[count];
+
+			int iterator = 0;
+			int removeItems = 0;
+			for (BearListLongInt i = 0; i < count; i++)
+			{
+				if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
+				{
+					array[iterator] = this->items[i];
+					iterator++;
+				}
+				else
+					removeItems++;
+			}
+
+			delete[] this->items;
+
+			count -= removeItems;
+
+			this->items = new T[count];
+
+			for (BearListLongInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			delete[] array;
+		}
+		#endif
+
+
+		void Delete(const T& Element, const bool& removeAll = false)
+		{
+			if (!items || !count)
+				throw std::exception("List is clear");
+
+			T* array = new T[count];
+
+			if (removeAll)
+			{
+				int j = 0;
+				int removeItems = 0;
+				for (BearListLongInt i = 0; i < count; i++)
+				{
+					if (this->items[i] != Element)
+					{
+						array[j] = this->items[i];
+						j++;
+					}
+					else
+						removeItems++;
+				}
+
+				count -= removeItems;
+			}
+			else
+			{
+				bool found = false;
+				for (BearListLongInt i = 0; i < count; i++)
+				{
+					if (this->items[i] != Element || found)
+						array[i - found] = this->items[i];
+					else
+						found = true;
+				}
+
+				count--;
+			}
+
+			delete[] this->items;
 
 			this->items = new T[count];
 
@@ -225,7 +302,7 @@ namespace Bear
 			return items;
 		}
 
-		void Foreach(void(*ForeachFunc)(const T& element, const BearListLongInt& iterator)) const
+		void Foreach(void(*ForeachFunc)(T& element, const BearListLongInt& iterator)) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 				ForeachFunc(items[i], i);
@@ -372,7 +449,7 @@ namespace Bear
 		}
 		#endif
 
-		const bool& operator==(const List<T>& elements)
+		const bool& operator==(const List<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -384,7 +461,7 @@ namespace Bear
 		}
 
 		#if __has_include(<vector>)
-		const bool& operator==(const std::vector<T>& elements)
+		const bool& operator==(const std::vector<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -396,12 +473,12 @@ namespace Bear
 		}
 		#endif
 
-		const bool& operator==(const T& element)
+		const bool& operator==(const T& element) const
 		{
 			return Exist(element);
 		}
 
-		const bool& operator!=(const List<T>& elements)
+		const bool& operator!=(const List<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -413,7 +490,7 @@ namespace Bear
 		}
 
 		#if __has_include(<vector>)
-		const bool& operator!=(const std::vector<T>& elements)
+		const bool& operator!=(const std::vector<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -425,7 +502,7 @@ namespace Bear
 		}
 		#endif
 
-		const bool& operator!=(const T& element)
+		const bool& operator!=(const T& element) const
 		{
 			return (!Exist(element));
 		}
@@ -445,6 +522,23 @@ namespace Bear
 		void operator+=(const T& element)
 		{
 			Add(element);
+		}
+
+		void operator-=(const List<T>& elements)
+		{
+			DeleteCollection(elements);
+		}
+
+		#if __has_include(<vector>)
+		void operator-=(const std::vector<T>& elements)
+		{
+			DeleteCollection(elements);
+		}
+		#endif
+
+		void operator-=(const T& element)
+		{
+			Delete(element);
 		}
 
 		T& operator[](const BearListLongInt& index) const
