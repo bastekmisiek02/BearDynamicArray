@@ -230,7 +230,6 @@ namespace Bear
 		}
 		#endif
 
-
 		void Delete(const T& Element, const bool& removeAll = false)
 		{
 			if (!items || !count)
@@ -353,33 +352,51 @@ namespace Bear
 			}
 		}
 
-		void Swap(const List<T>& elements)
+		void Swap(List<T>& elements)
 		{
-			if (count != elements.count)
-				throw std::exception("List to swap haven't the same count elements that this");
+			T* items = new T[count];
+			BearListLongInt count = this->count;
 
 			for (BearListLongInt i = 0; i < count; i++)
 			{
-				const T item = items[i];
-
-				items[i] = elements[i];
-				elements[i] = item;
+				items[i] = this->items[i];
 			}
+
+			delete[] this->items;
+
+			this->items = elements.items;
+			elements.items = items;
+
+			this->count = elements.count;
+			elements.count = count;
 		}
 
 		#if __has_include(<vector>)
 		void Swap(std::vector<T>& elements)
 		{
-			if (count != elements.size())
-				throw std::exception("Vector to swap haven't the same count elements that this");
+			T* items = new T[count];
+			BearListLongInt count = this->count;
 
 			for (BearListLongInt i = 0; i < count; i++)
-			{
-				const T item = items[i];
+				items[i] = this->items[i];
 
-				items[i] = elements[i];
-				elements[i] = item;
-			}
+			delete[] this->items;
+
+			this->count = elements.size();
+
+			T* vectorItems = new T[elements.size()];
+
+			for (BearListLongInt i = 0; i < elements.size(); i++)
+				vectorItems[i] = elements[i];
+
+			this->items = vectorItems;
+
+			elements.resize(count);
+
+			for (BearListLongInt i = 0; i < count; i++)
+				elements[i] = items[i];
+
+			delete[] items;
 		}
 		#endif
 
