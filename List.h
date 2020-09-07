@@ -149,69 +149,84 @@ namespace Bear
 			count++;
 		}
 
-		void DeleteCollection(const List<T>& Elements)
+		void DeleteCollection(const List<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw std::exception("List is clear");
 
 			T* array = new T[count];
 
-			int iterator = 0;
-			int removeItems = 0;
-			for (BearListLongInt i = 0; i < count; i++)
+			if (removeAll)
 			{
-				if (!Elements.Exist(items[i]))
+				BearListLongInt iterator = 0;
+				BearListLongInt removeItems = 0;
+				for (BearListLongInt i = 0; i < count; i++)
 				{
-					array[iterator] = this->items[i];
-					iterator++;
+					if (!Elements.Exist(items[i]))
+					{
+						array[iterator] = this->items[i];
+						iterator++;
+					}
+					else
+						removeItems++;
 				}
-				else
-					removeItems++;
+
+				count -= removeItems;
+				delete[] this->items;
+
+				this->items = new T[count];
+
+				for (BearListLongInt i = 0; i < count; i++)
+					this->items[i] = array[i];
+
+				delete[] array;
 			}
-
-			delete[] this->items;
-
-			count -= removeItems;
-
-			this->items = new T[count];
-
-			for (BearListLongInt i = 0; i < count; i++)
-				this->items[i] = array[i];
-
-			delete[] array;
+			else
+			{
+				for (BearListLongInt i = 0; i < Elements.count - 1; i++)
+					Delete(Elements[i], false);
+			}
 		}
 
 		#if __has_include(<vector>)
-		void DeleteCollection(const std::vector<T>& Elements)
+		void DeleteCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw std::exception("List is clear");
 
-			T* array = new T[count];
-
-			int iterator = 0;
-			int removeItems = 0;
-			for (BearListLongInt i = 0; i < count; i++)
+			if (removeAll)
 			{
-				if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
+				T* array = new T[count];
+
+				BearListLongInt iterator = 0;
+				BearListLongInt removeItems = 0;
+				for (BearListLongInt i = 0; i < count; i++)
 				{
-					array[iterator] = this->items[i];
-					iterator++;
+					if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
+					{
+						array[iterator] = this->items[i];
+						iterator++;
+					}
+					else
+						removeItems++;
 				}
-				else
-					removeItems++;
+
+				delete[] this->items;
+
+				count -= removeItems;
+
+				this->items = new T[count];
+
+				for (BearListLongInt i = 0; i < count; i++)
+					this->items[i] = array[i];
+
+				delete[] array;
 			}
-
-			delete[] this->items;
-
-			count -= removeItems;
-
-			this->items = new T[count];
-
-			for (BearListLongInt i = 0; i < count; i++)
-				this->items[i] = array[i];
-
-			delete[] array;
+			else
+			{
+				for (BearListLongInt i = 0; i < Elements.size(); i++)
+					Delete(Elements[i], false);
+			}
 		}
 		#endif
 
@@ -225,8 +240,8 @@ namespace Bear
 
 			if (removeAll)
 			{
-				int j = 0;
-				int removeItems = 0;
+				BearListLongInt j = 0;
+				BearListLongInt removeItems = 0;
 				for (BearListLongInt i = 0; i < count; i++)
 				{
 					if (this->items[i] != Element)
