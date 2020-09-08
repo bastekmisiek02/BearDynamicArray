@@ -1,0 +1,29 @@
+template<typename T> 
+class List;
+
+List is class like std::vector, but in the future will have more functionality.
+
+T - is a type to storage
+
+Constructors:
+- [List<T>](http://github.com/bastekmisiek02/BearList/Documenation/Constructors)
+
+Methods:
+
+- [Add](http://github.com/bastekmisiek02/BearList/Documenation/Add)
+- [AddCollection](http://github.com/bastekmisiek02/BearList/Documenation/AddCollection)
+- [Clear](http://github.com/bastekmisiek02/BearList/Documenation/Clear)
+- [Count](http://github.com/bastekmisiek02/BearList/Documenation/Count)
+- [Data](http://github.com/bastekmisiek02/BearList/Documenation/Data)
+- [Delete](http://github.com/bastekmisiek02/BearList/Documenation/Delete)
+- [DeleteCollection](http://github.com/bastekmisiek02/BearList/Documenation/DeleteCollection)
+- [Exist](http://github.com/bastekmisiek02/BearList/Documenation/Exist)
+- [Foreach](http://github.com/bastekmisiek02/BearList/Documenation/Foreach)
+- [GetFirst](http://github.com/bastekmisiek02/BearList/Documenation/GetFirst)
+- [GetLast](http://github.com/bastekmisiek02/BearList/Documenation/GetLast)
+- [GetMaxCount](http://github.com/bastekmisiek02/BearList/Documenation/GetMaxCount)
+- [Resize](http://github.com/bastekmisiek02/BearList/Documenation/Resize)
+- [Sort](http://github.com/bastekmisiek02/BearList/Documenation/Sort)
+- [Swap](http://github.com/bastekmisiek02/BearList/Documenation/Swap)
+- [ToArray](http://github.com/bastekmisiek02/BearList/Documenation/ToArray)
+- [ToVector](http://github.com/bastekmisiek02/BearList/Documenation/ToVector)
