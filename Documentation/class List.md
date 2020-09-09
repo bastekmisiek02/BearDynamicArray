@@ -6,11 +6,11 @@ List is class like std::vector, but in the future will have more functionality.
 T - is a type to storage
 
 Constructors:
-- [List<T>](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Add.txt)
+- [List<T>](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Constructors.txt)
 
 Methods:
 
-- [Add](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/AddCollection.txt)
+- [Add](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Add.txt)
 - [AddCollection](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/AddCollection.txt)
 - [Clear](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Clear.txt)
 - [Count](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Count.txt)
