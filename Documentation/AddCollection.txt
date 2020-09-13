@@ -1,3 +1,5 @@
+"AddCollection" - add elements to List
+
 //////////////////////////////////////////std::vector//////////////////////////////////////////////////////
 
 AddCollection(const std::vector<T>& Elements)
@@ -19,7 +21,7 @@ list.AddCollection(vector);
 
 //////////////////////////////////////////List/////////////////////////////////////////////////////////////
 
-List(const List<T>& Elements)
+AddCollection(const List<T>& Elements)
 
 Elements - other Bear::List<T> from which copy data to this List
 
