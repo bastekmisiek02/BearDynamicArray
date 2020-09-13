@@ -16,7 +16,7 @@ namespace Bear
 	private:
 		T* items;
 	private:
-		const T& GetFromIndex(const BearListLongInt& index) const
+		T& GetFromIndex(const BearListLongInt& index) const
 		{
 			if (index > count - 1)
 				throw std::exception("Index is greater than count");
@@ -71,7 +71,7 @@ namespace Bear
 			Clear();
 		}
 	public:
-		const bool& Exist(const T& element) const
+		const bool Exist(const T& element) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -322,7 +322,7 @@ namespace Bear
 				ForeachFunc(items[i], i);
 		}
 
-		void Sort(const bool& (*SortFunc)(const T& firstElement, const T& secondElement)) const
+		void Sort(const bool (*SortFunc)(const T& firstElement, const T& secondElement)) const
 		{
 			if (!items || !count)
 				throw std::exception("List is clear");
@@ -439,7 +439,7 @@ namespace Bear
 		}
 		#endif
 
-		T* ToArray(BearListLongInt* Count = nullptr) const
+		T* ToArray(const BearListLongInt* Count = nullptr) const
 		{
 			T* array = new T[count];
 
@@ -481,7 +481,7 @@ namespace Bear
 		}
 		#endif
 
-		const bool& operator==(const List<T>& elements) const
+		const bool operator==(const List<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -493,7 +493,7 @@ namespace Bear
 		}
 
 		#if __has_include(<vector>)
-		const bool& operator==(const std::vector<T>& elements) const
+		const bool operator==(const std::vector<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -505,12 +505,12 @@ namespace Bear
 		}
 		#endif
 
-		const bool& operator==(const T& element) const
+		const bool operator==(const T& element) const
 		{
 			return Exist(element);
 		}
 
-		const bool& operator!=(const List<T>& elements) const
+		const bool operator!=(const List<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -522,7 +522,7 @@ namespace Bear
 		}
 
 		#if __has_include(<vector>)
-		const bool& operator!=(const std::vector<T>& elements) const
+		const bool operator!=(const std::vector<T>& elements) const
 		{
 			for (BearListLongInt i = 0; i < count; i++)
 			{
@@ -534,7 +534,7 @@ namespace Bear
 		}
 		#endif
 
-		const bool& operator!=(const T& element) const
+		const bool operator!=(const T& element) const
 		{
 			return (!Exist(element));
 		}
