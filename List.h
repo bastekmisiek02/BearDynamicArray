@@ -299,7 +299,7 @@ namespace Bear
 			return ULLONG_MAX;
 		}
 
-		const BearListLongInt& Count() const
+		const BearListLongInt Count() const
 		{
 			return count;
 		}
