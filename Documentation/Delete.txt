@@ -21,7 +21,7 @@ for (int i = 0; i < 1000; i++)
 
 list.Delete(1, true);
 
-for (BearListLongInt i = 0; i < list.Count(); i++)
+for (BearListInt i = 0; i < list.Count(); i++)
 {
 	std::cout << list[i] << "\n";
 }

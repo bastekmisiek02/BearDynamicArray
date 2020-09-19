@@ -1,6 +1,6 @@
 "Count" - get size of list
 
-const BearListLongInt& Count()
+const BearListInt& Count()
 
 Example:
 
@@ -10,7 +10,7 @@ list.Add(2);
 list.Add(1);
 list.Add(3);
 
-for (BearListLongInt i = 0; i < list.Count(); i++)
+for (BearListInt i = 0; i < list.Count(); i++)
 {
 	std::cout << list[i] << "\n";
 }

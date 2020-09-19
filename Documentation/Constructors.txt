@@ -34,7 +34,7 @@ Bear::List<float> list(firstList);
 
 //////////////////////////////////////////Count////////////////////////////////////////////////////////////
 
-List(const BearListLongInt& Count)
+List(const BearListInt& Count)
 
 Count - count of elements in list
 

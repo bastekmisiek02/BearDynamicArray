@@ -22,7 +22,7 @@ vector[2] = 20;
 
 list.DeleteCollection(vector);
 
-for (Bear::BearListLongInt i = 0; i < list.Count(); i++)
+for (Bear::BearListInt i = 0; i < list.Count(); i++)
 {
 	std::cout << list[i] << "\n";
 }
@@ -51,7 +51,7 @@ list2[2] = 20;
 
 list.DeleteCollection(list2);
 
-for (Bear::BearListLongInt i = 0; i < list.Count(); i++)
+for (Bear::BearListInt i = 0; i < list.Count(); i++)
 {
 	std::cout << list[i] << "\n";
 }
