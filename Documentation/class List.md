@@ -18,7 +18,6 @@ Methods:
 - [Delete](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Delete.txt)
 - [DeleteCollection](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/DeleteCollection.txt)
 - [Exist](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Exist.txt)
-- [Foreach](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Foreach.txt)
 - [GetFirst](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/GetFirst.txt)
 - [GetLast](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/GetLast.txt)
 - [GetMaxCount](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/GetMaxCount.txt)
