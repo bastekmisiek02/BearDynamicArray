@@ -75,11 +75,11 @@ namespace Bear
 			Clear();
 		}
 	public:
-		const bool Exist(const T& element) const
+		const bool Exist(const T& Element) const
 		{
 			for (BearListInt i = 0; i < count; i++)
 			{
-				if (items[i] == element)
+				if (items[i] == Element)
 					return true;
 			}
 
