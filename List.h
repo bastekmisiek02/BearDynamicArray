@@ -6,17 +6,21 @@
 
 namespace Bear
 {
-	typedef unsigned long long int BearListLongInt;
+	#ifdef _WIN64
+		typedef unsigned long long int BearListInt;
+	#else
+		typedef unsigned int BearListInt;
+	#endif
 
 	template <typename T>
 	class List
 	{
 	private:
-		BearListLongInt count;
+		BearListInt count;
 	private:
 		T* items;
 	private:
-		T& GetFromIndex(const BearListLongInt& index) const
+		T& GetFromIndex(const BearListInt& index) const
 		{
 			if (index > count - 1)
 				throw std::exception("Index is greater than count");
@@ -36,7 +40,7 @@ namespace Bear
 		{
 			items = new T[Elements.size()];
 
-			for (BearListLongInt i = 0; i < Elements.size(); i++)
+			for (BearListInt i = 0; i < Elements.size(); i++)
 			{
 				items[i] = Elements[i];
 			}
@@ -48,13 +52,13 @@ namespace Bear
 		{
 			items = new T[Elements.count];
 
-			for (BearListLongInt i = 0; i < Elements.count; i++)
+			for (BearListInt i = 0; i < Elements.count; i++)
 			{
 				items[i] = Elements[i];
 			}
 		}
 
-		List(const BearListLongInt& Count)
+		List(const BearListInt& Count)
 			: count(Count)
 		{
 			items = new T[Count];
@@ -73,7 +77,7 @@ namespace Bear
 	public:
 		const bool Exist(const T& element) const
 		{
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				if (items[i] == element)
 					return true;
@@ -86,17 +90,17 @@ namespace Bear
 		{
 			T* array = new T[count];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				array[i] = this->items[i];
 
 			delete[] this->items;
 
 			this->items = new T[count + Elements.count];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
-			for (BearListLongInt i = count; i < count + Elements.count; i++)
+			for (BearListInt i = count; i < count + Elements.count; i++)
 				this->items[i] = Elements[i - count];
 
 			delete[] array;
@@ -109,17 +113,17 @@ namespace Bear
 		{
 			T* array = new T[count];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				array[i] = this->items[i];
 
 			delete[] this->items;
 
 			this->items = new T[count + Elements.size()];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
-			for (BearListLongInt i = count; i < count + Elements.size(); i++)
+			for (BearListInt i = count; i < count + Elements.size(); i++)
 				this->items[i] = Elements[i - count];
 
 			delete[] array;
@@ -132,14 +136,14 @@ namespace Bear
 		{
 			T* array = new T[count];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				array[i] = this->items[i];
 
 			delete[] this->items;
 
 			this->items = new T[count + 1];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
 			this->items[count] = Element;
@@ -158,9 +162,9 @@ namespace Bear
 
 			if (removeAll)
 			{
-				BearListLongInt iterator = 0;
-				BearListLongInt removeItems = 0;
-				for (BearListLongInt i = 0; i < count; i++)
+				BearListInt iterator = 0;
+				BearListInt removeItems = 0;
+				for (BearListInt i = 0; i < count; i++)
 				{
 					if (!Elements.Exist(items[i]))
 					{
@@ -176,14 +180,14 @@ namespace Bear
 
 				this->items = new T[count];
 
-				for (BearListLongInt i = 0; i < count; i++)
+				for (BearListInt i = 0; i < count; i++)
 					this->items[i] = array[i];
 
 				delete[] array;
 			}
 			else
 			{
-				for (BearListLongInt i = 0; i < Elements.count - 1; i++)
+				for (BearListInt i = 0; i < Elements.count - 1; i++)
 					Delete(Elements[i], false);
 			}
 		}
@@ -198,9 +202,9 @@ namespace Bear
 			{
 				T* array = new T[count];
 
-				BearListLongInt iterator = 0;
-				BearListLongInt removeItems = 0;
-				for (BearListLongInt i = 0; i < count; i++)
+				BearListInt iterator = 0;
+				BearListInt removeItems = 0;
+				for (BearListInt i = 0; i < count; i++)
 				{
 					if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
 					{
@@ -217,14 +221,14 @@ namespace Bear
 
 				this->items = new T[count];
 
-				for (BearListLongInt i = 0; i < count; i++)
+				for (BearListInt i = 0; i < count; i++)
 					this->items[i] = array[i];
 
 				delete[] array;
 			}
 			else
 			{
-				for (BearListLongInt i = 0; i < Elements.size(); i++)
+				for (BearListInt i = 0; i < Elements.size(); i++)
 					Delete(Elements[i], false);
 			}
 		}
@@ -239,9 +243,9 @@ namespace Bear
 
 			if (removeAll)
 			{
-				BearListLongInt j = 0;
-				BearListLongInt removeItems = 0;
-				for (BearListLongInt i = 0; i < count; i++)
+				BearListInt j = 0;
+				BearListInt removeItems = 0;
+				for (BearListInt i = 0; i < count; i++)
 				{
 					if (this->items[i] != Element)
 					{
@@ -257,7 +261,7 @@ namespace Bear
 			else
 			{
 				bool found = false;
-				for (BearListLongInt i = 0; i < count; i++)
+				for (BearListInt i = 0; i < count; i++)
 				{
 					if (this->items[i] != Element || found)
 						array[i - found] = this->items[i];
@@ -272,7 +276,7 @@ namespace Bear
 
 			this->items = new T[count];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
 			delete[] array;
@@ -294,12 +298,16 @@ namespace Bear
 			return items[count - 1];
 		}
 
-		const BearListLongInt& GetMaxCount() const
+		const BearListInt& GetMaxCount() const
 		{
-			return ULLONG_MAX;
+			#ifdef _WIN64
+				return ULLONG_MAX;
+			#else
+				return INT_MAX;
+			#endif
 		}
 
-		const BearListLongInt& Count() const
+		const BearListInt& Count() const
 		{
 			return count;
 		}
@@ -316,9 +324,9 @@ namespace Bear
 			return items;
 		}
 
-		void Foreach(void(*ForeachFunc)(T& element, const BearListLongInt& iterator)) const
+		void Foreach(void(*ForeachFunc)(T& element, const BearListInt& iterator)) const
 		{
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				ForeachFunc(items[i], i);
 		}
 
@@ -330,12 +338,12 @@ namespace Bear
 			if (count == 1)
 				return;
 
-			for (BearListLongInt i = 1; i < count; i++)
+			for (BearListInt i = 1; i < count; i++)
 			{
 				T* firstElement = &items[i - 1];
 				T* secondElement = &items[i];
 
-				for (BearListLongInt j = 0; j < i; j++)
+				for (BearListInt j = 0; j < i; j++)
 				{
 					if (!SortFunc(*firstElement, *secondElement))
 					{
@@ -355,9 +363,9 @@ namespace Bear
 		void Swap(List<T>& elements)
 		{
 			T* items = new T[count];
-			BearListLongInt count = this->count;
+			BearListInt count = this->count;
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				items[i] = this->items[i];
 			}
@@ -375,9 +383,9 @@ namespace Bear
 		void Swap(std::vector<T>& elements)
 		{
 			T* items = new T[count];
-			BearListLongInt count = this->count;
+			BearListInt count = this->count;
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				items[i] = this->items[i];
 
 			delete[] this->items;
@@ -386,21 +394,21 @@ namespace Bear
 
 			T* vectorItems = new T[elements.size()];
 
-			for (BearListLongInt i = 0; i < elements.size(); i++)
+			for (BearListInt i = 0; i < elements.size(); i++)
 				vectorItems[i] = elements[i];
 
 			this->items = vectorItems;
 
 			elements.resize(count);
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				elements[i] = items[i];
 
 			delete[] items;
 		}
 		#endif
 
-		void Resize(const BearListLongInt& Count)
+		void Resize(const BearListInt& Count)
 		{
 			if (items)
 				delete[] items;
@@ -410,7 +418,7 @@ namespace Bear
 			count = Count;
 		}
 
-		void Resize(const BearListLongInt& Count, const T value)
+		void Resize(const BearListInt& Count, const T value)
 		{
 			if (items)
 				delete[] items;
@@ -419,7 +427,7 @@ namespace Bear
 
 			count = Count;
 
-			for (BearListLongInt i = 0; i < Count; i++)
+			for (BearListInt i = 0; i < Count; i++)
 			{
 				items[i] = value;
 			}
@@ -430,7 +438,7 @@ namespace Bear
 		{
 			std::vector<T> vector(count);
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				vector[i] = items[i];
 			}
@@ -439,11 +447,11 @@ namespace Bear
 		}
 		#endif
 
-		T* ToArray(const BearListLongInt* Count = nullptr) const
+		T* ToArray(const BearListInt* Count = nullptr) const
 		{
 			T* array = new T[count];
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				array[i] = items[i];
 			}
@@ -463,7 +471,7 @@ namespace Bear
 
 			count = elements.count;
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				items[i] = elements[i];
 		}
 
@@ -476,14 +484,14 @@ namespace Bear
 
 			count = elements.size();
 
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 				items[i] = elements[i];
 		}
 		#endif
 
 		const bool operator==(const List<T>& elements) const
 		{
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return false;
@@ -495,7 +503,7 @@ namespace Bear
 		#if __has_include(<vector>)
 		const bool operator==(const std::vector<T>& elements) const
 		{
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return false;
@@ -512,7 +520,7 @@ namespace Bear
 
 		const bool operator!=(const List<T>& elements) const
 		{
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return true;
@@ -524,7 +532,7 @@ namespace Bear
 		#if __has_include(<vector>)
 		const bool operator!=(const std::vector<T>& elements) const
 		{
-			for (BearListLongInt i = 0; i < count; i++)
+			for (BearListInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return true;
@@ -573,7 +581,7 @@ namespace Bear
 			Delete(element);
 		}
 
-		T& operator[](const BearListLongInt& index) const
+		T& operator[](const BearListInt& index) const
 		{
 			return (T&)GetFromIndex(index);
 		}
