@@ -298,7 +298,7 @@ namespace Bear
 			return items[count - 1];
 		}
 
-		const BearListInt& GetMaxCount() const
+		const BearListInt GetMaxCount() const
 		{
 			#ifdef _WIN64
 				return ULLONG_MAX;
@@ -307,7 +307,7 @@ namespace Bear
 			#endif
 		}
 
-		const BearListInt& Count() const
+		const BearListInt Count() const
 		{
 			return count;
 		}
