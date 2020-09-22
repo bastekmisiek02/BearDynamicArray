@@ -412,7 +412,7 @@ namespace Bear
 			count = Count;
 		}
 
-		void Resize(const BearListInt& Count, const T value)
+		void Resize(const BearListInt& Count, const T& value)
 		{
 			if (items)
 				delete[] items;
@@ -441,14 +441,12 @@ namespace Bear
 		}
 		#endif
 
-		T* ToArray(const BearListInt* Count = nullptr) const
+		T* ToArray(BearListInt* Count = nullptr) const
 		{
 			T* array = new T[count];
 
 			for (BearListInt i = 0; i < count; i++)
-			{
 				array[i] = items[i];
-			}
 
 			if(Count)
 				*Count = count;
@@ -577,7 +575,7 @@ namespace Bear
 
 		T& operator[](const BearListInt& index) const
 		{
-			return (T&)GetFromIndex(index);
+			return GetFromIndex(index);
 		}
 	};
 }
