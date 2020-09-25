@@ -422,9 +422,7 @@ namespace Bear
 			count = Count;
 
 			for (BearListInt i = 0; i < Count; i++)
-			{
 				items[i] = value;
-			}
 		}
 
 		#if __has_include(<vector>)
