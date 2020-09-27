@@ -41,9 +41,7 @@ namespace Bear
 			items = new T[Elements.size()];
 
 			for (BearListInt i = 0; i < Elements.size(); i++)
-			{
 				items[i] = Elements[i];
-			}
 		}
 		#endif
 
@@ -53,9 +51,7 @@ namespace Bear
 			items = new T[Elements.count];
 
 			for (BearListInt i = 0; i < Elements.count; i++)
-			{
 				items[i] = Elements[i];
-			}
 		}
 
 		List(const BearListInt& Count)
@@ -153,7 +149,7 @@ namespace Bear
 			count++;
 		}
 
-		void DeleteCollection(const List<T>& Elements, const bool& removeAll = false)
+		void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw std::exception("List is clear");
@@ -188,12 +184,12 @@ namespace Bear
 			else
 			{
 				for (BearListInt i = 0; i < Elements.count - 1; i++)
-					Delete(Elements[i], false);
+					Remove(Elements[i], false);
 			}
 		}
 
 		#if __has_include(<vector>)
-		void DeleteCollection(const std::vector<T>& Elements, const bool& removeAll = false)
+		void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw std::exception("List is clear");
@@ -229,12 +225,12 @@ namespace Bear
 			else
 			{
 				for (BearListInt i = 0; i < Elements.size(); i++)
-					Delete(Elements[i], false);
+					Remove(Elements[i], false);
 			}
 		}
 		#endif
 
-		void Delete(const T& Element, const bool& removeAll = false)
+		void Remove(const T& Element, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw std::exception("List is clear");
@@ -360,9 +356,7 @@ namespace Bear
 			BearListInt count = this->count;
 
 			for (BearListInt i = 0; i < count; i++)
-			{
 				items[i] = this->items[i];
-			}
 
 			delete[] this->items;
 
@@ -431,9 +425,7 @@ namespace Bear
 			std::vector<T> vector(count);
 
 			for (BearListInt i = 0; i < count; i++)
-			{
 				vector[i] = items[i];
-			}
 
 			return vector;
 		}
@@ -568,7 +560,7 @@ namespace Bear
 
 		void operator-=(const T& element)
 		{
-			Delete(element);
+			Remove(element);
 		}
 
 		T& operator[](const BearListInt& index) const
