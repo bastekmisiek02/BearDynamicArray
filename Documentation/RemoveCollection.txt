@@ -1,8 +1,8 @@
-"DeleteCollection" - delete first element or all elements from collection
+"RemoveCollection" - delete first element or all elements from collection
 
 //////////////////////////////////////////std::vector//////////////////////////////////////////////////////
 
-void DeleteCollection(const std::vector<T>& Elements, const bool& removeAll = false)
+void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 
 Elements - elements which will be delete from the list
 removeAll - if true delete all element which equals "Elements", if false delete first element which equals "Element" (default false)
@@ -20,7 +20,7 @@ vector[0] = 2;
 vector[1] = 100;
 vector[2] = 20;
 
-list.DeleteCollection(vector);
+list.RemoveCollection(vector);
 
 for (Bear::BearListInt i = 0; i < list.Count(); i++)
 {
@@ -31,7 +31,7 @@ for (Bear::BearListInt i = 0; i < list.Count(); i++)
 
 //////////////////////////////////////////List/////////////////////////////////////////////////////////////
 
-void DeleteCollection(const Bear::List<T>& Elements, const bool& removeAll = false)
+void RemoveCollection(const Bear::List<T>& Elements, const bool& removeAll = false)
 
 Elements - elements which will be delete from the list
 removeAll - if true delete all element which equals "Elements", if false delete first element which equals "Element" (default false)
@@ -49,7 +49,7 @@ list2[0] = 2;
 list2[1] = 100;
 list2[2] = 20;
 
-list.DeleteCollection(list2);
+list.RemoveCollection(list2);
 
 for (Bear::BearListInt i = 0; i < list.Count(); i++)
 {
