@@ -1,6 +1,6 @@
-"Delete" - delete element or all elements which equals first parametr
+"Remove" - delete element or all elements which equals first parametr
 
-void Delete(const T& Element, const bool& removeAll = false)
+void Remove(const T& Element, const bool& removeAll = false)
 
 Element - element which will be delete from the list
 removeAll - if true delete all element which equals "Element", if false delete first element which equals "Element"
@@ -19,7 +19,7 @@ for (int i = 0; i < 1000; i++)
 	list.Add( 3 );
 }
 
-list.Delete(1, true);
+list.Remove(1, true);
 
 for (BearListInt i = 0; i < list.Count(); i++)
 {
