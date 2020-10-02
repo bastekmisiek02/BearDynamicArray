@@ -1,0 +1,31 @@
+"ToArray" - create new array on heap allocation and fill elements(count of array equals list.Count())
+
+T* ToArray(BearListInt* Count = nullptr) const
+
+Count - if "Count" not null *Count equals list.Count()
+
+"ToArray" return T array(remeber use delete if not use them)
+
+Example:
+
+Bear::List<int> list;
+
+for (int i = 0; i < 1000; i++)
+{
+	list.Add(1);
+	list.Add(100);
+	list.Add(14);
+	list.Add(4);
+	list.Add(2);
+	list.Add(3);
+}
+
+Bear::BearListInt count;
+int* array = list.ToArray(&count);
+
+for (Bear::BearListInt i = 0; i < count; i++)
+{
+	std::cout << array[i] << "\n";
+}
+
+delete[] array;
