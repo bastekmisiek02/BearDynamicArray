@@ -315,7 +315,7 @@ namespace Bear
 			count = 0;
 		}
 
-		void Destroy()
+		void Destroy() const
 		{
 			for (BearListInt i = 0; i < count; i++)
 				delete items[i];
