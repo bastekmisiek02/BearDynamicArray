@@ -315,6 +315,12 @@ namespace Bear
 			count = 0;
 		}
 
+		void Destroy()
+		{
+			for (BearListInt i = 0; i < count; i++)
+				delete items[i];
+		}
+
 		T* Data() const
 		{
 			return items;
