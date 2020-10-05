@@ -26,3 +26,4 @@ Methods:
 - [Swap](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Swap.txt)
 - [ToArray](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/ToArray.txt)
 - [ToVector](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/ToVector.txt)
+- [Destroy](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Destroy.txt)
