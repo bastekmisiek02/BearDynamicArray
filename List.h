@@ -1,12 +1,17 @@
 #pragma once
 
 #if __has_include(<vector>)
+	#define BEAR_LIST_VECTOR_ADDED
 	#include <vector>
+#endif
+
+#ifdef _WIN64
+	#define BEAR_LIST_WIN64
 #endif
 
 namespace Bear
 {
-	#ifdef _WIN64
+	#ifdef BEAR_LIST_WIN64
 		typedef unsigned long long int BearListInt;
 	#else
 		typedef unsigned int BearListInt;
@@ -34,7 +39,7 @@ namespace Bear
 			return items[index];
 		}
 	public:
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		List(const std::vector<T>& Elements)
 			: count(Elements.size())
 		{
@@ -104,7 +109,7 @@ namespace Bear
 			count += Elements.count;
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		void AddCollection(const std::vector<T>& Elements)
 		{
 			T* array = new T[count];
@@ -188,7 +193,7 @@ namespace Bear
 			}
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
@@ -296,7 +301,7 @@ namespace Bear
 
 		const BearListInt GetMaxCount() const
 		{
-			#ifdef _WIN64
+			#ifdef BEAR_LIST_WIN64
 				return ULLONG_MAX;
 			#else
 				return INT_MAX;
@@ -373,7 +378,7 @@ namespace Bear
 			elements.count = count;
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		void Swap(std::vector<T>& elements)
 		{
 			T* items = new T[count];
@@ -425,7 +430,7 @@ namespace Bear
 				items[i] = value;
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		std::vector<T> ToVector() const
 		{
 			std::vector<T> vector(count);
@@ -463,7 +468,7 @@ namespace Bear
 				items[i] = elements[i];
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		void operator=(const std::vector<T>& elements)
 		{
 			delete[] this->items;
@@ -488,7 +493,7 @@ namespace Bear
 			return true;
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		const bool operator==(const std::vector<T>& elements) const
 		{
 			for (BearListInt i = 0; i < count; i++)
@@ -517,7 +522,7 @@ namespace Bear
 			return false;
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		const bool operator!=(const std::vector<T>& elements) const
 		{
 			for (BearListInt i = 0; i < count; i++)
@@ -540,7 +545,7 @@ namespace Bear
 			AddCollection(elements);
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		void operator+=(const std::vector<T>& elements)
 		{
 			AddCollection(elements);
@@ -557,7 +562,7 @@ namespace Bear
 			DeleteCollection(elements);
 		}
 
-		#if __has_include(<vector>)
+		#ifdef BEAR_LIST_VECTOR_ADDED
 		void operator-=(const std::vector<T>& elements)
 		{
 			DeleteCollection(elements);
