@@ -283,6 +283,65 @@ namespace Bear
 			delete[] array;
 		}
 
+		void RemoveOnIndex(const BearListInt& Start, const BearListInt& End)
+		{
+			if (!items || !count)
+				throw std::exception("List is clear");
+
+			if (Start > count || End > count)
+				throw std::exception("Out of range");
+
+			if (Start > End)
+				throw std::exception("Start index must be lesser than End index");
+
+			T* array = new T[count];
+
+			BearListInt j = 0;
+			for (BearListInt i = 0; i < count; i++)
+			{
+				if (!(i >= Start && i <= End))
+					array[i - j] = items[i];
+				else
+					j++;
+			}
+
+			delete[] items;
+
+			count -= (End - Start) + 1;
+
+			items = new T[count];
+
+			for (BearListInt i = 0; i < count; i++)
+				items[i] = array[i];
+
+			delete[] array;
+		}
+
+		void RemoveOnIndex(const BearListInt& Start)
+		{
+			if (!items || !count)
+				throw std::exception("List is clear");
+
+			if (Start > count)
+				throw std::exception("Out of range");
+
+			count = Start;
+
+			T* array = new T[count];
+
+			for (BearListInt i = 0; i < count; i++)
+				array[i] = items[i];
+
+			delete[] items;
+
+			items = new T[count];
+
+			for (BearListInt i = 0; i < count; i++)
+				items[i] = array[i];
+
+			delete[] array;
+		}
+
 		T& GetFirst() const
 		{
 			if (!count)

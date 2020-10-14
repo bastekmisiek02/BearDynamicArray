@@ -1,0 +1,58 @@
+"RemoveOnIndex" - remove elements from first argument index to second argument or to end
+
+//////////////////////////////////////////Only 1 Argument//////////////////////////////////////////////////////
+
+void RemoveOnIndex(const BearListInt& Start)
+
+Start - first index to remove
+
+Remove elements from "Start" to end of List
+
+Example:
+
+Bear::List<int> list;
+
+list.Add(1);
+list.Add(100);
+list.Add(14);
+list.Add(4);
+list.Add(2);
+list.Add(3);
+
+list.RemoveOnIndex(1, 3);
+
+for (Bear::BearListInt i = 0; i < list.Count(); i++)
+{
+	std::cout << list[i] << "\n";
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////2 arguments//////////////////////////////////////////////////////
+
+void RemoveOnIndex(const BearListInt& Start, const BearListInt& End)
+
+Start - first index to remove
+End - last index to remove
+
+Remove elements from "Start" to "End" index
+
+Example:
+
+Bear::List<int> list;
+
+list.Add(1);
+list.Add(100);
+list.Add(14);
+list.Add(4);
+list.Add(2);
+list.Add(3);
+
+list.RemoveOnIndex(1);
+
+for (Bear::BearListInt i = 0; i < list.Count(); i++)
+{
+	std::cout << list[i] << "\n";
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////

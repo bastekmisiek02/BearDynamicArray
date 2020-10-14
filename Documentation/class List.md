@@ -27,3 +27,4 @@ Methods:
 - [ToArray](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/ToArray.txt)
 - [ToVector](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/ToVector.txt)
 - [Destroy](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Destroy.txt)
+- [RemoveOnIndex](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/RemoveOnIndex.txt)
