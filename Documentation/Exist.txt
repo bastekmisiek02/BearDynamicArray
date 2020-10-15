@@ -1,8 +1,9 @@
 "Exist" - check if exist element from parametr
 
-const bool Exist(const T& Element) const
+const bool Exist(const T& Element, BearListInt* Index = nullptr) const
 
 Element - item to be checked if it is in the list
+Index - if not null return index of "Element"
 
 "Exist" function return true if "Element" exist in list, else false
 
@@ -10,15 +11,14 @@ Example:
 
 Bear::List<int> list;
 
-for (int i = 0; i < 1000; i++)
-{
-	list.Add( 1 );
-	list.Add( 100 );
-	list.Add( 14 );
-	list.Add( 4 );
-	list.Add( 2 );
-	list.Add( 3 );
-}
+list.Add(1);
+list.Add(100);
+list.Add(14);
+list.Add(4);
+list.Add(2);
+list.Add(3);
 
-if(list.Exist(3))
-	std::cout << "Exist\n";
+Bear::BearListInt index;
+
+if (list.Exist(100, &index))
+	std::cout << index << "\n";

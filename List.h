@@ -39,7 +39,7 @@ namespace Bear
 			return items[index];
 		}
 	public:
-		#ifdef BEAR_LIST_VECTOR_ADDED
+#ifdef BEAR_LIST_VECTOR_ADDED
 		List(const std::vector<T>& Elements)
 			: count(Elements.size())
 		{
@@ -48,7 +48,7 @@ namespace Bear
 			for (BearListInt i = 0; i < Elements.size(); i++)
 				items[i] = Elements[i];
 		}
-		#endif
+#endif
 
 		List(const List<T>& Elements)
 			: count(Elements.count)
@@ -76,12 +76,17 @@ namespace Bear
 			Clear();
 		}
 	public:
-		const bool Exist(const T& Element) const
+		const bool Exist(const T& Element, BearListInt* Index = nullptr) const
 		{
 			for (BearListInt i = 0; i < count; i++)
 			{
 				if (items[i] == Element)
+				{
+					if (Index)
+						*Index = i;
+
 					return true;
+				}
 			}
 
 			return false;
