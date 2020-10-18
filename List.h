@@ -76,16 +76,38 @@ namespace Bear
 			Clear();
 		}
 	public:
-		const bool Exist(const T& Element, BearListInt* Index = nullptr) const
+		const bool Exist(const T& Element, const bool FromEnd = false, BearListInt* Index = nullptr) const
 		{
-			for (BearListInt i = 0; i < count; i++)
+			if (FromEnd)
 			{
-				if (items[i] == Element)
-				{
-					if (Index)
-						*Index = i;
+				#ifdef BEAR_LIST_WIN64
+					typedef long long int Int;
+				#else
+					typedef int Int;
+				#endif
 
-					return true;
+				for (Int i = count - 1; i > -1; i--)
+				{
+					if (items[i] == Element)
+					{
+						if (Index)
+							*Index = i;
+
+						return true;
+					}
+				}
+			}
+			else
+			{
+				for (BearListInt i = 0; i < count; i++)
+				{
+					if (items[i] == Element)
+					{
+						if (Index)
+							*Index = i;
+						
+						return true;
+					}
 				}
 			}
 
