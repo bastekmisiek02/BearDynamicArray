@@ -16,6 +16,11 @@ namespace Bear
 	#else
 		typedef unsigned int BearListInt;
 	#endif
+		
+	enum class BearListException
+	{
+		LastElementNull, FirstElementNull, StartIndexGreaterThanEnd, OutOfRange, IndexGreater, IndexLower, ListClear
+	};
 
 	template <typename T>
 	class List
@@ -28,13 +33,13 @@ namespace Bear
 		T& GetFromIndex(const BearListInt& index) const
 		{
 			if (index > count - 1)
-				throw std::exception("Index is greater than count");
+				throw BearListException::IndexGreater;
 
 			if (index < 0)
-				throw std::exception("Index must be greater than 0");
+				throw BearListException::IndexLower;
 
 			if (!count)
-				throw std::exception("List is clear");
+				throw BearListException::ListClear;
 
 			return items[index];
 		}
@@ -184,7 +189,7 @@ namespace Bear
 		void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw std::exception("List is clear");
+				throw BearListException::ListClear;
 
 			T* array = new T[count];
 
@@ -224,7 +229,7 @@ namespace Bear
 		void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw std::exception("List is clear");
+				throw BearListException::ListClear;
 
 			if (removeAll)
 			{
@@ -265,7 +270,7 @@ namespace Bear
 		void Remove(const T& Element, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw std::exception("List is clear");
+				throw BearListException::ListClear;
 
 			T* array = new T[count];
 
@@ -313,13 +318,13 @@ namespace Bear
 		void RemoveOnIndex(const BearListInt& Start, const BearListInt& End)
 		{
 			if (!items || !count)
-				throw std::exception("List is clear");
+				throw BearListException::ListClear;
 
 			if (Start > count || End > count)
-				throw std::exception("Out of range");
+				throw BearListException::OutOfRange;
 
 			if (Start > End)
-				throw std::exception("Start index must be lesser than End index");
+				throw BearListException::StartIndexGreaterThanEnd;
 
 			T* array = new T[count];
 
@@ -347,10 +352,10 @@ namespace Bear
 		void RemoveOnIndex(const BearListInt& Start)
 		{
 			if (!items || !count)
-				throw std::exception("List is clear");
+				throw BearListException::ListClear;
 
 			if (Start > count)
-				throw std::exception("Out of range");
+				throw BearListException::OutOfRange;
 
 			count = Start;
 
@@ -372,7 +377,7 @@ namespace Bear
 		T& GetFirst() const
 		{
 			if (!count)
-				throw std::exception("First Element is null");
+				throw BearListException::FirstElementNull;
 
 			return items[0];
 		}
@@ -380,7 +385,7 @@ namespace Bear
 		T& GetLast() const
 		{
 			if (!count)
-				throw std::exception("Last Element is null");
+				throw BearListException::LastElementNull;
 
 			return items[count - 1];
 		}
@@ -420,7 +425,7 @@ namespace Bear
 		void Sort(const bool (*SortFunc)(const T& firstElement, const T& secondElement)) const
 		{
 			if (!items || !count)
-				throw std::exception("List is clear");
+				throw BearListException::ListClear;
 
 			if (count == 1)
 				return;
