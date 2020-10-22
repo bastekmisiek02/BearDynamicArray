@@ -21,10 +21,8 @@ list.Add(3);
 
 list.RemoveOnIndex(1, 3);
 
-for (Bear::BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << list[i] << "\n";
-}
+for (const auto& item : list)
+	std::cout << item << "\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,9 +48,7 @@ list.Add(3);
 
 list.RemoveOnIndex(1);
 
-for (Bear::BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << list[i] << "\n";
-}
+for (const auto& item : list)
+	std::cout << item << "\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

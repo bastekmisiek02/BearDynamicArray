@@ -21,7 +21,5 @@ for (int i = 0; i < 1000; i++)
 
 list.Remove(1, true);
 
-for (BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << list[i] << "\n";
-}
+for (const auto& item : list)
+	std::cout << item << "\n";

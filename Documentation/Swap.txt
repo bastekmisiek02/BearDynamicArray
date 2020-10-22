@@ -21,17 +21,13 @@ vector[2] = 20;
 
 list.Swap(vector);
 
-for (Bear::BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << list[i] << "\n";
-}
+for (const auto& item : list)
+	std::cout << item << "\n";
 
 std::cout << "---------------------------\n";
 
-for (Bear::BearListInt i = 0; i < vector.size(); i++)
-{
-	std::cout << vector[i] << "\n";
-}
+for (const auto& item : vector)
+	std::cout << item << "\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,16 +52,12 @@ secondList[2] = 20;
 
 list.Swap(secondList);
 
-for (Bear::BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << list[i] << "\n";
-}
+for (const auto& item : list)
+	std::cout << item << "\n";
 
 std::cout << "---------------------------\n";
 
-for (Bear::BearListInt i = 0; i < secondList.Count(); i++)
-{
-	std::cout << secondList[i] << "\n";
-}
+for (const auto& item : secondList)
+	std::cout << item << "\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

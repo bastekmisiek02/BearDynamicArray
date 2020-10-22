@@ -24,8 +24,6 @@ Bear::BearListInt count;
 int* array = list.ToArray(&count);
 
 for (Bear::BearListInt i = 0; i < count; i++)
-{
 	std::cout << array[i] << "\n";
-}
 
 delete[] array;

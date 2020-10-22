@@ -13,9 +13,5 @@ list.Add(new int(4));
 list.Add(new int(2));
 list.Add(new int(3));
 
-for (Bear::BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << *list[i] << "\n";
-}
-
-list.Destroy();
+for (const auto& item : list)
+	std::cout << *item << "\n";

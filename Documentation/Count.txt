@@ -10,7 +10,5 @@ list.Add(2);
 list.Add(1);
 list.Add(3);
 
-for (BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << list[i] << "\n";
-}
+for (const auto& item : list)
+	std::cout << item << "\n";

@@ -11,7 +11,7 @@ const bool Sort(const int& firstElement, const int& secondElement)
 	return firstElement < secondElement;
 }
 
-List<int> list;
+Bear::List<int> list;
 
 for (int i = 0; i < 1000; i++)
 {
@@ -25,7 +25,5 @@ for (int i = 0; i < 1000; i++)
 
 list.Sort(Sort);
 
-for (BearListInt i = 0; i < list.Count(); i++)
-{
-	std::cout << list[i] << "\n";
-}
+for (const auto& item : list)
+	std::cout << item << "\n";

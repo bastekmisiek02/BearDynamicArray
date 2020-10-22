@@ -1,19 +1,3 @@
-"GetLast" - return last element of list
+"end" - return iterator for last element of list
 
-T& GetLast() const
-
-Example:
-
-Bear::List<int> list;
-
-for (int i = 0; i < 1000; i++)
-{
-	list.Add( 1 );
-	list.Add( 100 );
-	list.Add( 14 );
-	list.Add( 4 );
-	list.Add( 2 );
-	list.Add( 3 );
-}
-
-std::cout << list.GetLast();
+BearListIterator<T> end()
