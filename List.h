@@ -19,7 +19,50 @@ namespace Bear
 		
 	enum class BearListException
 	{
-		LastElementNull, FirstElementNull, StartIndexGreaterThanEnd, OutOfRange, IndexGreater, IndexLower, ListClear
+		StartIndexGreaterThanEnd, OutOfRange, IndexGreater, IndexLower, ListClear
+	};
+
+	template<typename T>
+	class BearListIterator
+	{
+	private:
+		T* ptr;
+	public:
+		BearListIterator(T* Ptr)
+			: ptr(Ptr)
+		{
+		}
+
+		const T& operator*()
+		{
+			return *ptr;
+		}
+
+		const BearListIterator& operator++()
+		{
+			ptr++;
+			return *this;
+		}
+
+		bool operator==(const BearListIterator& other)
+		{
+			return ptr == other.ptr;
+		}
+
+		const bool operator==(const BearListIterator& other) const
+		{
+			return ptr == other.ptr;
+		}
+
+		bool operator!=(const BearListIterator& other)
+		{
+			return ptr != other.ptr;
+		}
+
+		const bool operator!=(const BearListIterator& other) const
+		{
+			return ptr != other.ptr;
+		}
 	};
 
 	template <typename T>
@@ -374,20 +417,14 @@ namespace Bear
 			delete[] array;
 		}
 
-		T& GetFirst() const
+		BearListIterator<T> begin() const
 		{
-			if (!count)
-				throw BearListException::FirstElementNull;
-
-			return items[0];
+			return BearListIterator<T>(items);
 		}
 
-		T& GetLast() const
+		BearListIterator<T> end() const
 		{
-			if (!count)
-				throw BearListException::LastElementNull;
-
-			return items[count - 1];
+			return BearListIterator<T>(items + count);
 		}
 
 		const BearListInt GetMaxCount() const
