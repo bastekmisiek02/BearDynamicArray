@@ -8,7 +8,7 @@ elements - vector which will be swap elements
 
 Example:
 
-Bear::List<int> list(4);
+List<int> list(4);
 list[0] = 2;
 list[1] = 3;
 list[2] = 100;
@@ -33,19 +33,19 @@ for (const auto& item : vector)
 
 //////////////////////////////////////////List/////////////////////////////////////////////////////////////
 
-void Swap(Bear::List<T>& elements)
+void Swap(List<T>& elements)
 
 elements - list which will be swap elements
 
 Example:
 
-Bear::List<int> list(4);
+List<int> list(4);
 list[0] = 2;
 list[1] = 3;
 list[2] = 100;
 list[3] = 10;
 
-Bear::List<int> secondList(3);
+List<int> secondList(3);
 secondList[0] = 2;
 secondList[1] = 100;
 secondList[2] = 20;

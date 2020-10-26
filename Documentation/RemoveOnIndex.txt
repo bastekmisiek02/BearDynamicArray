@@ -2,7 +2,7 @@
 
 //////////////////////////////////////////Only 1 Argument//////////////////////////////////////////////////////
 
-void RemoveOnIndex(const BearListInt& Start)
+void RemoveOnIndex(const Uint& Start)
 
 Start - first index to remove
 
@@ -10,7 +10,7 @@ Remove elements from "Start" to end of List
 
 Example:
 
-Bear::List<int> list;
+List<int> list;
 
 list.Add(1);
 list.Add(100);
@@ -28,7 +28,7 @@ for (const auto& item : list)
 
 //////////////////////////////////////////2 arguments//////////////////////////////////////////////////////
 
-void RemoveOnIndex(const BearListInt& Start, const BearListInt& End)
+void RemoveOnIndex(const Uint& Start, const Uint& End)
 
 Start - first index to remove
 End - last index to remove
@@ -37,7 +37,7 @@ Remove elements from "Start" to "End" index
 
 Example:
 
-Bear::List<int> list;
+List<int> list;
 
 list.Add(1);
 list.Add(100);

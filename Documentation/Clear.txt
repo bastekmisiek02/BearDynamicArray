@@ -4,7 +4,7 @@ Clear()
 
 Example:
 
-Bear::List<int> list;
+List<int> list;
 
 list.Add(3);
 list.Add(2);

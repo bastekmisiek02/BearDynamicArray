@@ -11,7 +11,7 @@ const bool Sort(const int& firstElement, const int& secondElement)
 	return firstElement < secondElement;
 }
 
-Bear::List<int> list;
+List<int> list;
 
 for (int i = 0; i < 1000; i++)
 {

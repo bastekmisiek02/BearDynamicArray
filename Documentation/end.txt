@@ -1,3 +1,3 @@
 "end" - return iterator for last element of list
 
-BearListIterator<T> end()
+Iterator<T> end()

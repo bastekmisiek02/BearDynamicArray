@@ -9,7 +9,7 @@ removeAll - if true delete all element which equals "Elements", if false delete 
 
 Example:
 
-Bear::List<int> list(4);
+List<int> list(4);
 list[0] = 2;
 list[1] = 3;
 list[2] = 100;
@@ -29,20 +29,20 @@ for (const auto& item : list)
 
 //////////////////////////////////////////List/////////////////////////////////////////////////////////////
 
-void RemoveCollection(const Bear::List<T>& Elements, const bool& removeAll = false)
+void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
 
 Elements - elements which will be delete from the list
 removeAll - if true delete all element which equals "Elements", if false delete first element which equals "Element" (default false)
 
 Example:
 
-Bear::List<int> list(4);
+List<int> list(4);
 list[0] = 2;
 list[1] = 3;
 list[2] = 100;
 list[3] = 100;
 
-Bear::List<int> list2(3);
+List<int> list2(3);
 list2[0] = 2;
 list2[1] = 100;
 list2[2] = 20;

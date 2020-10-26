@@ -13,7 +13,7 @@ vector[0] = 1;
 vector[1] = 1000;
 vector[2] = 20;
 
-Bear::List<int> list;
+List<int> list;
 
 list.AddCollection(vector);
 
@@ -23,16 +23,16 @@ list.AddCollection(vector);
 
 AddCollection(const List<T>& Elements)
 
-Elements - other Bear::List<T> from which copy data to this List
+Elements - other List<T> from which copy data to this List
 
 Example:
 
-Bear::List<float> firstList(3);
+List<float> firstList(3);
 firstList[0] = 1.0f;
 firstList[1] = 1000.0f;
 firstList[2] = 20.0f;
 
-Bear::List<float> list;
+List<float> list;
 
 list.AddCollection(firstList);
 

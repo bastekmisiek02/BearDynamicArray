@@ -4,7 +4,7 @@ void Destroy() const
 
 Example:
 
-Bear::List<int*> list;
+List<int*> list;
 
 list.Add(new int(2));
 list.Add(new int(100));
@@ -15,3 +15,5 @@ list.Add(new int(3));
 
 for (const auto& item : list)
 	std::cout << *item << "\n";
+
+list.Destroy();

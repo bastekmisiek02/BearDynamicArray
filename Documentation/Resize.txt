@@ -2,13 +2,13 @@
 
 //////////////////////////////////////////without value//////////////////////////////////////////////////////
 
-void Resize(const BearListInt& Count)
+void Resize(const Uint& Count)
 
 Elements of list are empty
 
 Example:
 
-Bear::List<int> list;
+List<int> list;
 
 int count;
 
@@ -23,13 +23,13 @@ std::cout << "List size: " << list.Count() << "\n";
 
 //////////////////////////////////////////with value///////////////////////////////////////////////////////
 
-void Resize(const BearListInt& Count, const T& value)
+void Resize(const Uint& Count, const T& value)
 
 Elements of list are equals of "value"
 
 Example:
 
-Bear::List<int> list;
+List<int> list;
 
 int count;
 
@@ -43,7 +43,7 @@ std::cin >> value;
 
 list.Resize(count, value);
 
-for (Bear::BearListInt i = 0; i < list.Count(); i++)
+for (Uint i = 0; i < list.Count(); i++)
 	std::cout << "Value : " << i << " = " << list[i] << "\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

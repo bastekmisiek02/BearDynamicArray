@@ -8,7 +8,7 @@ Count - if "Count" not null *Count equals list.Count()
 
 Example:
 
-Bear::List<int> list;
+List<int> list;
 
 for (int i = 0; i < 1000; i++)
 {
@@ -20,10 +20,10 @@ for (int i = 0; i < 1000; i++)
 	list.Add(3);
 }
 
-Bear::BearListInt count;
+Uint count;
 int* array = list.ToArray(&count);
 
-for (Bear::BearListInt i = 0; i < count; i++)
+for (Uint i = 0; i < count; i++)
 	std::cout << array[i] << "\n";
 
 delete[] array;

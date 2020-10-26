@@ -7,7 +7,7 @@ removeAll - if true delete all element which equals "Element", if false delete f
 
 Example:
 
-Bear::List<int> list;
+List<int> list;
 
 for (int i = 0; i < 1000; i++)
 {
