@@ -11,19 +11,86 @@
 
 namespace Bear
 {
-	namespace List
+
+#ifdef BEAR_LIST_WIN64
+	typedef unsigned long long int ListUInt;
+#else
+	typedef unsigned int ListUInt;
+#endif
+
+	enum class ListException
 	{
-		#ifdef BEAR_LIST_WIN64
-			typedef unsigned long long int Uint;
-		#else
-			typedef unsigned int Uint;
+		StartIndexGreaterThanEnd, OutOfRange, IndexGreater, IndexLower, ListClear
+	};
+
+	template <typename T>
+	class List
+	{
+	private:
+		ListUInt count;
+	private:
+		T* items;
+	private:
+		T& GetFromIndex(const ListUInt& index) const
+		{
+			if (index > count - 1)
+				throw ListException::IndexGreater;
+
+			if (index < 0)
+				throw ListException::IndexLower;
+
+			if (!count)
+				throw ListException::ListClear;
+
+			return items[index];
+		}
+	public:
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		List(const std::vector<T>& Elements)
+			: count(Elements.size())
+		{
+			items = new T[Elements.size()];
+
+			for (ListUInt i = 0; i < Elements.size(); i++)
+				items[i] = Elements[i];
+		}
 		#endif
 
-		enum class Exception
+		List(const List<T>& Elements)
+			: count(Elements.count)
 		{
-			StartIndexGreaterThanEnd, OutOfRange, IndexGreater, IndexLower, ListClear
-		};
+			items = new T[Elements.count];
 
+			for (ListUInt i = 0; i < Elements.count; i++)
+				items[i] = Elements[i];
+		}
+
+		List(const ListUInt& Count)
+			: count(Count)
+		{
+			items = new T[Count];
+		}
+
+		List(const T* Array, const ListUInt& Count)
+			: count(Count)
+		{
+			items = new T[Count];
+
+			for (ListUInt i = 0; i < Count; i++)
+				items[i] = Array[i];
+		}
+
+		List()
+			: count(0)
+		{
+			items = new T[0];
+		}
+
+		~List()
+		{
+			Clear();
+		}
+	public:
 		template<typename T>
 		class Iterator
 		{
@@ -35,7 +102,12 @@ namespace Bear
 			{
 			}
 
-			const T& operator*()
+			const T& operator*() const
+			{
+				return *ptr;
+			}
+
+			T& operator*()
 			{
 				return *ptr;
 			}
@@ -66,648 +138,588 @@ namespace Bear
 				return ptr != other.ptr;
 			}
 		};
-
-		template <typename T>
-		class List
+	public:
+		const bool Exist(const T& Element, const bool FromEnd = false, ListUInt* Index = nullptr) const
 		{
-		private:
-			Uint count;
-		private:
-			T* items;
-		private:
-			T& GetFromIndex(const Uint& index) const
+			if (FromEnd)
 			{
-				if (index > count - 1)
-					throw Exception::IndexGreater;
+				#ifdef BEAR_LIST_WIN64
+				typedef long long int Int;
+				#else
+				typedef int Int;
+				#endif
 
-				if (index < 0)
-					throw Exception::IndexLower;
-
-				if (!count)
-					throw Exception::ListClear;
-
-				return items[index];
-			}
-		public:
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			List(const std::vector<T>& Elements)
-				: count(Elements.size())
-			{
-				items = new T[Elements.size()];
-
-				for (Uint i = 0; i < Elements.size(); i++)
-					items[i] = Elements[i];
-			}
-			#endif
-
-			List(const List<T>& Elements)
-				: count(Elements.count)
-			{
-				items = new T[Elements.count];
-
-				for (Uint i = 0; i < Elements.count; i++)
-					items[i] = Elements[i];
-			}
-
-			List(const Uint& Count)
-				: count(Count)
-			{
-				items = new T[Count];
-			}
-
-			List()
-				: count(0)
-			{
-				items = new T[0];
-			}
-
-			~List()
-			{
-				Clear();
-			}
-		public:
-			const bool Exist(const T& Element, const bool FromEnd = false, Uint* Index = nullptr) const
-			{
-				if (FromEnd)
+				for (Int i = count - 1; i > -1; i--)
 				{
-					#ifdef BEAR_LIST_WIN64
-						typedef long long int Int;
-					#else
-						typedef int Int;
-					#endif
-
-					for (Int i = count - 1; i > -1; i--)
+					if (items[i] == Element)
 					{
-						if (items[i] == Element)
-						{
-							if (Index)
-								*Index = i;
+						if (Index)
+							*Index = i;
 
-							return true;
-						}
+						return true;
 					}
 				}
-				else
+			}
+			else
+			{
+				for (ListUInt i = 0; i < count; i++)
 				{
-					for (Uint i = 0; i < count; i++)
+					if (items[i] == Element)
 					{
-						if (items[i] == Element)
-						{
-							if (Index)
-								*Index = i;
+						if (Index)
+							*Index = i;
 
-							return true;
-						}
+						return true;
 					}
 				}
-
-				return false;
 			}
 
-			void AddCollection(const List<T>& Elements)
+			return false;
+		}
+
+		void AddCollection(const List<T>& Elements)
+		{
+			T* array = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				array[i] = this->items[i];
+
+			delete[] this->items;
+
+			this->items = new T[count + Elements.count];
+
+			for (ListUInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			for (ListUInt i = count; i < count + Elements.count; i++)
+				this->items[i] = Elements[i - count];
+
+			delete[] array;
+
+			count += Elements.count;
+		}
+
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		void AddCollection(const std::vector<T>& Elements)
+		{
+			T* array = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				array[i] = this->items[i];
+
+			delete[] this->items;
+
+			this->items = new T[count + Elements.size()];
+
+			for (ListUInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			for (ListUInt i = count; i < count + Elements.size(); i++)
+				this->items[i] = Elements[i - count];
+
+			delete[] array;
+
+			count += Elements.size();
+		}
+		#endif
+
+		void Add(const T& Element)
+		{
+			T* array = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				array[i] = this->items[i];
+
+			delete[] this->items;
+
+			this->items = new T[count + 1];
+
+			for (ListUInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			this->items[count] = Element;
+
+			delete[] array;
+
+			count++;
+		}
+
+		void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
+		{
+			if (!items || !count)
+				throw ListException::ListClear;
+
+			T* array = new T[count];
+
+			if (removeAll)
 			{
-				T* array = new T[count];
-
-				for (Uint i = 0; i < count; i++)
-					array[i] = this->items[i];
-
-				delete[] this->items;
-
-				this->items = new T[count + Elements.count];
-
-				for (Uint i = 0; i < count; i++)
-					this->items[i] = array[i];
-
-				for (Uint i = count; i < count + Elements.count; i++)
-					this->items[i] = Elements[i - count];
-
-				delete[] array;
-
-				count += Elements.count;
-			}
-
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			void AddCollection(const std::vector<T>& Elements)
-			{
-				T* array = new T[count];
-
-				for (Uint i = 0; i < count; i++)
-					array[i] = this->items[i];
-
-				delete[] this->items;
-
-				this->items = new T[count + Elements.size()];
-
-				for (Uint i = 0; i < count; i++)
-					this->items[i] = array[i];
-
-				for (Uint i = count; i < count + Elements.size(); i++)
-					this->items[i] = Elements[i - count];
-
-				delete[] array;
-
-				count += Elements.size();
-			}
-			#endif
-
-			void Add(const T& Element)
-			{
-				T* array = new T[count];
-
-				for (Uint i = 0; i < count; i++)
-					array[i] = this->items[i];
-
-				delete[] this->items;
-
-				this->items = new T[count + 1];
-
-				for (Uint i = 0; i < count; i++)
-					this->items[i] = array[i];
-
-				this->items[count] = Element;
-
-				delete[] array;
-
-				count++;
-			}
-
-			void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
-			{
-				if (!items || !count)
-					throw Exception::ListClear;
-
-				T* array = new T[count];
-
-				if (removeAll)
+				ListUInt iterator = 0;
+				ListUInt removeItems = 0;
+				for (ListUInt i = 0; i < count; i++)
 				{
-					Uint iterator = 0;
-					Uint removeItems = 0;
-					for (Uint i = 0; i < count; i++)
+					if (!Elements.Exist(items[i]))
 					{
-						if (!Elements.Exist(items[i]))
-						{
-							array[iterator] = this->items[i];
-							iterator++;
-						}
-						else
-							removeItems++;
+						array[iterator] = this->items[i];
+						iterator++;
 					}
-
-					count -= removeItems;
-					delete[] this->items;
-
-					this->items = new T[count];
-
-					for (Uint i = 0; i < count; i++)
-						this->items[i] = array[i];
-
-					delete[] array;
-				}
-				else
-				{
-					for (Uint i = 0; i < Elements.count - 1; i++)
-						Remove(Elements[i], false);
-				}
-			}
-
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
-			{
-				if (!items || !count)
-					throw Exception::ListClear;
-
-				if (removeAll)
-				{
-					T* array = new T[count];
-
-					Uint iterator = 0;
-					Uint removeItems = 0;
-					for (Uint i = 0; i < count; i++)
-					{
-						if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
-						{
-							array[iterator] = this->items[i];
-							iterator++;
-						}
-						else
-							removeItems++;
-					}
-
-					delete[] this->items;
-
-					count -= removeItems;
-
-					this->items = new T[count];
-
-					for (Uint i = 0; i < count; i++)
-						this->items[i] = array[i];
-
-					delete[] array;
-				}
-				else
-				{
-					for (Uint i = 0; i < Elements.size(); i++)
-						Remove(Elements[i], false);
-				}
-			}
-			#endif
-
-			void Remove(const T& Element, const bool& removeAll = false)
-			{
-				if (!items || !count)
-					throw Exception::ListClear;
-
-				T* array = new T[count];
-
-				if (removeAll)
-				{
-					Uint j = 0;
-					Uint removeItems = 0;
-					for (Uint i = 0; i < count; i++)
-					{
-						if (this->items[i] != Element)
-						{
-							array[j] = this->items[i];
-							j++;
-						}
-						else
-							removeItems++;
-					}
-
-					count -= removeItems;
-				}
-				else
-				{
-					bool found = false;
-					for (Uint i = 0; i < count; i++)
-					{
-						if (this->items[i] != Element || found)
-							array[i - found] = this->items[i];
-						else
-							found = true;
-					}
-
-					count--;
+					else
+						removeItems++;
 				}
 
+				count -= removeItems;
 				delete[] this->items;
 
 				this->items = new T[count];
 
-				for (Uint i = 0; i < count; i++)
+				for (ListUInt i = 0; i < count; i++)
 					this->items[i] = array[i];
 
 				delete[] array;
 			}
-
-			void RemoveOnIndex(const Uint& Start, const Uint& End)
+			else
 			{
-				if (!items || !count)
-					throw Exception::ListClear;
+				for (ListUInt i = 0; i < Elements.count - 1; i++)
+					Remove(Elements[i], false);
+			}
+		}
 
-				if (Start > count || End > count)
-					throw Exception::OutOfRange;
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
+		{
+			if (!items || !count)
+				throw ListException::ListClear;
 
-				if (Start > End)
-					throw Exception::StartIndexGreaterThanEnd;
-
+			if (removeAll)
+			{
 				T* array = new T[count];
 
-				Uint j = 0;
-				for (Uint i = 0; i < count; i++)
+				ListUInt iterator = 0;
+				ListUInt removeItems = 0;
+				for (ListUInt i = 0; i < count; i++)
 				{
-					if (!(i >= Start && i <= End))
-						array[i - j] = items[i];
-					else
-						j++;
-				}
-
-				delete[] items;
-
-				count -= (End - Start) + 1;
-
-				items = new T[count];
-
-				for (Uint i = 0; i < count; i++)
-					items[i] = array[i];
-
-				delete[] array;
-			}
-
-			void RemoveOnIndex(const Uint& Start)
-			{
-				if (!items || !count)
-					throw Exception::ListClear;
-
-				if (Start > count)
-					throw Exception::OutOfRange;
-
-				count = Start;
-
-				T* array = new T[count];
-
-				for (Uint i = 0; i < count; i++)
-					array[i] = items[i];
-
-				delete[] items;
-
-				items = new T[count];
-
-				for (Uint i = 0; i < count; i++)
-					items[i] = array[i];
-
-				delete[] array;
-			}
-
-			Iterator<T> begin() const
-			{
-				return Iterator<T>(items);
-			}
-
-			Iterator<T> end() const
-			{
-				return Iterator<T>(items + count);
-			}
-
-			const Uint GetMaxCount() const
-			{
-				#ifdef BEAR_LIST_WIN64
-					return ULLONG_MAX;
-				#else
-					return INT_MAX;
-				#endif
-			}
-
-			const Uint Count() const
-			{
-				return count;
-			}
-
-			void Clear()
-			{
-				delete[] items;
-				items = nullptr;
-				count = 0;
-			}
-
-			void Destroy() const
-			{
-				for (Uint i = 0; i < count; i++)
-					delete items[i];
-			}
-
-			T* Data() const
-			{
-				return items;
-			}
-
-			void Sort(const bool (*SortFunc)(const T& firstElement, const T& secondElement)) const
-			{
-				if (!items || !count)
-					throw Exception::ListClear;
-
-				if (count == 1)
-					return;
-
-				for (Uint i = 1; i < count; i++)
-				{
-					T* firstElement = &items[i - 1];
-					T* secondElement = &items[i];
-
-					for (Uint j = 0; j < i; j++)
+					if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
 					{
-						if (!SortFunc(*firstElement, *secondElement))
-						{
-							const T helpItem = *firstElement;
-							*firstElement = *secondElement;
-							*secondElement = helpItem;
-
-							firstElement = &items[i - j - 2];
-							secondElement = &items[i - j - 1];
-						}
-						else
-							break;
+						array[iterator] = this->items[i];
+						iterator++;
 					}
+					else
+						removeItems++;
+				}
+
+				delete[] this->items;
+
+				count -= removeItems;
+
+				this->items = new T[count];
+
+				for (ListUInt i = 0; i < count; i++)
+					this->items[i] = array[i];
+
+				delete[] array;
+			}
+			else
+			{
+				for (ListUInt i = 0; i < Elements.size(); i++)
+					Remove(Elements[i], false);
+			}
+		}
+		#endif
+
+		void Remove(const T& Element, const bool& removeAll = false)
+		{
+			if (!items || !count)
+				throw ListException::ListClear;
+
+			T* array = new T[count];
+
+			if (removeAll)
+			{
+				ListUInt j = 0;
+				ListUInt removeItems = 0;
+				for (ListUInt i = 0; i < count; i++)
+				{
+					if (this->items[i] != Element)
+					{
+						array[j] = this->items[i];
+						j++;
+					}
+					else
+						removeItems++;
+				}
+
+				count -= removeItems;
+			}
+			else
+			{
+				bool found = false;
+				for (ListUInt i = 0; i < count; i++)
+				{
+					if (this->items[i] != Element || found)
+						array[i - found] = this->items[i];
+					else
+						found = true;
+				}
+
+				count--;
+			}
+
+			delete[] this->items;
+
+			this->items = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				this->items[i] = array[i];
+
+			delete[] array;
+		}
+
+		void RemoveOnIndex(const ListUInt& Start, const ListUInt& End)
+		{
+			if (!items || !count)
+				throw ListException::ListClear;
+
+			if (Start > count || End > count)
+				throw ListException::OutOfRange;
+
+			if (Start > End)
+				throw ListException::StartIndexGreaterThanEnd;
+
+			T* array = new T[count];
+
+			ListUInt j = 0;
+			for (ListUInt i = 0; i < count; i++)
+			{
+				if (!(i >= Start && i <= End))
+					array[i - j] = items[i];
+				else
+					j++;
+			}
+
+			delete[] items;
+
+			count -= (End - Start) + 1;
+
+			items = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				items[i] = array[i];
+
+			delete[] array;
+		}
+
+		void RemoveOnIndex(const ListUInt& Start)
+		{
+			if (!items || !count)
+				throw ListException::ListClear;
+
+			if (Start > count)
+				throw ListException::OutOfRange;
+
+			count = Start;
+
+			T* array = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				array[i] = items[i];
+
+			delete[] items;
+
+			items = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				items[i] = array[i];
+
+			delete[] array;
+		}
+
+		Iterator<T> begin() const
+		{
+			return Iterator<T>(items);
+		}
+
+		Iterator<T> end() const
+		{
+			return Iterator<T>(items + count);
+		}
+
+		const ListUInt GetMaxCount() const
+		{
+			#ifdef BEAR_LIST_WIN64
+				return ULLONG_MAX;
+			#else
+				return INT_MAX;
+			#endif
+		}
+
+		const ListUInt Count() const
+		{
+			return count;
+		}
+
+		void Clear()
+		{
+			delete[] items;
+			items = nullptr;
+			count = 0;
+		}
+
+		void Destroy() const
+		{
+			for (ListUInt i = 0; i < count; i++)
+				delete items[i];
+		}
+
+		T* Data() const
+		{
+			return items;
+		}
+
+		void Sort(const bool (*SortFunc)(const T& firstElement, const T& secondElement)) const
+		{
+			if (!items || !count)
+				throw ListException::ListClear;
+
+			if (count == 1)
+				return;
+
+			for (ListUInt i = 1; i < count; i++)
+			{
+				T* firstElement = &items[i - 1];
+				T* secondElement = &items[i];
+
+				for (ListUInt j = 0; j < i; j++)
+				{
+					if (!SortFunc(*firstElement, *secondElement))
+					{
+						const T helpItem = *firstElement;
+						*firstElement = *secondElement;
+						*secondElement = helpItem;
+
+						firstElement = &items[i - j - 2];
+						secondElement = &items[i - j - 1];
+					}
+					else
+						break;
 				}
 			}
+		}
 
-			void Swap(List<T>& elements)
-			{
-				T* items = new T[count];
-				Uint count = this->count;
+		void Swap(List<T>& elements)
+		{
+			T* items = new T[count];
+			ListUInt count = this->count;
 
-				for (Uint i = 0; i < count; i++)
-					items[i] = this->items[i];
+			for (ListUInt i = 0; i < count; i++)
+				items[i] = this->items[i];
 
-				delete[] this->items;
+			delete[] this->items;
 
-				this->items = elements.items;
-				elements.items = items;
+			this->items = elements.items;
+			elements.items = items;
 
-				this->count = elements.count;
-				elements.count = count;
-			}
+			this->count = elements.count;
+			elements.count = count;
+		}
 
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			void Swap(std::vector<T>& elements)
-			{
-				T* items = new T[count];
-				Uint count = this->count;
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		void Swap(std::vector<T>& elements)
+		{
+			T* items = new T[count];
+			ListUInt count = this->count;
 
-				for (Uint i = 0; i < count; i++)
-					items[i] = this->items[i];
+			for (ListUInt i = 0; i < count; i++)
+				items[i] = this->items[i];
 
-				delete[] this->items;
+			delete[] this->items;
 
-				this->count = elements.size();
+			this->count = elements.size();
 
-				T* vectorItems = new T[elements.size()];
+			T* vectorItems = new T[elements.size()];
 
-				for (Uint i = 0; i < elements.size(); i++)
-					vectorItems[i] = elements[i];
+			for (ListUInt i = 0; i < elements.size(); i++)
+				vectorItems[i] = elements[i];
 
-				this->items = vectorItems;
+			this->items = vectorItems;
 
-				elements.resize(count);
+			elements.resize(count);
 
-				for (Uint i = 0; i < count; i++)
-					elements[i] = items[i];
+			for (ListUInt i = 0; i < count; i++)
+				elements[i] = items[i];
 
+			delete[] items;
+		}
+		#endif
+
+		void Resize(const ListUInt& Count)
+		{
+			if (items)
 				delete[] items;
-			}
-			#endif
 
-			void Resize(const Uint& Count)
+			items = new T[Count];
+
+			count = Count;
+		}
+
+		void Resize(const ListUInt& Count, const T& value)
+		{
+			if (items)
+				delete[] items;
+
+			items = new T[Count];
+
+			count = Count;
+
+			for (ListUInt i = 0; i < Count; i++)
+				items[i] = value;
+		}
+
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		std::vector<T> ToVector() const
+		{
+			std::vector<T> vector(count);
+
+			for (ListUInt i = 0; i < count; i++)
+				vector[i] = items[i];
+
+			return vector;
+		}
+		#endif
+
+		T* ToArray(ListUInt* Count = nullptr) const
+		{
+			T* array = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				array[i] = items[i];
+
+			if (Count)
+				*Count = count;
+
+			return array;
+		}
+
+	public:
+		void operator=(const List<T>& elements)
+		{
+			delete[] this->items;
+
+			items = new T[elements.count];
+
+			count = elements.count;
+
+			for (ListUInt i = 0; i < count; i++)
+				items[i] = elements[i];
+		}
+
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		void operator=(const std::vector<T>& elements)
+		{
+			delete[] this->items;
+
+			items = new T[elements.size()];
+
+			count = elements.size();
+
+			for (ListUInt i = 0; i < count; i++)
+				items[i] = elements[i];
+		}
+		#endif
+
+		const bool operator==(const List<T>& elements) const
+		{
+			for (ListUInt i = 0; i < count; i++)
 			{
-				if (items)
-					delete[] items;
-
-				items = new T[Count];
-
-				count = Count;
+				if (items[i] != elements[i])
+					return false;
 			}
 
-			void Resize(const Uint& Count, const T& value)
+			return true;
+		}
+
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		const bool operator==(const std::vector<T>& elements) const
+		{
+			for (ListUInt i = 0; i < count; i++)
 			{
-				if (items)
-					delete[] items;
-
-				items = new T[Count];
-
-				count = Count;
-
-				for (Uint i = 0; i < Count; i++)
-					items[i] = value;
+				if (items[i] != elements[i])
+					return false;
 			}
 
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			std::vector<T> ToVector() const
+			return true;
+		}
+		#endif
+
+		const bool operator==(const T& element) const
+		{
+			return Exist(element);
+		}
+
+		const bool operator!=(const List<T>& elements) const
+		{
+			for (ListUInt i = 0; i < count; i++)
 			{
-				std::vector<T> vector(count);
-
-				for (Uint i = 0; i < count; i++)
-					vector[i] = items[i];
-
-				return vector;
+				if (items[i] != elements[i])
+					return true;
 			}
-			#endif
 
-			T* ToArray(Uint* Count = nullptr) const
+			return false;
+		}
+
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		const bool operator!=(const std::vector<T>& elements) const
+		{
+			for (ListUInt i = 0; i < count; i++)
 			{
-				T* array = new T[count];
-
-				for (Uint i = 0; i < count; i++)
-					array[i] = items[i];
-
-				if (Count)
-					*Count = count;
-
-				return array;
+				if (items[i] != elements[i])
+					return true;
 			}
 
-		public:
-			void operator=(const List<T>& elements)
-			{
-				delete[] this->items;
+			return false;
+		}
+		#endif
 
-				items = new T[elements.count];
+		const bool operator!=(const T& element) const
+		{
+			return (!Exist(element));
+		}
 
-				count = elements.count;
+		void operator+=(const List<T>& elements)
+		{
+			AddCollection(elements);
+		}
 
-				for (Uint i = 0; i < count; i++)
-					items[i] = elements[i];
-			}
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		void operator+=(const std::vector<T>& elements)
+		{
+			AddCollection(elements);
+		}
+		#endif
 
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			void operator=(const std::vector<T>& elements)
-			{
-				delete[] this->items;
+		void operator+=(const T& element)
+		{
+			Add(element);
+		}
 
-				items = new T[elements.size()];
+		void operator-=(const List<T>& elements)
+		{
+			DeleteCollection(elements);
+		}
 
-				count = elements.size();
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		void operator-=(const std::vector<T>& elements)
+		{
+			DeleteCollection(elements);
+		}
+		#endif
 
-				for (Uint i = 0; i < count; i++)
-					items[i] = elements[i];
-			}
-			#endif
+		void operator-=(const T& element)
+		{
+			Remove(element);
+		}
 
-			const bool operator==(const List<T>& elements) const
-			{
-				for (Uint i = 0; i < count; i++)
-				{
-					if (items[i] != elements[i])
-						return false;
-				}
-
-				return true;
-			}
-
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			const bool operator==(const std::vector<T>& elements) const
-			{
-				for (Uint i = 0; i < count; i++)
-				{
-					if (items[i] != elements[i])
-						return false;
-				}
-
-				return true;
-			}
-			#endif
-
-			const bool operator==(const T& element) const
-			{
-				return Exist(element);
-			}
-
-			const bool operator!=(const List<T>& elements) const
-			{
-				for (Uint i = 0; i < count; i++)
-				{
-					if (items[i] != elements[i])
-						return true;
-				}
-
-				return false;
-			}
-
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			const bool operator!=(const std::vector<T>& elements) const
-			{
-				for (Uint i = 0; i < count; i++)
-				{
-					if (items[i] != elements[i])
-						return true;
-				}
-
-				return false;
-			}
-			#endif
-
-			const bool operator!=(const T& element) const
-			{
-				return (!Exist(element));
-			}
-
-			void operator+=(const List<T>& elements)
-			{
-				AddCollection(elements);
-			}
-
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			void operator+=(const std::vector<T>& elements)
-			{
-				AddCollection(elements);
-			}
-			#endif
-
-			void operator+=(const T& element)
-			{
-				Add(element);
-			}
-
-			void operator-=(const List<T>& elements)
-			{
-				DeleteCollection(elements);
-			}
-
-			#ifdef BEAR_LIST_VECTOR_ADDED
-			void operator-=(const std::vector<T>& elements)
-			{
-				DeleteCollection(elements);
-			}
-			#endif
-
-			void operator-=(const T& element)
-			{
-				Remove(element);
-			}
-
-			T& operator[](const Uint& index) const
-			{
-				return GetFromIndex(index);
-			}
-		};
-	}
+		T& operator[](const ListUInt& index) const
+		{
+			return GetFromIndex(index);
+		}
+	};
 }
