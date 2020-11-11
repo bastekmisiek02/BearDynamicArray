@@ -71,15 +71,6 @@ namespace Bear
 			items = new T[Count];
 		}
 
-		List(const T* Array, const ListUInt& Count)
-			: count(Count)
-		{
-			items = new T[Count];
-
-			for (ListUInt i = 0; i < Count; i++)
-				items[i] = Array[i];
-		}
-
 		List()
 			: count(0)
 		{
