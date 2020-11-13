@@ -432,12 +432,22 @@ namespace Bear
 			delete[] array;
 		}
 
-		Iterator<T> begin() const
+		Iterator<T> begin()
 		{
 			return Iterator<T>(items);
 		}
 
-		Iterator<T> end() const
+		Iterator<T> end()
+		{
+			return Iterator<T>(items + count);
+		}
+
+		const Iterator<T> begin() const
+		{
+			return Iterator<T>(items);
+		}
+
+		const Iterator<T> end() const
 		{
 			return Iterator<T>(items + count);
 		}
@@ -469,7 +479,12 @@ namespace Bear
 				delete items[i];
 		}
 
-		T* Data() const
+		const T* Data() const
+		{
+			return items;
+		}
+
+		T* Data()
 		{
 			return items;
 		}
@@ -574,7 +589,17 @@ namespace Bear
 		}
 
 		#ifdef BEAR_LIST_VECTOR_ADDED
-		std::vector<T> ToVector() const
+		std::vector<T> ToVector()
+		{
+			std::vector<T> vector(count);
+
+			for (ListUInt i = 0; i < count; i++)
+				vector[i] = items[i];
+
+			return vector;
+		}
+
+		const std::vector<T> ToVector() const
 		{
 			std::vector<T> vector(count);
 
@@ -585,7 +610,7 @@ namespace Bear
 		}
 		#endif
 
-		T* ToArray(ListUInt* Count = nullptr) const
+		T* ToArray(ListUInt* Count = nullptr)
 		{
 			T* array = new T[count];
 
@@ -598,6 +623,18 @@ namespace Bear
 			return array;
 		}
 
+		const T* ToArray(ListUInt* Count = nullptr) const
+		{
+			T* array = new T[count];
+
+			for (ListUInt i = 0; i < count; i++)
+				array[i] = items[i];
+
+			if (Count)
+				*Count = count;
+
+			return array;
+		}
 	public:
 		void operator=(const List<T>& elements)
 		{
@@ -624,6 +661,35 @@ namespace Bear
 				items[i] = elements[i];
 		}
 		#endif
+
+		bool operator==(const List<T>& elements)
+		{
+			for (ListUInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return false;
+			}
+
+			return true;
+		}
+
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		bool operator==(const std::vector<T>& elements)
+		{
+			for (ListUInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return false;
+			}
+
+			return true;
+		}
+		#endif
+
+		bool operator==(const T& element)
+		{
+			return Exist(element);
+		}
 
 		const bool operator==(const List<T>& elements) const
 		{
@@ -652,6 +718,35 @@ namespace Bear
 		const bool operator==(const T& element) const
 		{
 			return Exist(element);
+		}
+
+		bool operator!=(const List<T>& elements)
+		{
+			for (ListUInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return true;
+			}
+
+			return false;
+		}
+
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		bool operator!=(const std::vector<T>& elements)
+		{
+			for (ListUInt i = 0; i < count; i++)
+			{
+				if (items[i] != elements[i])
+					return true;
+			}
+
+			return false;
+		}
+		#endif
+
+		bool operator!=(const T& element)
+		{
+			return (!Exist(element));
 		}
 
 		const bool operator!=(const List<T>& elements) const
@@ -717,7 +812,12 @@ namespace Bear
 			Remove(element);
 		}
 
-		T& operator[](const ListUInt& index) const
+		T& operator[](const ListUInt& index)
+		{
+			return GetFromIndex(index);
+		}
+
+		const T& operator[](const ListUInt& index) const
 		{
 			return GetFromIndex(index);
 		}
