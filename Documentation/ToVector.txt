@@ -1,6 +1,7 @@
 "ToVector" - create new std::vector and fill elements(count of vector equals list.Count())
 
-std::vector<T> ToVector() const
+std::vector<T> ToVector()
+const std::vector<T> ToVector() const
 
 "ToVector" return std::vector<T>
 

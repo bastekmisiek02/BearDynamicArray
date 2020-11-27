@@ -1,6 +1,8 @@
 "ToArray" - create new array on heap allocation and fill elements(count of array equals list.Count())
 
-T* ToArray(BearListInt* Count = nullptr) const
+T* ToArray(ListUInt* Count = nullptr)
+
+const T* ToArray(ListUInt* Count = nullptr) const
 
 Count - if "Count" not null *Count equals list.Count()
 

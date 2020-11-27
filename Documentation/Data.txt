@@ -1,6 +1,7 @@
 "Data" - Return pointer to element storage. It equals address of first element.
 
-T* Data() const
+const T* Data() const
+T* Data()
 
 Example:
 
