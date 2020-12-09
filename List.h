@@ -13,28 +13,63 @@ namespace Bear
 {
 
 #ifdef BEAR_LIST_WIN64
+	/// <summary>
+	/// Standard uint for list
+	/// </summary>
 	typedef unsigned long long int ListUInt;
 #else
+	/// <summary>
+	/// Standard uint for list
+	/// </summary>
 	typedef unsigned int ListUInt;
 #endif
 
+	/// <summary>
+	/// Exception when it's something wrong
+	/// </summary>
 	enum class ListException
 	{
-		StartIndexGreaterThanEnd, OutOfRange, IndexGreater, IndexLower, ListClear
+		/// <summary>
+		/// It's throwing when start index is greater than last index
+		/// </summary>
+		StartIndexGreaterThanEnd = 0, 
+		/// <summary>
+		/// It's throwing when index is greater than count
+		/// </summary>
+		OutOfRange = 1, 
+		/// <summary>
+		/// It's throwing when index is lower than 0
+		/// </summary>
+		IndexLower = 2,
+		/// <summary>
+		/// It's throwing when list is clear
+		/// </summary>
+		ListClear = 3
 	};
 
 	template <typename T>
 	class List
 	{
 	private:
+		/// <summary>
+		/// Count of list
+		/// </summary>
 		ListUInt count;
 	private:
+		/// <summary>
+		/// Array of items in list
+		/// </summary>
 		T* items;
 	private:
+		/// <summary>
+		/// Get item from index and when something wrong throw exception
+		/// </summary>
+		/// <param name="index">Index from where get items</param>
+		/// <returns>Return item from index</returns>
 		T& GetFromIndex(const ListUInt& index) const
 		{
 			if (index > count - 1)
-				throw ListException::IndexGreater;
+				throw ListException::OutOfRange;
 
 			if (index < 0)
 				throw ListException::IndexLower;
@@ -46,6 +81,10 @@ namespace Bear
 		}
 	public:
 		#ifdef BEAR_LIST_VECTOR_ADDED
+		/// <summary>
+		/// Create list with count of Elements.size() and copy data from "Elements" to this->items
+		/// </summary>
+		/// <param name="Elements">- std::vector from where will be copy data</param>
 		List(const std::vector<T>& Elements)
 			: count(Elements.size())
 		{
@@ -56,6 +95,10 @@ namespace Bear
 		}
 		#endif
 
+		/// <summary>
+		/// Create list with count of Elements.Count() and copy data from "Elements" to this->items
+		/// </summary>
+		/// <param name="Elements">- List from where will be copy data</param>
 		List(const List<T>& Elements)
 			: count(Elements.count)
 		{
@@ -65,12 +108,21 @@ namespace Bear
 				items[i] = Elements[i];
 		}
 
+		/// <summary>
+		/// Create empty list with Count
+		/// </summary>
+		/// <param name="Count">- Count of elements</param>
 		List(const ListUInt& Count)
 			: count(Count)
 		{
 			items = new T[Count];
 		}
 
+		/// <summary>
+		/// Create list with count of Count and copy data from "Array" to this->items
+		/// </summary>
+		/// <param name="Array">- Array from where will be copy data</param>
+		/// <param name="Count">- Count of elements</param>
 		List(const T* Array, const ListUInt& Count)
 			: count(Count)
 		{
@@ -80,6 +132,9 @@ namespace Bear
 				items[i] = Array[i];
 		}
 
+		/// <summary>
+		/// Create an empty list of size 0
+		/// </summary>
 		List()
 			: count(0)
 		{
@@ -91,6 +146,10 @@ namespace Bear
 			Clear();
 		}
 	public:
+		/// <summary>
+		/// Iterator for list
+		/// </summary>
+		/// <typeparam name="T">Type of list</typeparam>
 		template<typename T>
 		class Iterator
 		{
@@ -139,6 +198,13 @@ namespace Bear
 			}
 		};
 	public:
+		/// <summary>
+		/// Check if element exists and if "Index" isn't null "Index" will be index of search element
+		/// </summary>
+		/// <param name="Element">- Search element</param>
+		/// <param name="FromEnd">- If true search will be from end</param>
+		/// <param name="Index">- If isn't null return index of search element</param>
+		/// <returns>Return true if element exist in list, otherwise return false</returns>
 		const bool Exist(const T& Element, const bool FromEnd = false, ListUInt* Index = nullptr) const
 		{
 			if (FromEnd)
@@ -177,6 +243,10 @@ namespace Bear
 			return false;
 		}
 
+		/// <summary>
+		/// Add elements from "Elements" and Count+=Elements.Count()
+		/// </summary>
+		/// <param name="Elements">- List from where will be add items</param>
 		void AddCollection(const List<T>& Elements)
 		{
 			T* array = new T[count];
@@ -200,6 +270,10 @@ namespace Bear
 		}
 
 		#ifdef BEAR_LIST_VECTOR_ADDED
+		/// <summary>
+		/// Add elements from "Elements" and Count+=Elements.size()
+		/// </summary>
+		/// <param name="Elements">- std::vector from where will be add items</param>
 		void AddCollection(const std::vector<T>& Elements)
 		{
 			T* array = new T[count];
@@ -223,6 +297,10 @@ namespace Bear
 		}
 		#endif
 
+		/// <summary>
+		/// Add "Element" to list
+		/// </summary>
+		/// <param name="Element">- Added element</param>
 		void Add(const T& Element)
 		{
 			T* array = new T[count];
@@ -244,6 +322,11 @@ namespace Bear
 			count++;
 		}
 
+		/// <summary>
+		/// Removing "Elements" from list
+		/// </summary>
+		/// <param name="Elements">- Removed elements</param>
+		/// <param name="removeAll">- If true removing all elements where Elements[n]==items[i], otherwise remove first element where Elements[n]==items[i]</param>
 		void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
@@ -284,6 +367,11 @@ namespace Bear
 		}
 
 		#ifdef BEAR_LIST_VECTOR_ADDED
+		/// <summary>
+		/// Removing "Elements" from list
+		/// </summary>
+		/// <param name="Elements">- Removed elements</param>
+		/// <param name="removeAll">- If true removing all elements where Elements[n]==items[i], otherwise remove first element where Elements[n]==items[i]</param>
 		void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
@@ -325,6 +413,11 @@ namespace Bear
 		}
 		#endif
 
+		/// <summary>
+		/// Removing "Element" from list
+		/// </summary>
+		/// <param name="Element">- Removed element</param>
+		/// <param name="removeAll">- If true removing all elements where Element==items[i], otherwise remove first element where Element==items[i]</param>
 		void Remove(const T& Element, const bool& removeAll = false)
 		{
 			if (!items || !count)
@@ -373,6 +466,11 @@ namespace Bear
 			delete[] array;
 		}
 
+		/// <summary>
+		/// Removing elements from "Start" to "End"
+		/// </summary>
+		/// <param name="Start">- Index from will be removed items</param>
+		/// <param name="End">- End index removed items</param>
 		void RemoveOnIndex(const ListUInt& Start, const ListUInt& End)
 		{
 			if (!items || !count)
@@ -407,6 +505,10 @@ namespace Bear
 			delete[] array;
 		}
 
+		/// <summary>
+		/// Remove elements from "Start" index to end
+		/// </summary>
+		/// <param name="Start">- Index where we start removing elements</param>
 		void RemoveOnIndex(const ListUInt& Start)
 		{
 			if (!items || !count)
@@ -452,6 +554,10 @@ namespace Bear
 			return Iterator<T>(items + count);
 		}
 
+		/// <summary>
+		/// Return max count of list
+		/// </summary>
+		/// <returns>Max count of list</returns>
 		const ListUInt GetMaxCount() const
 		{
 			#ifdef BEAR_LIST_WIN64
@@ -461,11 +567,18 @@ namespace Bear
 			#endif
 		}
 
+		/// <summary>
+		/// Return count of list
+		/// </summary>
+		/// <returns>Count of list</returns>
 		const ListUInt Count() const
 		{
 			return count;
 		}
 
+		/// <summary>
+		/// Clear the list
+		/// </summary>
 		void Clear()
 		{
 			delete[] items;
@@ -473,22 +586,37 @@ namespace Bear
 			count = 0;
 		}
 
+		/// <summary>
+		/// If items are pointers to heap use this to free memory
+		/// </summary>
 		void Destroy() const
 		{
 			for (ListUInt i = 0; i < count; i++)
 				delete items[i];
 		}
 
+		/// <summary>
+		/// Return pointer to first element of list
+		/// </summary>
+		/// <returns></returns>
 		const T* Data() const
 		{
 			return items;
 		}
 
+		/// <summary>
+		/// Return pointer to first element of list
+		/// </summary>
+		/// <returns></returns>
 		T* Data()
 		{
 			return items;
 		}
-
+		
+		/// <summary>
+		/// Sort list
+		/// </summary>
+		/// <param name="SortFunc">- If return true "firstElement" will be closer </param>
 		void Sort(const bool (*SortFunc)(const T& firstElement, const T& secondElement)) const
 		{
 			if (!items || !count)
@@ -519,7 +647,11 @@ namespace Bear
 			}
 		}
 
-		void Swap(List<T>& elements)
+		/// <summary>
+		/// Swap items between this->items and "Elements"
+		/// </summary>
+		/// <param name="Elements"></param>
+		void Swap(List<T>& Elements)
 		{
 			T* items = new T[count];
 			ListUInt count = this->count;
@@ -529,15 +661,19 @@ namespace Bear
 
 			delete[] this->items;
 
-			this->items = elements.items;
-			elements.items = items;
+			this->items = Elements.items;
+			Elements.items = items;
 
-			this->count = elements.count;
-			elements.count = count;
+			this->count = Elements.count;
+			Elements.count = count;
 		}
 
 		#ifdef BEAR_LIST_VECTOR_ADDED
-		void Swap(std::vector<T>& elements)
+		/// <summary>
+		/// Swap items between this->items and "Elements"
+		/// </summary>
+		/// <param name="Elements"></param>
+		void Swap(std::vector<T>& Elements)
 		{
 			T* items = new T[count];
 			ListUInt count = this->count;
@@ -547,24 +683,28 @@ namespace Bear
 
 			delete[] this->items;
 
-			this->count = elements.size();
+			this->count = Elements.size();
 
-			T* vectorItems = new T[elements.size()];
+			T* vectorItems = new T[Elements.size()];
 
-			for (ListUInt i = 0; i < elements.size(); i++)
-				vectorItems[i] = elements[i];
+			for (ListUInt i = 0; i < Elements.size(); i++)
+				vectorItems[i] = Elements[i];
 
 			this->items = vectorItems;
 
-			elements.resize(count);
+			Elements.resize(count);
 
 			for (ListUInt i = 0; i < count; i++)
-				elements[i] = items[i];
+				Elements[i] = items[i];
 
 			delete[] items;
 		}
 		#endif
 
+		/// <summary>
+		/// Set count to "Count" and destroy data in list
+		/// </summary>
+		/// <param name="Count"></param>
 		void Resize(const ListUInt& Count)
 		{
 			if (items)
@@ -575,7 +715,12 @@ namespace Bear
 			count = Count;
 		}
 
-		void Resize(const ListUInt& Count, const T& value)
+		/// <summary>
+		/// Set count to "Count" and set items to "Value"
+		/// </summary>
+		/// <param name="Count"></param>
+		/// <param name="Value"></param>
+		void Resize(const ListUInt& Count, const T& Value)
 		{
 			if (items)
 				delete[] items;
@@ -585,10 +730,14 @@ namespace Bear
 			count = Count;
 
 			for (ListUInt i = 0; i < Count; i++)
-				items[i] = value;
+				items[i] = Value;
 		}
 
 		#ifdef BEAR_LIST_VECTOR_ADDED
+		/// <summary>
+		/// Convert List to std::vector
+		/// </summary>
+		/// <returns></returns>
 		std::vector<T> ToVector()
 		{
 			std::vector<T> vector(count);
@@ -599,6 +748,10 @@ namespace Bear
 			return vector;
 		}
 
+		/// <summary>
+		/// Convert List to std::vector
+		/// </summary>
+		/// <returns></returns>
 		const std::vector<T> ToVector() const
 		{
 			std::vector<T> vector(count);
@@ -610,6 +763,11 @@ namespace Bear
 		}
 		#endif
 
+		/// <summary>
+		/// Create array and return it with the same data and count equals List !!! REMEMBER use delete[] to destroy it !!!
+		/// </summary>
+		/// <param name="Count"></param>
+		/// <returns></returns>
 		T* ToArray(ListUInt* Count = nullptr)
 		{
 			T* array = new T[count];
@@ -623,6 +781,11 @@ namespace Bear
 			return array;
 		}
 
+		/// <summary>
+		/// Create array and return it with the same data and count equals List !!! REMEMBER use delete[] to destroy it !!!
+		/// </summary>
+		/// <param name="Count"></param>
+		/// <returns></returns>
 		const T* ToArray(ListUInt* Count = nullptr) const
 		{
 			T* array = new T[count];
