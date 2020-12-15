@@ -133,6 +133,16 @@ namespace Bear
 		}
 
 		/// <summary>
+		/// Create list with count "Count" and set all items to "Value"
+		/// </summary>
+		/// <param name="Count">- List size</param>
+		/// <param name="Value">- All items will be the same "Value"</param>
+		List(const ListUInt& Count, const T& Value)
+		{
+			Resize(Count, Value);
+		}
+
+		/// <summary>
 		/// Create an empty list of size 0
 		/// </summary>
 		List()
