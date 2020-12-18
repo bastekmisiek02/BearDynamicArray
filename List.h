@@ -985,6 +985,18 @@ namespace Bear
 			Remove(element);
 		}
 
+		#ifdef BEAR_LIST_VECTOR_ADDED
+		operator std::vector<T>()
+		{
+			return ToVector();
+		}
+
+		operator const std::vector<T>() const
+		{
+			return ToVector();
+		}
+		#endif
+
 		T& operator[](const ListUInt& index)
 		{
 			return GetFromIndex(index);
