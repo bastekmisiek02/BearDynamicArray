@@ -4,6 +4,7 @@ const Uint GetMaxCount() const
 
 Example:
 
+```C++
 List<int> list;
 
 for (int i = 0; i < 1000; i++)
@@ -18,3 +19,4 @@ for (int i = 0; i < 1000; i++)
 	list.Add(2);
 	list.Add(3);
 }
+```

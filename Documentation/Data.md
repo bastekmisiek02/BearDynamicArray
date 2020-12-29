@@ -5,6 +5,7 @@ T* Data()
 
 Example:
 
+```C++
 List<int> list;
 
 list.Add(2);
@@ -12,3 +13,4 @@ list.Add(1);
 list.Add(3);
 
 std::cout << *list.Data() << "\n";
+```

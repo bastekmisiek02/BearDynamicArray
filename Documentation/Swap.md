@@ -8,6 +8,7 @@ elements - vector which will be swap elements
 
 Example:
 
+```C++
 List<int> list(4);
 list[0] = 2;
 list[1] = 3;
@@ -28,6 +29,7 @@ std::cout << "---------------------------\n";
 
 for (const auto& item : vector)
 	std::cout << item << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -39,6 +41,7 @@ elements - list which will be swap elements
 
 Example:
 
+```C++
 List<int> list(4);
 list[0] = 2;
 list[1] = 3;
@@ -59,5 +62,6 @@ std::cout << "---------------------------\n";
 
 for (const auto& item : secondList)
 	std::cout << item << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

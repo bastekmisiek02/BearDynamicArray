@@ -80,7 +80,7 @@ namespace Bear
 			return items[index];
 		}
 	public:
-		#ifdef BEAR_LIST_VECTOR_ADDED
+#ifdef BEAR_LIST_VECTOR_ADDED
 		/// <summary>
 		/// Create list with count of Elements.size() and copy data from "Elements" to this->items
 		/// </summary>
@@ -93,7 +93,7 @@ namespace Bear
 			for (ListUInt i = 0; i < Elements.size(); i++)
 				items[i] = Elements[i];
 		}
-		#endif
+#endif
 
 		/// <summary>
 		/// Create list with count of Elements.Count() and copy data from "Elements" to this->items
@@ -171,14 +171,20 @@ namespace Bear
 			{
 			}
 
+			T& operator*()
+			{
+				return *ptr;
+			}
+
 			const T& operator*() const
 			{
 				return *ptr;
 			}
 
-			T& operator*()
+			const Iterator& operator--()
 			{
-				return *ptr;
+				ptr--;
+				return *this;
 			}
 
 			const Iterator& operator++()
@@ -219,11 +225,11 @@ namespace Bear
 		{
 			if (FromEnd)
 			{
-				#ifdef BEAR_LIST_WIN64
+#ifdef BEAR_LIST_WIN64
 				typedef long long int Int;
-				#else
+#else
 				typedef int Int;
-				#endif
+#endif
 
 				for (Int i = count - 1; i > -1; i--)
 				{
@@ -279,7 +285,7 @@ namespace Bear
 			count += Elements.count;
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+#ifdef BEAR_LIST_VECTOR_ADDED
 		/// <summary>
 		/// Add elements from "Elements" and Count+=Elements.size()
 		/// </summary>
@@ -305,7 +311,7 @@ namespace Bear
 
 			count += Elements.size();
 		}
-		#endif
+#endif
 
 		/// <summary>
 		/// Add "Element" to list
@@ -376,7 +382,7 @@ namespace Bear
 			}
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+#ifdef BEAR_LIST_VECTOR_ADDED
 		/// <summary>
 		/// Removing "Elements" from list
 		/// </summary>
@@ -421,7 +427,7 @@ namespace Bear
 					Remove(Elements[i], false);
 			}
 		}
-		#endif
+#endif
 
 		/// <summary>
 		/// Removing "Element" from list

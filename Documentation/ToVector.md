@@ -7,6 +7,7 @@ const std::vector<T> ToVector() const
 
 Example:
 
+```C++
 List<int> list;
 
 for (int i = 0; i < 1000; i++)
@@ -23,3 +24,4 @@ std::vector<int> vector = list.ToVector();
 
 for (const auto& item : vector)
 	std::cout << item << "\n";
+```

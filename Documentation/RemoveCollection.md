@@ -9,6 +9,7 @@ removeAll - if true delete all element which equals "Elements", if false delete 
 
 Example:
 
+```C++
 List<int> list(4);
 list[0] = 2;
 list[1] = 3;
@@ -24,6 +25,7 @@ list.RemoveCollection(vector);
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,6 +38,7 @@ removeAll - if true delete all element which equals "Elements", if false delete 
 
 Example:
 
+```C++
 List<int> list(4);
 list[0] = 2;
 list[1] = 3;
@@ -51,5 +54,6 @@ list.RemoveCollection(list2);
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

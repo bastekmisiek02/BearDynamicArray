@@ -8,6 +8,7 @@ Elements of list are empty
 
 Example:
 
+```C++
 List<int> list;
 
 int count;
@@ -18,6 +19,7 @@ std::cin >> count;
 list.Resize(count);
 
 std::cout << "List size: " << list.Count() << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,6 +31,7 @@ Elements of list are equals of "value"
 
 Example:
 
+```C++
 List<int> list;
 
 int count;
@@ -45,5 +48,6 @@ list.Resize(count, value);
 
 for (Uint i = 0; i < list.Count(); i++)
 	std::cout << "Value : " << i << " = " << list[i] << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

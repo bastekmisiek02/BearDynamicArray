@@ -6,6 +6,7 @@ if "SortFunc" return true first element will be closer
 
 Example:
 
+```C++
 const bool Sort(const int& firstElement, const int& secondElement)
 {
 	return firstElement < secondElement;
@@ -27,3 +28,4 @@ list.Sort(Sort);
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```

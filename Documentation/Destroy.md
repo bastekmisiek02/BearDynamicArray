@@ -4,6 +4,7 @@ void Destroy() const
 
 Example:
 
+```C++
 List<int*> list;
 
 list.Add(new int(2));
@@ -17,3 +18,4 @@ for (const auto& item : list)
 	std::cout << *item << "\n";
 
 list.Destroy();
+```

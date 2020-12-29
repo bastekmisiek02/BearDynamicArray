@@ -10,6 +10,7 @@ Count - if "Count" not null *Count equals list.Count()
 
 Example:
 
+```C++
 List<int> list;
 
 for (int i = 0; i < 1000; i++)
@@ -29,3 +30,4 @@ for (Uint i = 0; i < count; i++)
 	std::cout << array[i] << "\n";
 
 delete[] array;
+```

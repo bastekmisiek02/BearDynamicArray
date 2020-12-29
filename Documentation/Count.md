@@ -4,6 +4,7 @@ const Uint& Count()
 
 Example:
 
+```C++
 List<int> list;
 
 list.Add(2);
@@ -12,3 +13,4 @@ list.Add(3);
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```

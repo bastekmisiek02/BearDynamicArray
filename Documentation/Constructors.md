@@ -6,12 +6,14 @@ Elements - std::vector<T> from which copy data to List(Count of list is equals E
 
 Example:
 
+```C++
 std::vector<int> vector(3);
 vector[0] = 1;
 vector[1] = 1000;
 vector[2] = 20;
 
 List<int> list(vector);
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -23,12 +25,14 @@ Elements - other List<T> from which copy data to this List(Count of list is equa
 
 Example:
 
+```C++
 List<float> firstList(3);
 firstList[0] = 1.0f;
 firstList[1] = 1000.0f;
 firstList[2] = 20.0f;
 
 List<float> list(firstList);
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,10 +46,12 @@ This constructor create empty elements
 
 Example:
 
+```C++
 List<unsigned int> list(3);
 list[0] = 2000;
 list[1] = 100;
 list[2] = 1;
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,12 +66,14 @@ This constructor create list of "Count" elements and copy from "Array"
 
 Example:
 
+```C++
 int array[]{ 5, 45};
 
 Bear::List<int> list(array, sizeof(array) / sizeof(array[0]));
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -86,6 +94,7 @@ This constructor create empty List
 
 Example:
 
+```C++
 class TestClass
 {
 public:
@@ -96,5 +105,6 @@ List<TestClass> list;
 list.Add({});
 list.Add({});
 list.Add({});
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

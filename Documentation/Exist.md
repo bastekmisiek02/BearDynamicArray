@@ -10,6 +10,7 @@ Index - if not null return index of "Element"
 
 Example:
 
+```C++
 List<int> list;
 
 list.Add(1);
@@ -23,3 +24,4 @@ Uint index;
 
 if (list.Exist(3, true, &index))
 	std::cout << index << "\n";
+```

@@ -7,6 +7,7 @@ removeAll - if true delete all element which equals "Element", if false delete f
 
 Example:
 
+```C++
 List<int> list;
 
 for (int i = 0; i < 1000; i++)
@@ -23,3 +24,4 @@ list.Remove(1, true);
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```

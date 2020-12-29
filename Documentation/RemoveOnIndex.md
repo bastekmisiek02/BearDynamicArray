@@ -10,6 +10,7 @@ Remove elements from "Start" to end of List
 
 Example:
 
+```C++
 List<int> list;
 
 list.Add(1);
@@ -23,6 +24,7 @@ list.RemoveOnIndex(1, 3);
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,6 +39,7 @@ Remove elements from "Start" to "End" index
 
 Example:
 
+```
 List<int> list;
 
 list.Add(1);
@@ -50,5 +53,6 @@ list.RemoveOnIndex(1);
 
 for (const auto& item : list)
 	std::cout << item << "\n";
+```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
