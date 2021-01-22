@@ -11,7 +11,6 @@
 
 namespace Bear
 {
-
 #ifdef BEAR_LIST_WIN64
 	/// <summary>
 	/// Standard uint for list
@@ -88,13 +87,29 @@ namespace Bear
 		List(const std::vector<T>& Elements)
 			: count(Elements.size())
 		{
-			items = new T[Elements.size()];
+			items = new T[count];
 
-			for (ListUInt i = 0; i < Elements.size(); i++)
+			for (ListUInt i = 0; i < count; i++)
 				items[i] = Elements[i];
 		}
-#endif
 
+		/// <summary>
+		/// Create list with count of elements.size() and copy data from "elements" to this->items
+		/// </summary>
+		/// <param name="elements">- initializer list from where will be copy data</param>
+		List(const std::initializer_list<T>& elements)
+			: count(elements.size())
+		{
+			items = new T[count];
+
+			auto it = elements.begin();
+			for (ListUInt i = 0; i < count; i++)
+			{
+				this->items[i] = *it;
+				it++;
+			}
+		}
+#endif
 		/// <summary>
 		/// Create list with count of Elements.Count() and copy data from "Elements" to this->items
 		/// </summary>
@@ -225,11 +240,11 @@ namespace Bear
 		{
 			if (FromEnd)
 			{
-#ifdef BEAR_LIST_WIN64
+				#ifdef BEAR_LIST_WIN64
 				typedef long long int Int;
-#else
+				#else
 				typedef int Int;
-#endif
+				#endif
 
 				for (Int i = count - 1; i > -1; i--)
 				{
