@@ -196,15 +196,93 @@ namespace Bear
 				return *ptr;
 			}
 
-			const Iterator& operator--()
+			Iterator& operator--()
 			{
 				ptr--;
 				return *this;
 			}
 
-			const Iterator& operator++()
+			const Iterator& operator--() const
+			{
+				ptr--;
+				return *this;
+			}
+
+			Iterator& operator++()
 			{
 				ptr++;
+				return *this;
+			}
+
+			const Iterator& operator++() const
+			{
+				ptr++;
+				return *this;
+			}
+
+			Iterator& operator-=(const ListUInt& offset)
+			{
+				ptr -= offset;
+				return *this;
+			}
+
+			const Iterator& operator-=(const ListUInt& offset) const
+			{
+				ptr -= offset;
+				return *this;
+			}
+
+			Iterator& operator+=(const ListUInt& offset)
+			{
+				ptr += offset;
+				return *this;
+			}
+
+			const Iterator& operator+=(const ListUInt& offset) const
+			{
+				ptr += offset;
+				return *this;
+			}
+
+			Iterator& operator*=(const ListUInt& offset)
+			{
+				ptr *= offset;
+				return *this;
+			}
+
+			const Iterator& operator*=(const ListUInt& offset) const
+			{
+				ptr *= offset;
+				return *this;
+			}
+
+			Iterator& operator/=(const ListUInt& offset)
+			{
+				if (!offset)
+					throw ("Can't division by 0");
+
+				ptr /= offset;
+				return *this;
+			}
+
+			const Iterator& operator/=(const ListUInt& offset) const
+			{
+				if(!offset)
+					throw ("Can't division by 0");
+
+				ptr /= offset;
+				return *this;
+			}
+
+			Iterator& operator%=(const ListUInt& offset)
+			{
+				ptr %= offset;
+				return *this;
+			}
+
+			const Iterator& operator%=(const ListUInt& offset) const
+			{
+				ptr %= offset;
 				return *this;
 			}
 
