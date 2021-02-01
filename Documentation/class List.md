@@ -1,12 +1,12 @@
 template<typename T> 
-class List;
+class DynamicArray;
 
-List is class like std::vector, but in the future will have more functionality.
+DynamicArray is class like std::vector, but in the future will have more functionality.
 
 T - is a type to storage
 
 Constructors:
-- [List<T>](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Constructors.txt)
+- [DynamicArray<T>](https://github.com/bastekmisiek02/BearList/blob/master/Documentation/Constructors.txt)
 
 Methods:
 

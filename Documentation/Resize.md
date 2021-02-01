@@ -1,53 +1,53 @@
-"Resize" - Resize the list to "Count" size
+"Resize" - Resize the DynamicArray to "Count" size
 
 //////////////////////////////////////////without value//////////////////////////////////////////////////////
 
-void Resize(const Uint& Count)
+void Resize(const DynamicArrayUint& Count)
 
-Elements of list are empty
+Elements of DynamicArray are empty
 
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> array;
 
 int count;
 
-std::cout << "Type count of list: \n";
+std::cout << "Type count of DynamicArray: \n";
 std::cin >> count;
 
-list.Resize(count);
+array.Resize(count);
 
-std::cout << "List size: " << list.Count() << "\n";
+std::cout << "DynamicArray size: " << array.Count() << "\n";
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////with value///////////////////////////////////////////////////////
 
-void Resize(const Uint& Count, const T& value)
+void Resize(const DynamicArrayUint& Count, const T& value)
 
 Elements of list are equals of "value"
 
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> array;
 
 int count;
 
-std::cout << "Type count of list: \n";
+std::cout << "Type count of DynamicArray: \n";
 std::cin >> count;
 
 int value;
 
-std::cout << "Type value of list: \n";
+std::cout << "Type value of DynamicArray: \n";
 std::cin >> value;
 
-list.Resize(count, value);
+array.Resize(count, value);
 
-for (Uint i = 0; i < list.Count(); i++)
-	std::cout << "Value : " << i << " = " << list[i] << "\n";
+for (DynamicArrayUint i = 0; i < array.Count(); i++)
+	std::cout << "Value : " << i << " = " << array[i] << "\n";
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

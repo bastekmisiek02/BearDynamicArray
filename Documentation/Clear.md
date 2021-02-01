@@ -1,16 +1,16 @@
-"Clear" - clear list and count equals 0
+"Clear" - clear DynamicArray and count equals 0
 
 Clear()
 
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> array;
 
-list.Add(3);
-list.Add(2);
-list.Add(4);
-list.Add(65);
+array.Add(3);
+array.Add(2);
+array.Add(4);
+array.Add(65);
 
-list.Clear();
+array.Clear();
 ```

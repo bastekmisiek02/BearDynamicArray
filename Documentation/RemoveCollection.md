@@ -4,34 +4,34 @@
 
 void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 
-Elements - elements which will be delete from the list
+Elements - elements which will be delete from the DynamicArray
 removeAll - if true delete all element which equals "Elements", if false delete first element which equals "Element" (default false)
 
 Example:
 
 ```C++
-List<int> list(4);
-list[0] = 2;
-list[1] = 3;
-list[2] = 100;
-list[3] = 10;
+DynamicArray<int> array(4);
+array[0] = 2;
+array[1] = 3;
+array[2] = 100;
+array[3] = 10;
 
 std::vector<int> vector(3);
 vector[0] = 2;
 vector[1] = 100;
 vector[2] = 20;
 
-list.RemoveCollection(vector);
+array.RemoveCollection(vector);
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////List/////////////////////////////////////////////////////////////
+//////////////////////////////////////////DynamicArray/////////////////////////////////////////////////////////////
 
-void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
+void RemoveCollection(const DynamicArray<T>& Elements, const bool& removeAll = false)
 
 Elements - elements which will be delete from the list
 removeAll - if true delete all element which equals "Elements", if false delete first element which equals "Element" (default false)
@@ -39,20 +39,20 @@ removeAll - if true delete all element which equals "Elements", if false delete 
 Example:
 
 ```C++
-List<int> list(4);
-list[0] = 2;
-list[1] = 3;
-list[2] = 100;
-list[3] = 100;
+DynamicArray<int> array(4);
+array[0] = 2;
+array[1] = 3;
+array[2] = 100;
+array[3] = 100;
 
-List<int> list2(3);
-list2[0] = 2;
-list2[1] = 100;
-list2[2] = 20;
+DynamicArray<int> array2(3);
+array2[0] = 2;
+array2[1] = 100;
+array2[2] = 20;
 
-list.RemoveCollection(list2);
+array.RemoveCollection(array2);
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 ```
 

@@ -5,17 +5,17 @@ void Destroy() const
 Example:
 
 ```C++
-List<int*> list;
+DynamicArray<int*> array;
 
-list.Add(new int(2));
-list.Add(new int(100));
-list.Add(new int(14));
-list.Add(new int(4));
-list.Add(new int(2));
-list.Add(new int(3));
+array.Add(new int(2));
+array.Add(new int(100));
+array.Add(new int(14));
+array.Add(new int(4));
+array.Add(new int(2));
+array.Add(new int(3));
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << *item << "\n";
 
-list.Destroy();
+array.Destroy();
 ```

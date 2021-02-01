@@ -2,7 +2,7 @@
 
 //////////////////////////////////////////Only 1 Argument//////////////////////////////////////////////////////
 
-void RemoveOnIndex(const Uint& Start)
+void RemoveOnIndex(const DynamicArrayUint& Start)
 
 Start - first index to remove
 
@@ -11,18 +11,18 @@ Remove elements from "Start" to end of List
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> array;
 
-list.Add(1);
-list.Add(100);
-list.Add(14);
-list.Add(4);
-list.Add(2);
-list.Add(3);
+array.Add(1);
+array.Add(100);
+array.Add(14);
+array.Add(4);
+array.Add(2);
+array.Add(3);
 
-list.RemoveOnIndex(1, 3);
+array.RemoveOnIndex(1);
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 ```
 
@@ -30,7 +30,7 @@ for (const auto& item : list)
 
 //////////////////////////////////////////2 arguments//////////////////////////////////////////////////////
 
-void RemoveOnIndex(const Uint& Start, const Uint& End)
+void RemoveOnIndex(const DynamicArrayUint& Start, const DynamicArrayUint& End)
 
 Start - first index to remove
 End - last index to remove
@@ -40,18 +40,18 @@ Remove elements from "Start" to "End" index
 Example:
 
 ```
-List<int> list;
+DynamicArray<int> array;
 
-list.Add(1);
-list.Add(100);
-list.Add(14);
-list.Add(4);
-list.Add(2);
-list.Add(3);
+array.Add(1);
+array.Add(100);
+array.Add(14);
+array.Add(4);
+array.Add(2);
+array.Add(3);
 
-list.RemoveOnIndex(1);
+array.RemoveOnIndex(1, 3);
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 ```
 

@@ -1,8 +1,8 @@
 "Exist" - check if exist element from parametr
 
-const bool Exist(const T& Element, const bool FromEnd = false, Uint* Index = nullptr) const
+const bool Exist(const T& Element, const bool FromEnd = false, DynamicArrayUint* Index = nullptr) const
 
-Element - item to be checked if it is in the list
+Element - item to be checked if it is in the DynamicArray
 FromEnd - if true search from end
 Index - if not null return index of "Element"
 
@@ -11,17 +11,17 @@ Index - if not null return index of "Element"
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> array;
 
-list.Add(1);
-list.Add(100);
-list.Add(14);
-list.Add(4);
-list.Add(2);
-list.Add(3);
+array.Add(1);
+array.Add(100);
+array.Add(14);
+array.Add(4);
+array.Add(2);
+array.Add(3);
 
-Uint index;
+DynamicArrayUint index;
 
-if (list.Exist(3, true, &index))
+if (array.Exist(3, true, &index))
 	std::cout << index << "\n";
 ```

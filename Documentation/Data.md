@@ -6,11 +6,11 @@ T* Data()
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> array;
 
-list.Add(2);
-list.Add(1);
-list.Add(3);
+array.Add(2);
+array.Add(1);
+array.Add(3);
 
-std::cout << *list.Data() << "\n";
+std::cout << *array.Data() << "\n";
 ```

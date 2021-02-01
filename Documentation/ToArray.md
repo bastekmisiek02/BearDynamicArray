@@ -1,32 +1,32 @@
-"ToArray" - create new array on heap allocation and fill elements(count of array equals list.Count())
+"ToArray" - create new array on heap allocation and fill elements(count of array equals array.Count())
 
-T* ToArray(ListUInt* Count = nullptr)
+T* ToArray(DynamicArrayUInt* Count = nullptr)
 
-const T* ToArray(ListUInt* Count = nullptr) const
+const T* ToArray(DynamicArrayUInt* Count = nullptr) const
 
-Count - if "Count" not null *Count equals list.Count()
+Count - if "Count" not null *Count equals array.Count()
 
 "ToArray" return T array(remeber use delete if not use them)
 
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> dynamicArray;
 
 for (int i = 0; i < 1000; i++)
 {
-	list.Add(1);
-	list.Add(100);
-	list.Add(14);
-	list.Add(4);
-	list.Add(2);
-	list.Add(3);
+	dynamicArray.Add(1);
+	dynamicArray.Add(100);
+	dynamicArray.Add(14);
+	dynamicArray.Add(4);
+	dynamicArray.Add(2);
+	dynamicArray.Add(3);
 }
 
-Uint count;
-int* array = list.ToArray(&count);
+DynamicArrayUint count;
+int* array = dynamicArray.ToArray(&count);
 
-for (Uint i = 0; i < count; i++)
+for (DynamicArrayUint i = 0; i < count; i++)
 	std::cout << array[i] << "\n";
 
 delete[] array;

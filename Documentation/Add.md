@@ -1,17 +1,17 @@
-"Add" - add element to List
+"Add" - add element to DynamicArray
 
 void Add(const T& Element)
 
-Element - is element to add to List
+Element - is element to add to DynamicArray
 
 Example:
 
 ```C++
 
-List<int> list;
+DynamicArray<int> array;
 
-list.Add(2);
-list.Add(1);
-list.Add(3);
+array.Add(2);
+array.Add(1);
+array.Add(3);
 
 ```

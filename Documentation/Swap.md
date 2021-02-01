@@ -9,20 +9,20 @@ elements - vector which will be swap elements
 Example:
 
 ```C++
-List<int> list(4);
-list[0] = 2;
-list[1] = 3;
-list[2] = 100;
-list[3] = 10;
+DynamicArray<int> array(4);
+array[0] = 2;
+array[1] = 3;
+array[2] = 100;
+array[3] = 10;
 
 std::vector<int> vector(3);
 vector[0] = 2;
 vector[1] = 100;
 vector[2] = 20;
 
-list.Swap(vector);
+array.Swap(vector);
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 
 std::cout << "---------------------------\n";
@@ -33,34 +33,34 @@ for (const auto& item : vector)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////List/////////////////////////////////////////////////////////////
+//////////////////////////////////////////DynamicArray/////////////////////////////////////////////////////////////
 
-void Swap(List<T>& elements)
+void Swap(DynamicArray<T>& elements)
 
-elements - list which will be swap elements
+elements - DynamicArray which will be swap elements
 
 Example:
 
 ```C++
-List<int> list(4);
-list[0] = 2;
-list[1] = 3;
-list[2] = 100;
-list[3] = 10;
+DynamicArray<int> array(4);
+array[0] = 2;
+array[1] = 3;
+array[2] = 100;
+array[3] = 10;
 
-List<int> secondList(3);
-secondList[0] = 2;
-secondList[1] = 100;
-secondList[2] = 20;
+DynamicArray<int> secondArray(3);
+secondArray[0] = 2;
+secondArray[1] = 100;
+secondArray[2] = 20;
 
-list.Swap(secondList);
+array.Swap(secondArray);
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 
 std::cout << "---------------------------\n";
 
-for (const auto& item : secondList)
+for (const auto& item : secondArray)
 	std::cout << item << "\n";
 ```
 

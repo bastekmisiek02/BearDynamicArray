@@ -1,16 +1,16 @@
-"Count" - get size of list
+"Count" - get size of DynamicArray
 
-const Uint& Count()
+const DynamicArrayUint& Count()
 
 Example:
 
 ```C++
-List<int> list;
+DynamicArray<int> array;
 
-list.Add(2);
-list.Add(1);
-list.Add(3);
+array.Add(2);
+array.Add(1);
+array.Add(3);
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 ```

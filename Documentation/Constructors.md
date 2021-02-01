@@ -1,8 +1,8 @@
 //////////////////////////////////////////std::vector//////////////////////////////////////////////////////
 
-List(const std::vector<T>& Elements)
+DynamicArray(const std::vector<T>& Elements)
 
-Elements - std::vector<T> from which copy data to List(Count of list is equals Elements.size())
+Elements - std::vector<T> from which copy data to DynamicArray(Count of list is equals Elements.size())
 
 Example:
 
@@ -12,50 +12,50 @@ vector[0] = 1;
 vector[1] = 1000;
 vector[2] = 20;
 
-List<int> list(vector);
+DynamicArray<int> array(vector);
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////initializer_list//////////////////////////////////////////////////////
 
-List(const std::initializer_list<T>& elements)
+DynamicArray(const std::initializer_list<T>& elements)
 
-Elements - std::initializer_list<T> from which copy data to List(Count of list is equals elements.size())
+Elements - std::initializer_list<T> from which copy data to DynamicArray(Count of list is equals elements.size())
 
 Example:
 
 ```C++
-Bear::List<int> list{ 1, 100, 14, 4, 2, 3 };
+Bear::DynamicArray<int> array{ 1, 100, 14, 4, 2, 3 };
 
-for (const auto& item : list)
+for (const auto& item : array)
 	std::cout << item << "\n";
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////List/////////////////////////////////////////////////////////////
+//////////////////////////////////////////DynamicArray/////////////////////////////////////////////////////////////
 
-List(const List<T>& Elements)
+DynamicArray(const DynamicArray<T>& Elements)
 
-Elements - other List<T> from which copy data to this List(Count of list is equals Elements.Count())
+Elements - other DynamicArray<T> from which copy data to this DynamicArray(Count of list is equals Elements.Count())
 
 Example:
 
 ```C++
-List<float> firstList(3);
-firstList[0] = 1.0f;
-firstList[1] = 1000.0f;
-firstList[2] = 20.0f;
+DynamicArray<float> firstArray(3);
+firstArray[0] = 1.0f;
+firstArray[1] = 1000.0f;
+firstArray[2] = 20.0f;
 
-List<float> list(firstList);
+DynamicArray<float> array(firstArray);
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////Count////////////////////////////////////////////////////////////
 
-List(const BearListInt& Count)
+DynamicArray(const DynamicArrayUInt& Count)
 
 Count - count of elements in list
 
@@ -64,31 +64,31 @@ This constructor create empty elements
 Example:
 
 ```C++
-List<unsigned int> list(3);
-list[0] = 2000;
-list[1] = 100;
-list[2] = 1;
+DynamicArray<unsigned int> array(3);
+array[0] = 2000;
+array[1] = 100;
+array[2] = 1;
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////Array////////////////////////////////////////////////////////////
 
-List(const T* Array, const ListUInt& Count)
+DynamicArray(const T* Array, const DynamicArrayUInt& Count)
 
 Array - array of elements T
 Count - count of Array
 
-This constructor create list of "Count" elements and copy from "Array"
+This constructor create DynamicArray of "Count" elements and copy from "Array"
 
 Example:
 
 ```C++
 int array[]{ 5, 45};
 
-Bear::List<int> list(array, sizeof(array) / sizeof(array[0]));
+Bear::DynamicArray<int> dynamicArray(array, sizeof(array) / sizeof(array[0]));
 
-for (const auto& item : list)
+for (const auto& item : dynamicArray)
 	std::cout << item << "\n";
 ```
 
@@ -96,7 +96,7 @@ for (const auto& item : list)
 
 //////////////////////////////////////////Value for items//////////////////////////////////////////////////
 
-List(const ListUInt& Count, const T& Value)
+DynamicArray(const DynamicArrayUInt& Count, const T& Value)
 
 Count - List size
 Value - All items will be the same "Value"
@@ -105,9 +105,9 @@ Create list with count "Count" and set all items to "Value"
 
 //////////////////////////////////////////Empty////////////////////////////////////////////////////////////
 
-List()
+DynamicArray()
 
-This constructor create empty List
+This constructor create empty DynamicArray
 
 Example:
 
@@ -118,10 +118,10 @@ public:
 	TestClass() {};
 };
 
-List<TestClass> list;
-list.Add({});
-list.Add({});
-list.Add({});
+DynamicArray<TestClass> array;
+array.Add({});
+array.Add({});
+array.Add({});
 ```
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

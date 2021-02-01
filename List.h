@@ -1,32 +1,32 @@
 #pragma once
 
 #if __has_include(<vector>)
-	#define BEAR_LIST_VECTOR_ADDED
+	#define BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 	#include <vector>
 #endif
 
 #ifdef _WIN64
-	#define BEAR_LIST_WIN64
+	#define BEAR_DYNAMIC_ARRAY_WIN64
 #endif
 
 namespace Bear
 {
-#ifdef BEAR_LIST_WIN64
+#ifdef BEAR_DYNAMIC_ARRAY_WIN64
 	/// <summary>
-	/// Standard uint for list
+	/// Standard uint for dynamic array
 	/// </summary>
-	typedef unsigned long long int ListUInt;
+	typedef unsigned long long int DynamicArrayUInt;
 #else
 	/// <summary>
-	/// Standard uint for list
+	/// Standard uint for dynamic array
 	/// </summary>
-	typedef unsigned int ListUInt;
+	typedef unsigned int DynamicArrayUInt;
 #endif
 
 	/// <summary>
 	/// Exception when it's something wrong
 	/// </summary>
-	enum class ListException
+	enum class DynamicArrayException
 	{
 		/// <summary>
 		/// It's throwing when start index is greater than last index
@@ -41,19 +41,19 @@ namespace Bear
 		/// </summary>
 		IndexLower = 2,
 		/// <summary>
-		/// It's throwing when list is clear
+		/// It's throwing when dynamic array is clear
 		/// </summary>
-		ListClear = 3
+		DynamicArrayClear = 3
 	};
 
 	template <typename T>
-	class List
+	class DynamicArray
 	{
 	private:
 		/// <summary>
 		/// Count of list
 		/// </summary>
-		ListUInt count;
+		DynamicArrayUInt count;
 	private:
 		/// <summary>
 		/// Array of items in list
@@ -65,45 +65,45 @@ namespace Bear
 		/// </summary>
 		/// <param name="index">Index from where get items</param>
 		/// <returns>Return item from index</returns>
-		T& GetFromIndex(const ListUInt& index) const
+		T& GetFromIndex(const DynamicArrayUInt& index) const
 		{
 			if (index > count - 1)
-				throw ListException::OutOfRange;
+				throw DynamicArrayException::OutOfRange;
 
 			if (index < 0)
-				throw ListException::IndexLower;
+				throw DynamicArrayException::IndexLower;
 
 			if (!count)
-				throw ListException::ListClear;
+				throw DynamicArrayException::DynamicArrayClear;
 
 			return items[index];
 		}
 	public:
-#ifdef BEAR_LIST_VECTOR_ADDED
+#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		/// <summary>
-		/// Create list with count of Elements.size() and copy data from "Elements" to this->items
+		/// Create dynamic array with count of Elements.size() and copy data from "Elements" to this->items
 		/// </summary>
 		/// <param name="Elements">- std::vector from where will be copy data</param>
-		List(const std::vector<T>& Elements)
+		DynamicArray(const std::vector<T>& Elements)
 			: count(Elements.size())
 		{
 			items = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = Elements[i];
 		}
 
 		/// <summary>
-		/// Create list with count of elements.size() and copy data from "elements" to this->items
+		/// Create dynamic array with count of elements.size() and copy data from "elements" to this->items
 		/// </summary>
 		/// <param name="elements">- initializer list from where will be copy data</param>
-		List(const std::initializer_list<T>& elements)
+		DynamicArray(const std::initializer_list<T>& elements)
 			: count(elements.size())
 		{
 			items = new T[count];
 
 			auto it = elements.begin();
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				this->items[i] = *it;
 				it++;
@@ -111,23 +111,23 @@ namespace Bear
 		}
 #endif
 		/// <summary>
-		/// Create list with count of Elements.Count() and copy data from "Elements" to this->items
+		/// Create dynamic array with count of Elements.Count() and copy data from "Elements" to this->items
 		/// </summary>
-		/// <param name="Elements">- List from where will be copy data</param>
-		List(const List<T>& Elements)
+		/// <param name="Elements">- DynamicArray from where will be copy data</param>
+		DynamicArray(const DynamicArray<T>& Elements)
 			: count(Elements.count)
 		{
 			items = new T[Elements.count];
 
-			for (ListUInt i = 0; i < Elements.count; i++)
+			for (DynamicArrayUInt i = 0; i < Elements.count; i++)
 				items[i] = Elements[i];
 		}
 
 		/// <summary>
-		/// Create empty list with Count
+		/// Create empty dynamic array with Count
 		/// </summary>
 		/// <param name="Count">- Count of elements</param>
-		List(const ListUInt& Count)
+		DynamicArray(const DynamicArrayUInt& Count)
 			: count(Count)
 		{
 			items = new T[Count];
@@ -138,43 +138,43 @@ namespace Bear
 		/// </summary>
 		/// <param name="Array">- Array from where will be copy data</param>
 		/// <param name="Count">- Count of elements</param>
-		List(const T* Array, const ListUInt& Count)
+		DynamicArray(const T* Array, const DynamicArrayUInt& Count)
 			: count(Count)
 		{
 			items = new T[Count];
 
-			for (ListUInt i = 0; i < Count; i++)
+			for (DynamicArrayUInt i = 0; i < Count; i++)
 				items[i] = Array[i];
 		}
 
 		/// <summary>
-		/// Create list with count "Count" and set all items to "Value"
+		/// Create dynamic array with count "Count" and set all items to "Value"
 		/// </summary>
-		/// <param name="Count">- List size</param>
+		/// <param name="Count">- Dynamic array size</param>
 		/// <param name="Value">- All items will be the same "Value"</param>
-		List(const ListUInt& Count, const T& Value)
+		DynamicArray(const DynamicArrayUInt& Count, const T& Value)
 		{
 			Resize(Count, Value);
 		}
 
 		/// <summary>
-		/// Create an empty list of size 0
+		/// Create an empty dynamic array of size 0
 		/// </summary>
-		List()
+		DynamicArray()
 			: count(0)
 		{
 			items = new T[0];
 		}
 
-		~List()
+		~DynamicArray()
 		{
 			Clear();
 		}
 	public:
 		/// <summary>
-		/// Iterator for list
+		/// Iterator for dynamic array
 		/// </summary>
-		/// <typeparam name="T">Type of list</typeparam>
+		/// <typeparam name="T">Type of dynamic array</typeparam>
 		template<typename T>
 		class Iterator
 		{
@@ -220,43 +220,43 @@ namespace Bear
 				return *this;
 			}
 
-			Iterator& operator-=(const ListUInt& offset)
+			Iterator& operator-=(const DynamicArrayUInt& offset)
 			{
 				ptr -= offset;
 				return *this;
 			}
 
-			const Iterator& operator-=(const ListUInt& offset) const
+			const Iterator& operator-=(const DynamicArrayUInt& offset) const
 			{
 				ptr -= offset;
 				return *this;
 			}
 
-			Iterator& operator+=(const ListUInt& offset)
+			Iterator& operator+=(const DynamicArrayUInt& offset)
 			{
 				ptr += offset;
 				return *this;
 			}
 
-			const Iterator& operator+=(const ListUInt& offset) const
+			const Iterator& operator+=(const DynamicArrayUInt& offset) const
 			{
 				ptr += offset;
 				return *this;
 			}
 
-			Iterator& operator*=(const ListUInt& offset)
+			Iterator& operator*=(const DynamicArrayUInt& offset)
 			{
 				ptr *= offset;
 				return *this;
 			}
 
-			const Iterator& operator*=(const ListUInt& offset) const
+			const Iterator& operator*=(const DynamicArrayUInt& offset) const
 			{
 				ptr *= offset;
 				return *this;
 			}
 
-			Iterator& operator/=(const ListUInt& offset)
+			Iterator& operator/=(const DynamicArrayUInt& offset)
 			{
 				if (!offset)
 					throw ("Can't division by 0");
@@ -265,7 +265,7 @@ namespace Bear
 				return *this;
 			}
 
-			const Iterator& operator/=(const ListUInt& offset) const
+			const Iterator& operator/=(const DynamicArrayUInt& offset) const
 			{
 				if(!offset)
 					throw ("Can't division by 0");
@@ -274,13 +274,13 @@ namespace Bear
 				return *this;
 			}
 
-			Iterator& operator%=(const ListUInt& offset)
+			Iterator& operator%=(const DynamicArrayUInt& offset)
 			{
 				ptr %= offset;
 				return *this;
 			}
 
-			const Iterator& operator%=(const ListUInt& offset) const
+			const Iterator& operator%=(const DynamicArrayUInt& offset) const
 			{
 				ptr %= offset;
 				return *this;
@@ -314,11 +314,11 @@ namespace Bear
 		/// <param name="FromEnd">- If true search will be from end</param>
 		/// <param name="Index">- If isn't null return index of search element</param>
 		/// <returns>Return true if element exist in list, otherwise return false</returns>
-		const bool Exist(const T& Element, const bool FromEnd = false, ListUInt* Index = nullptr) const
+		const bool Exist(const T& Element, const bool FromEnd = false, DynamicArrayUInt* Index = nullptr) const
 		{
 			if (FromEnd)
 			{
-				#ifdef BEAR_LIST_WIN64
+				#ifdef BEAR_DYNAMIC_ARRAY_WIN64
 				typedef long long int Int;
 				#else
 				typedef int Int;
@@ -337,7 +337,7 @@ namespace Bear
 			}
 			else
 			{
-				for (ListUInt i = 0; i < count; i++)
+				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
 					if (items[i] == Element)
 					{
@@ -353,24 +353,24 @@ namespace Bear
 		}
 
 		/// <summary>
-		/// Add elements from "Elements" and Count+=Elements.Count()
+		/// Add elements from "Elements" and Count += Elements.Count()
 		/// </summary>
-		/// <param name="Elements">- List from where will be add items</param>
-		void AddCollection(const List<T>& Elements)
+		/// <param name="Elements">- DynamicArray from where will be add items</param>
+		void AddCollection(const DynamicArray<T>& Elements)
 		{
 			T* array = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				array[i] = this->items[i];
 
 			delete[] this->items;
 
 			this->items = new T[count + Elements.count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
-			for (ListUInt i = count; i < count + Elements.count; i++)
+			for (DynamicArrayUInt i = count; i < count + Elements.count; i++)
 				this->items[i] = Elements[i - count];
 
 			delete[] array;
@@ -378,26 +378,26 @@ namespace Bear
 			count += Elements.count;
 		}
 
-#ifdef BEAR_LIST_VECTOR_ADDED
+#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		/// <summary>
-		/// Add elements from "Elements" and Count+=Elements.size()
+		/// Add elements from "Elements" and Count += Elements.size()
 		/// </summary>
 		/// <param name="Elements">- std::vector from where will be add items</param>
 		void AddCollection(const std::vector<T>& Elements)
 		{
 			T* array = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				array[i] = this->items[i];
 
 			delete[] this->items;
 
 			this->items = new T[count + Elements.size()];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
-			for (ListUInt i = count; i < count + Elements.size(); i++)
+			for (DynamicArrayUInt i = count; i < count + Elements.size(); i++)
 				this->items[i] = Elements[i - count];
 
 			delete[] array;
@@ -407,21 +407,21 @@ namespace Bear
 #endif
 
 		/// <summary>
-		/// Add "Element" to list
+		/// Add "Element" to dynamic array
 		/// </summary>
 		/// <param name="Element">- Added element</param>
 		void Add(const T& Element)
 		{
 			T* array = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				array[i] = this->items[i];
 
 			delete[] this->items;
 
 			this->items = new T[count + 1];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
 			this->items[count] = Element;
@@ -432,22 +432,22 @@ namespace Bear
 		}
 
 		/// <summary>
-		/// Removing "Elements" from list
+		/// Removing "Elements" from dynamic array
 		/// </summary>
 		/// <param name="Elements">- Removed elements</param>
-		/// <param name="removeAll">- If true removing all elements where Elements[n]==items[i], otherwise remove first element where Elements[n]==items[i]</param>
-		void RemoveCollection(const List<T>& Elements, const bool& removeAll = false)
+		/// <param name="removeAll">- If true removing all elements where Elements[n] == items[i], otherwise remove first element where Elements[n] == items[i]</param>
+		void RemoveCollection(const DynamicArray<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw ListException::ListClear;
+				throw DynamicArrayException::DynamicArrayClear;
 
 			T* array = new T[count];
 
 			if (removeAll)
 			{
-				ListUInt iterator = 0;
-				ListUInt removeItems = 0;
-				for (ListUInt i = 0; i < count; i++)
+				DynamicArrayUInt iterator = 0;
+				DynamicArrayUInt removeItems = 0;
+				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
 					if (!Elements.Exist(items[i]))
 					{
@@ -463,36 +463,36 @@ namespace Bear
 
 				this->items = new T[count];
 
-				for (ListUInt i = 0; i < count; i++)
+				for (DynamicArrayUInt i = 0; i < count; i++)
 					this->items[i] = array[i];
 
 				delete[] array;
 			}
 			else
 			{
-				for (ListUInt i = 0; i < Elements.count - 1; i++)
+				for (DynamicArrayUInt i = 0; i < Elements.count - 1; i++)
 					Remove(Elements[i], false);
 			}
 		}
 
-#ifdef BEAR_LIST_VECTOR_ADDED
+#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		/// <summary>
-		/// Removing "Elements" from list
+		/// Removing "Elements" from dynamic array
 		/// </summary>
 		/// <param name="Elements">- Removed elements</param>
-		/// <param name="removeAll">- If true removing all elements where Elements[n]==items[i], otherwise remove first element where Elements[n]==items[i]</param>
+		/// <param name="removeAll">- If true removing all elements where Elements[n] == items[i], otherwise remove first element where Elements[n] == items[i]</param>
 		void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw ListException::ListClear;
+				throw DynamicArrayException::DynamicArrayClear;
 
 			if (removeAll)
 			{
 				T* array = new T[count];
 
-				ListUInt iterator = 0;
-				ListUInt removeItems = 0;
-				for (ListUInt i = 0; i < count; i++)
+				DynamicArrayUInt iterator = 0;
+				DynamicArrayUInt removeItems = 0;
+				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
 					if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
 					{
@@ -509,36 +509,36 @@ namespace Bear
 
 				this->items = new T[count];
 
-				for (ListUInt i = 0; i < count; i++)
+				for (DynamicArrayUInt i = 0; i < count; i++)
 					this->items[i] = array[i];
 
 				delete[] array;
 			}
 			else
 			{
-				for (ListUInt i = 0; i < Elements.size(); i++)
+				for (DynamicArrayUInt i = 0; i < Elements.size(); i++)
 					Remove(Elements[i], false);
 			}
 		}
 #endif
 
 		/// <summary>
-		/// Removing "Element" from list
+		/// Removing "Element" from dynamic array
 		/// </summary>
 		/// <param name="Element">- Removed element</param>
-		/// <param name="removeAll">- If true removing all elements where Element==items[i], otherwise remove first element where Element==items[i]</param>
+		/// <param name="removeAll">- If true removing all elements where Element == items[i], otherwise remove first element where Element == items[i]</param>
 		void Remove(const T& Element, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw ListException::ListClear;
+				throw DynamicArrayException::DynamicArrayClear;
 
 			T* array = new T[count];
 
 			if (removeAll)
 			{
-				ListUInt j = 0;
-				ListUInt removeItems = 0;
-				for (ListUInt i = 0; i < count; i++)
+				DynamicArrayUInt j = 0;
+				DynamicArrayUInt removeItems = 0;
+				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
 					if (this->items[i] != Element)
 					{
@@ -554,7 +554,7 @@ namespace Bear
 			else
 			{
 				bool found = false;
-				for (ListUInt i = 0; i < count; i++)
+				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
 					if (this->items[i] != Element || found)
 						array[i - found] = this->items[i];
@@ -569,7 +569,7 @@ namespace Bear
 
 			this->items = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				this->items[i] = array[i];
 
 			delete[] array;
@@ -580,21 +580,21 @@ namespace Bear
 		/// </summary>
 		/// <param name="Start">- Index from will be removed items</param>
 		/// <param name="End">- End index removed items</param>
-		void RemoveOnIndex(const ListUInt& Start, const ListUInt& End)
+		void RemoveOnIndex(const DynamicArrayUInt& Start, const DynamicArrayUInt& End)
 		{
 			if (!items || !count)
-				throw ListException::ListClear;
+				throw DynamicArrayException::DynamicArrayClear;
 
 			if (Start > count || End > count)
-				throw ListException::OutOfRange;
+				throw DynamicArrayException::OutOfRange;
 
 			if (Start > End)
-				throw ListException::StartIndexGreaterThanEnd;
+				throw DynamicArrayException::StartIndexGreaterThanEnd;
 
 			T* array = new T[count];
 
-			ListUInt j = 0;
-			for (ListUInt i = 0; i < count; i++)
+			DynamicArrayUInt j = 0;
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (!(i >= Start && i <= End))
 					array[i - j] = items[i];
@@ -608,7 +608,7 @@ namespace Bear
 
 			items = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = array[i];
 
 			delete[] array;
@@ -618,26 +618,26 @@ namespace Bear
 		/// Remove elements from "Start" index to end
 		/// </summary>
 		/// <param name="Start">- Index where we start removing elements</param>
-		void RemoveOnIndex(const ListUInt& Start)
+		void RemoveOnIndex(const DynamicArrayUInt& Start)
 		{
 			if (!items || !count)
-				throw ListException::ListClear;
+				throw DynamicArrayException::DynamicArrayClear;
 
 			if (Start > count)
-				throw ListException::OutOfRange;
+				throw DynamicArrayException::OutOfRange;
 
 			count = Start;
 
 			T* array = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				array[i] = items[i];
 
 			delete[] items;
 
 			items = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = array[i];
 
 			delete[] array;
@@ -664,12 +664,12 @@ namespace Bear
 		}
 
 		/// <summary>
-		/// Return max count of list
+		/// Return max count of dynamic array
 		/// </summary>
-		/// <returns>Max count of list</returns>
-		const ListUInt GetMaxCount() const
+		/// <returns>Max count of dynamic array</returns>
+		const DynamicArrayUInt GetMaxCount() const
 		{
-			#ifdef BEAR_LIST_WIN64
+			#ifdef BEAR_DYNAMIC_ARRAY_WIN64
 				return ULLONG_MAX;
 			#else
 				return INT_MAX;
@@ -677,16 +677,16 @@ namespace Bear
 		}
 
 		/// <summary>
-		/// Return count of list
+		/// Return count of dynamic array
 		/// </summary>
-		/// <returns>Count of list</returns>
-		const ListUInt Count() const
+		/// <returns>Count of dynamic array</returns>
+		const DynamicArrayUInt Count() const
 		{
 			return count;
 		}
 
 		/// <summary>
-		/// Clear the list
+		/// Clear the dynamic array
 		/// </summary>
 		void Clear()
 		{
@@ -696,11 +696,11 @@ namespace Bear
 		}
 
 		/// <summary>
-		/// If items are pointers to heap use this to free memory
+		/// If "T" is pointer to heap, use this to free memory
 		/// </summary>
 		void Destroy() const
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				delete items[i];
 		}
 
@@ -729,17 +729,17 @@ namespace Bear
 		void Sort(const bool (*SortFunc)(const T& firstElement, const T& secondElement)) const
 		{
 			if (!items || !count)
-				throw ListException::ListClear;
+				throw DynamicArrayException::DynamicArrayClear;
 
 			if (count == 1)
 				return;
 
-			for (ListUInt i = 1; i < count; i++)
+			for (DynamicArrayUInt i = 1; i < count; i++)
 			{
 				T* firstElement = &items[i - 1];
 				T* secondElement = &items[i];
 
-				for (ListUInt j = 0; j < i; j++)
+				for (DynamicArrayUInt j = 0; j < i; j++)
 				{
 					if (!SortFunc(*firstElement, *secondElement))
 					{
@@ -760,12 +760,12 @@ namespace Bear
 		/// Swap items between this->items and "Elements"
 		/// </summary>
 		/// <param name="Elements"></param>
-		void Swap(List<T>& Elements)
+		void Swap(DynamicArray<T>& Elements)
 		{
 			T* items = new T[count];
-			ListUInt count = this->count;
+			DynamicArrayUInt count = this->count;
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = this->items[i];
 
 			delete[] this->items;
@@ -777,7 +777,7 @@ namespace Bear
 			Elements.count = count;
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		/// <summary>
 		/// Swap items between this->items and "Elements"
 		/// </summary>
@@ -785,9 +785,9 @@ namespace Bear
 		void Swap(std::vector<T>& Elements)
 		{
 			T* items = new T[count];
-			ListUInt count = this->count;
+			DynamicArrayUInt count = this->count;
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = this->items[i];
 
 			delete[] this->items;
@@ -796,14 +796,14 @@ namespace Bear
 
 			T* vectorItems = new T[Elements.size()];
 
-			for (ListUInt i = 0; i < Elements.size(); i++)
+			for (DynamicArrayUInt i = 0; i < Elements.size(); i++)
 				vectorItems[i] = Elements[i];
 
 			this->items = vectorItems;
 
 			Elements.resize(count);
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				Elements[i] = items[i];
 
 			delete[] items;
@@ -811,10 +811,10 @@ namespace Bear
 		#endif
 
 		/// <summary>
-		/// Set count to "Count" and destroy data in list
+		/// Set count to "Count" and destroy data in dynamic array
 		/// </summary>
 		/// <param name="Count"></param>
-		void Resize(const ListUInt& Count)
+		void Resize(const DynamicArrayUInt& Count)
 		{
 			if (items)
 				delete[] items;
@@ -829,7 +829,7 @@ namespace Bear
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <param name="Value"></param>
-		void Resize(const ListUInt& Count, const T& Value)
+		void Resize(const DynamicArrayUInt& Count, const T& Value)
 		{
 			if (items)
 				delete[] items;
@@ -838,34 +838,34 @@ namespace Bear
 
 			count = Count;
 
-			for (ListUInt i = 0; i < Count; i++)
+			for (DynamicArrayUInt i = 0; i < Count; i++)
 				items[i] = Value;
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		/// <summary>
-		/// Convert List to std::vector
+		/// Convert DynamicArray to std::vector
 		/// </summary>
 		/// <returns></returns>
 		std::vector<T> ToVector()
 		{
 			std::vector<T> vector(count);
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				vector[i] = items[i];
 
 			return vector;
 		}
 
 		/// <summary>
-		/// Convert List to std::vector
+		/// Convert DynamicArray to std::vector
 		/// </summary>
 		/// <returns></returns>
 		const std::vector<T> ToVector() const
 		{
 			std::vector<T> vector(count);
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				vector[i] = items[i];
 
 			return vector;
@@ -877,11 +877,11 @@ namespace Bear
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <returns></returns>
-		T* ToArray(ListUInt* Count = nullptr)
+		T* ToArray(DynamicArrayUInt* Count = nullptr)
 		{
 			T* array = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				array[i] = items[i];
 
 			if (Count)
@@ -895,11 +895,11 @@ namespace Bear
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <returns></returns>
-		const T* ToArray(ListUInt* Count = nullptr) const
+		const T* ToArray(DynamicArrayUInt* Count = nullptr) const
 		{
 			T* array = new T[count];
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				array[i] = items[i];
 
 			if (Count)
@@ -908,7 +908,7 @@ namespace Bear
 			return array;
 		}
 	public:
-		void operator=(const List<T>& elements)
+		void operator=(const DynamicArray<T>& elements)
 		{
 			delete[] this->items;
 
@@ -916,11 +916,11 @@ namespace Bear
 
 			count = elements.count;
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = elements[i];
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		void operator=(const std::vector<T>& elements)
 		{
 			delete[] this->items;
@@ -929,14 +929,14 @@ namespace Bear
 
 			count = elements.size();
 
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = elements[i];
 		}
 		#endif
 
-		bool operator==(const List<T>& elements)
+		bool operator==(const DynamicArray<T>& elements)
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return false;
@@ -945,10 +945,10 @@ namespace Bear
 			return true;
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		bool operator==(const std::vector<T>& elements)
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return false;
@@ -963,9 +963,9 @@ namespace Bear
 			return Exist(element);
 		}
 
-		const bool operator==(const List<T>& elements) const
+		const bool operator==(const DynamicArray<T>& elements) const
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return false;
@@ -974,10 +974,10 @@ namespace Bear
 			return true;
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		const bool operator==(const std::vector<T>& elements) const
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return false;
@@ -992,9 +992,9 @@ namespace Bear
 			return Exist(element);
 		}
 
-		bool operator!=(const List<T>& elements)
+		bool operator!=(const DynamicArray<T>& elements)
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return true;
@@ -1003,10 +1003,10 @@ namespace Bear
 			return false;
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		bool operator!=(const std::vector<T>& elements)
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return true;
@@ -1021,9 +1021,9 @@ namespace Bear
 			return (!Exist(element));
 		}
 
-		const bool operator!=(const List<T>& elements) const
+		const bool operator!=(const DynamicArray<T>& elements) const
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return true;
@@ -1032,10 +1032,10 @@ namespace Bear
 			return false;
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		const bool operator!=(const std::vector<T>& elements) const
 		{
-			for (ListUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
 				if (items[i] != elements[i])
 					return true;
@@ -1050,12 +1050,12 @@ namespace Bear
 			return (!Exist(element));
 		}
 
-		void operator+=(const List<T>& elements)
+		void operator+=(const DynamicArray<T>& elements)
 		{
 			AddCollection(elements);
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		void operator+=(const std::vector<T>& elements)
 		{
 			AddCollection(elements);
@@ -1067,12 +1067,12 @@ namespace Bear
 			Add(element);
 		}
 
-		void operator-=(const List<T>& elements)
+		void operator-=(const DynamicArray<T>& elements)
 		{
 			DeleteCollection(elements);
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		void operator-=(const std::vector<T>& elements)
 		{
 			DeleteCollection(elements);
@@ -1084,7 +1084,7 @@ namespace Bear
 			Remove(element);
 		}
 
-		#ifdef BEAR_LIST_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		operator std::vector<T>()
 		{
 			return ToVector();
@@ -1096,12 +1096,12 @@ namespace Bear
 		}
 		#endif
 
-		T& operator[](const ListUInt& index)
+		T& operator[](const DynamicArrayUInt& index)
 		{
 			return GetFromIndex(index);
 		}
 
-		const T& operator[](const ListUInt& index) const
+		const T& operator[](const DynamicArrayUInt& index) const
 		{
 			return GetFromIndex(index);
 		}
