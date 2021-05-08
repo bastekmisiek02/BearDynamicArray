@@ -65,7 +65,7 @@ namespace Bear
 		/// </summary>
 		/// <param name="index">Index from where get items</param>
 		/// <returns>Return item from index</returns>
-		T& GetFromIndex(const DynamicArrayUInt& index) const
+		constexpr T& GetFromIndex(const DynamicArrayUInt& index) const
 		{
 			if (index > count - 1)
 				throw DynamicArrayException::OutOfRange;
@@ -84,20 +84,20 @@ namespace Bear
 		/// Create dynamic array with count of Elements.size() and copy data from "Elements" to this->items
 		/// </summary>
 		/// <param name="Elements">- std::vector from where will be copy data</param>
-		DynamicArray(const std::vector<T>& Elements)
-			: count(Elements.size())
+		constexpr DynamicArray(const std::vector<T>& elements)
+			: count(elements.size())
 		{
 			items = new T[count];
 
 			for (DynamicArrayUInt i = 0; i < count; i++)
-				items[i] = Elements[i];
+				items[i] = elements[i];
 		}
 
 		/// <summary>
 		/// Create dynamic array with count of elements.size() and copy data from "elements" to this->items
 		/// </summary>
 		/// <param name="elements">- initializer list from where will be copy data</param>
-		DynamicArray(const std::initializer_list<T>& elements)
+		constexpr DynamicArray(const std::initializer_list<T>& elements)
 			: count(elements.size())
 		{
 			items = new T[count];
@@ -114,23 +114,23 @@ namespace Bear
 		/// Create dynamic array with count of Elements.Count() and copy data from "Elements" to this->items
 		/// </summary>
 		/// <param name="Elements">- DynamicArray from where will be copy data</param>
-		DynamicArray(const DynamicArray<T>& Elements)
-			: count(Elements.count)
+		constexpr DynamicArray(const DynamicArray<T>& elements)
+			: count(elements.count)
 		{
-			items = new T[Elements.count];
+			items = new T[elements.count];
 
-			for (DynamicArrayUInt i = 0; i < Elements.count; i++)
-				items[i] = Elements[i];
+			for (DynamicArrayUInt i = 0; i < elements.count; i++)
+				items[i] = elements[i];
 		}
 
 		/// <summary>
 		/// Create empty dynamic array with Count
 		/// </summary>
 		/// <param name="Count">- Count of elements</param>
-		DynamicArray(const DynamicArrayUInt& Count)
-			: count(Count)
+		constexpr DynamicArray(const DynamicArrayUInt& count)
+			: count(count)
 		{
-			items = new T[Count];
+			items = new T[count];
 		}
 
 		/// <summary>
@@ -138,13 +138,13 @@ namespace Bear
 		/// </summary>
 		/// <param name="Array">- Array from where will be copy data</param>
 		/// <param name="Count">- Count of elements</param>
-		DynamicArray(const T* Array, const DynamicArrayUInt& Count)
-			: count(Count)
+		constexpr DynamicArray(const T* array, const DynamicArrayUInt& count)
+			: count(count)
 		{
-			items = new T[Count];
+			items = new T[count];
 
-			for (DynamicArrayUInt i = 0; i < Count; i++)
-				items[i] = Array[i];
+			for (DynamicArrayUInt i = 0; i < count; i++)
+				items[i] = array[i];
 		}
 
 		/// <summary>
@@ -152,15 +152,15 @@ namespace Bear
 		/// </summary>
 		/// <param name="Count">- Dynamic array size</param>
 		/// <param name="Value">- All items will be the same "Value"</param>
-		DynamicArray(const DynamicArrayUInt& Count, const T& Value)
+		constexpr DynamicArray(const DynamicArrayUInt& count, const T& value)
 		{
-			Resize(Count, Value);
+			Resize(count, value);
 		}
 
 		/// <summary>
 		/// Create an empty dynamic array of size 0
 		/// </summary>
-		DynamicArray()
+		constexpr DynamicArray()
 			: count(0)
 		{
 			items = new T[0];
@@ -181,82 +181,82 @@ namespace Bear
 		private:
 			T* ptr;
 		public:
-			Iterator(T* Ptr)
-				: ptr(Ptr)
+			constexpr Iterator(T* ptr)
+				: ptr(ptr)
 			{
 			}
 
-			T& operator*()
-			{
-				return *ptr;
-			}
-
-			const T& operator*() const
+			constexpr T& operator*()
 			{
 				return *ptr;
 			}
 
-			Iterator& operator--()
+			constexpr const T& operator*() const
+			{
+				return *ptr;
+			}
+
+			constexpr Iterator& operator--()
 			{
 				ptr--;
 				return *this;
 			}
 
-			const Iterator& operator--() const
+			constexpr const Iterator& operator--() const
 			{
 				ptr--;
 				return *this;
 			}
 
-			Iterator& operator++()
+			constexpr Iterator& operator++()
 			{
 				ptr++;
 				return *this;
 			}
 
-			const Iterator& operator++() const
+			constexpr const Iterator& operator++() const
 			{
 				ptr++;
 				return *this;
 			}
 
-			Iterator& operator-=(const DynamicArrayUInt& offset)
+			constexpr Iterator& operator-=(const DynamicArrayUInt& offset)
 			{
 				ptr -= offset;
 				return *this;
 			}
 
-			const Iterator& operator-=(const DynamicArrayUInt& offset) const
+			constexpr const Iterator& operator-=(const DynamicArrayUInt& offset) const
 			{
 				ptr -= offset;
 				return *this;
 			}
 
-			Iterator& operator+=(const DynamicArrayUInt& offset)
+			constexpr Iterator& operator+=(const DynamicArrayUInt& offset)
 			{
 				ptr += offset;
 				return *this;
 			}
 
-			const Iterator& operator+=(const DynamicArrayUInt& offset) const
+			constexpr const Iterator& operator+=(const DynamicArrayUInt& offset) const
 			{
 				ptr += offset;
 				return *this;
 			}
 
-			Iterator& operator*=(const DynamicArrayUInt& offset)
+			constexpr Iterator& operator*=(const DynamicArrayUInt& offset)
 			{
 				ptr *= offset;
 				return *this;
 			}
 
-			const Iterator& operator*=(const DynamicArrayUInt& offset) const
+			constexpr const Iterator& operator*=(const DynamicArrayUInt& offset) const
 			{
 				ptr *= offset;
 				return *this;
 			}
 
-			Iterator& operator/=(const DynamicArrayUInt& offset)
+			constexpr Iterator& operator/=(const DynamicArrayUInt& offset)
 			{
 				if (!offset)
 					throw ("Can't division by 0");
@@ -265,7 +265,7 @@ namespace Bear
 				return *this;
 			}
 
-			const Iterator& operator/=(const DynamicArrayUInt& offset) const
+			constexpr const Iterator& operator/=(const DynamicArrayUInt& offset) const
 			{
 				if(!offset)
 					throw ("Can't division by 0");
@@ -274,34 +274,34 @@ namespace Bear
 				return *this;
 			}
 
-			Iterator& operator%=(const DynamicArrayUInt& offset)
+			constexpr Iterator& operator%=(const DynamicArrayUInt& offset)
 			{
 				ptr %= offset;
 				return *this;
 			}
 
-			const Iterator& operator%=(const DynamicArrayUInt& offset) const
+			constexpr const Iterator& operator%=(const DynamicArrayUInt& offset) const
 			{
 				ptr %= offset;
 				return *this;
 			}
 
-			bool operator==(const Iterator& other)
+			constexpr bool operator==(const Iterator& other)
 			{
 				return ptr == other.ptr;
 			}
 
-			const bool operator==(const Iterator& other) const
+			constexpr const bool operator==(const Iterator& other) const
 			{
 				return ptr == other.ptr;
 			}
 
-			bool operator!=(const Iterator& other)
+			constexpr bool operator!=(const Iterator& other)
 			{
 				return ptr != other.ptr;
 			}
 
-			const bool operator!=(const Iterator& other) const
+			constexpr const bool operator!=(const Iterator& other) const
 			{
 				return ptr != other.ptr;
 			}
@@ -314,9 +314,9 @@ namespace Bear
 		/// <param name="FromEnd">- If true search will be from end</param>
 		/// <param name="Index">- If isn't null return index of search element</param>
 		/// <returns>Return true if element exist in list, otherwise return false</returns>
-		const bool Exist(const T& Element, const bool FromEnd = false, DynamicArrayUInt* Index = nullptr) const
+		constexpr const bool Exist(const T& element, const bool fromEnd = false, DynamicArrayUInt* index = nullptr) const
 		{
-			if (FromEnd)
+			if (fromEnd)
 			{
 				#ifdef BEAR_DYNAMIC_ARRAY_WIN64
 				typedef long long int Int;
@@ -326,10 +326,10 @@ namespace Bear
 
 				for (Int i = count - 1; i > -1; i--)
 				{
-					if (items[i] == Element)
+					if (items[i] == element)
 					{
-						if (Index)
-							*Index = i;
+						if (index)
+							*index = i;
 
 						return true;
 					}
@@ -339,10 +339,10 @@ namespace Bear
 			{
 				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
-					if (items[i] == Element)
+					if (items[i] == element)
 					{
-						if (Index)
-							*Index = i;
+						if (index)
+							*index = i;
 
 						return true;
 					}
@@ -356,77 +356,72 @@ namespace Bear
 		/// Add elements from "Elements" and Count += Elements.Count()
 		/// </summary>
 		/// <param name="Elements">- DynamicArray from where will be add items</param>
-		void AddCollection(const DynamicArray<T>& Elements)
+		constexpr void AddCollection(const DynamicArray<T>& elements)
 		{
-			T* array = new T[count];
+			T* array = new T[count + elements.count];
 
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				array[i] = this->items[i];
+			for (DynamicArrayUInt i = 0; i < count + elements.count; i++)
+			{
+				if (i < count)
+				{
+					array[i] = items[i];
+					continue;
+				}
 
-			delete[] this->items;
+				array[i] = elements.items[i - count];
+			}
 
-			this->items = new T[count + Elements.count];
+			delete[] items;
 
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				this->items[i] = array[i];
+			items = array;
 
-			for (DynamicArrayUInt i = count; i < count + Elements.count; i++)
-				this->items[i] = Elements[i - count];
-
-			delete[] array;
-
-			count += Elements.count;
+			count += elements.count;
 		}
 
-#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
+		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
 		/// <summary>
 		/// Add elements from "Elements" and Count += Elements.size()
 		/// </summary>
 		/// <param name="Elements">- std::vector from where will be add items</param>
-		void AddCollection(const std::vector<T>& Elements)
+		constexpr void AddCollection(const std::vector<T>& elements)
 		{
-			T* array = new T[count];
+			T* array = new T[count + elements.size()];
 
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				array[i] = this->items[i];
+			for (DynamicArrayUInt i = 0; i < count + elements.size(); i++)
+			{
+				if (i < count)
+				{
+					array[i] = items[i];
+					continue;
+				}
 
-			delete[] this->items;
+				array[i] = elements[i - count];
+			}
 
-			this->items = new T[count + Elements.size()];
+			delete[] items;
 
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				this->items[i] = array[i];
+			items = array;
 
-			for (DynamicArrayUInt i = count; i < count + Elements.size(); i++)
-				this->items[i] = Elements[i - count];
-
-			delete[] array;
-
-			count += Elements.size();
+			count += elements.size();
 		}
-#endif
+		#endif
 
 		/// <summary>
 		/// Add "Element" to dynamic array
 		/// </summary>
 		/// <param name="Element">- Added element</param>
-		void Add(const T& Element)
+		constexpr void Add(const T& element)
 		{
-			T* array = new T[count];
+			T* array = new T[count + 1];
 
 			for (DynamicArrayUInt i = 0; i < count; i++)
 				array[i] = this->items[i];
 
+			array[count] = element;
+
 			delete[] this->items;
 
-			this->items = new T[count + 1];
-
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				this->items[i] = array[i];
-
-			this->items[count] = Element;
-
-			delete[] array;
+			this->items = array;
 
 			count++;
 		}
@@ -436,42 +431,99 @@ namespace Bear
 		/// </summary>
 		/// <param name="Elements">- Removed elements</param>
 		/// <param name="removeAll">- If true removing all elements where Elements[n] == items[i], otherwise remove first element where Elements[n] == items[i]</param>
-		void RemoveCollection(const DynamicArray<T>& Elements, const bool& removeAll = false)
+		constexpr void RemoveCollection(const DynamicArray<T>& elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw DynamicArrayException::DynamicArrayClear;
 
-			T* array = new T[count];
-
 			if (removeAll)
 			{
-				DynamicArrayUInt iterator = 0;
-				DynamicArrayUInt removeItems = 0;
+				DynamicArrayUInt&& removeElements = 0;
+
 				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
-					if (!Elements.Exist(items[i]))
+					bool&& found = false;
+
+					for (DynamicArrayUInt j = 0; j < elements.count; j++)
 					{
-						array[iterator] = this->items[i];
-						iterator++;
+						if (items[i] == elements.items[j])
+						{
+							found = true;
+							break;
+						}
 					}
+
+					if (found)
+						removeElements++;
 					else
-						removeItems++;
+					{
+						T element = items[i];
+
+						items[i] = items[i - removeElements];
+						items[i - removeElements] = element;
+					}
 				}
 
-				count -= removeItems;
-				delete[] this->items;
+				if (removeElements)
+				{
+					count -= removeElements;
 
-				this->items = new T[count];
+					T* array = new T[count];
 
-				for (DynamicArrayUInt i = 0; i < count; i++)
-					this->items[i] = array[i];
+					for (DynamicArrayUInt i = 0; i < count; i++)
+						array[i] = items[i];
 
-				delete[] array;
+					delete[] items;
+
+					items = array;
+				}
 			}
 			else
 			{
-				for (DynamicArrayUInt i = 0; i < Elements.count - 1; i++)
-					Remove(Elements[i], false);
+				bool* notRemoved = new bool[elements.count];
+
+				DynamicArrayUInt&& removeElements = 0;
+
+				for (DynamicArrayUInt i = 0; i < count; i++)
+				{
+					bool&& found = false;
+
+					for (DynamicArrayUInt j = 0; j < elements.count; j++)
+					{
+						if ((items[i] == elements.items[j]) && (notRemoved[j]))
+						{
+							notRemoved[j] = false;
+							found = true;
+							break;
+						}
+					}
+
+					if (found)
+						removeElements++;
+					else
+					{
+						T element = items[i];
+
+						items[i] = items[i - removeElements];
+						items[i - removeElements] = element;
+					}
+				}
+
+				if (removeElements)
+				{
+					count -= removeElements;
+
+					T* array = new T[count];
+
+					for (DynamicArrayUInt i = 0; i < count; i++)
+						array[i] = items[i];
+
+					delete[] items;
+
+					items = array;
+				}
+
+				delete[] notRemoved;
 			}
 		}
 
@@ -481,43 +533,99 @@ namespace Bear
 		/// </summary>
 		/// <param name="Elements">- Removed elements</param>
 		/// <param name="removeAll">- If true removing all elements where Elements[n] == items[i], otherwise remove first element where Elements[n] == items[i]</param>
-		void RemoveCollection(const std::vector<T>& Elements, const bool& removeAll = false)
+		constexpr void RemoveCollection(const std::vector<T>& elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw DynamicArrayException::DynamicArrayClear;
 
 			if (removeAll)
 			{
-				T* array = new T[count];
+				DynamicArrayUInt&& removeElements = 0;
 
-				DynamicArrayUInt iterator = 0;
-				DynamicArrayUInt removeItems = 0;
 				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
-					if (std::find(Elements.begin(), Elements.end(), items[i]) == Elements.end())
+					bool&& found = false;
+
+					for (DynamicArrayUInt j = 0; j < elements.size(); j++)
 					{
-						array[iterator] = this->items[i];
-						iterator++;
+						if (items[i] == elements[j])
+						{
+							found = true;
+							break;
+						}
 					}
+
+					if (found)
+						removeElements++;
 					else
-						removeItems++;
+					{
+						T element = items[i];
+
+						items[i] = items[i - removeElements];
+						items[i - removeElements] = element;
+					}
 				}
 
-				delete[] this->items;
+				if (removeElements)
+				{
+					count -= removeElements;
 
-				count -= removeItems;
+					T* array = new T[count];
 
-				this->items = new T[count];
+					for (DynamicArrayUInt i = 0; i < count; i++)
+						array[i] = items[i];
 
-				for (DynamicArrayUInt i = 0; i < count; i++)
-					this->items[i] = array[i];
+					delete[] items;
 
-				delete[] array;
+					items = array;
+				}
 			}
 			else
 			{
-				for (DynamicArrayUInt i = 0; i < Elements.size(); i++)
-					Remove(Elements[i], false);
+				bool* notRemoved = new bool[elements.size()];
+
+				DynamicArrayUInt&& removeElements = 0;
+
+				for (DynamicArrayUInt i = 0; i < count; i++)
+				{
+					bool&& found = false;
+
+					for (DynamicArrayUInt j = 0; j < elements.size(); j++)
+					{
+						if ((items[i] == elements[j]) && (notRemoved[j]))
+						{
+							notRemoved[j] = false;
+							found = true;
+							break;
+						}
+					}
+
+					if (found)
+						removeElements++;
+					else
+					{
+						T element = items[i];
+
+						items[i] = items[i - removeElements];
+						items[i - removeElements] = element;
+					}
+				}
+
+				if (removeElements)
+				{
+					count -= removeElements;
+
+					T* array = new T[count];
+
+					for (DynamicArrayUInt i = 0; i < count; i++)
+						array[i] = items[i];
+
+					delete[] items;
+
+					items = array;
+				}
+
+				delete[] notRemoved;
 			}
 		}
 #endif
@@ -527,7 +635,7 @@ namespace Bear
 		/// </summary>
 		/// <param name="Element">- Removed element</param>
 		/// <param name="removeAll">- If true removing all elements where Element == items[i], otherwise remove first element where Element == items[i]</param>
-		void Remove(const T& Element, const bool& removeAll = false)
+		void Remove(const T& element, const bool& removeAll = false)
 		{
 			if (!items || !count)
 				throw DynamicArrayException::DynamicArrayClear;
@@ -536,11 +644,12 @@ namespace Bear
 
 			if (removeAll)
 			{
-				DynamicArrayUInt j = 0;
-				DynamicArrayUInt removeItems = 0;
+				DynamicArrayUInt&& j = 0;
+				DynamicArrayUInt&& removeItems = 0;
+			
 				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
-					if (this->items[i] != Element)
+					if (this->items[i] != element)
 					{
 						array[j] = this->items[i];
 						j++;
@@ -548,31 +657,27 @@ namespace Bear
 					else
 						removeItems++;
 				}
-
+			
 				count -= removeItems;
 			}
 			else
 			{
-				bool found = false;
+				bool&& found = false;
+			
 				for (DynamicArrayUInt i = 0; i < count; i++)
 				{
-					if (this->items[i] != Element || found)
+					if (this->items[i] != element || found)
 						array[i - found] = this->items[i];
 					else
 						found = true;
 				}
-
+			
 				count--;
 			}
-
+			
 			delete[] this->items;
-
-			this->items = new T[count];
-
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				this->items[i] = array[i];
-
-			delete[] array;
+			
+			this->items = array;
 		}
 
 		/// <summary>
@@ -580,23 +685,24 @@ namespace Bear
 		/// </summary>
 		/// <param name="Start">- Index from will be removed items</param>
 		/// <param name="End">- End index removed items</param>
-		void RemoveOnIndex(const DynamicArrayUInt& Start, const DynamicArrayUInt& End)
+		void RemoveOnIndex(const DynamicArrayUInt& start, const DynamicArrayUInt& end)
 		{
 			if (!items || !count)
 				throw DynamicArrayException::DynamicArrayClear;
 
-			if (Start > count || End > count)
+			if (start > count || end > count)
 				throw DynamicArrayException::OutOfRange;
 
-			if (Start > End)
+			if (start > end)
 				throw DynamicArrayException::StartIndexGreaterThanEnd;
 
 			T* array = new T[count];
 
-			DynamicArrayUInt j = 0;
+			DynamicArrayUInt&& j = 0;
+
 			for (DynamicArrayUInt i = 0; i < count; i++)
 			{
-				if (!(i >= Start && i <= End))
+				if (!(i >= start && i <= end))
 					array[i - j] = items[i];
 				else
 					j++;
@@ -604,29 +710,24 @@ namespace Bear
 
 			delete[] items;
 
-			count -= (End - Start) + 1;
+			count -= (end - start) + 1;
 
-			items = new T[count];
-
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				items[i] = array[i];
-
-			delete[] array;
+			items = array;
 		}
 
 		/// <summary>
 		/// Remove elements from "Start" index to end
 		/// </summary>
 		/// <param name="Start">- Index where we start removing elements</param>
-		void RemoveOnIndex(const DynamicArrayUInt& Start)
+		void RemoveOnIndex(const DynamicArrayUInt& start)
 		{
 			if (!items || !count)
 				throw DynamicArrayException::DynamicArrayClear;
 
-			if (Start > count)
+			if (start > count)
 				throw DynamicArrayException::OutOfRange;
 
-			count = Start;
+			count = start;
 
 			T* array = new T[count];
 
@@ -635,12 +736,7 @@ namespace Bear
 
 			delete[] items;
 
-			items = new T[count];
-
-			for (DynamicArrayUInt i = 0; i < count; i++)
-				items[i] = array[i];
-
-			delete[] array;
+			items = array;
 		}
 
 		Iterator<T> begin()
@@ -726,7 +822,7 @@ namespace Bear
 		/// Sort list
 		/// </summary>
 		/// <param name="SortFunc">- If return true "firstElement" will be closer </param>
-		void Sort(const bool (*SortFunc)(const T& firstElement, const T& secondElement)) const
+		void Sort(const bool (*sortFunc)(const T& firstElement, const T& secondElement)) const
 		{
 			if (!items || !count)
 				throw DynamicArrayException::DynamicArrayClear;
@@ -741,7 +837,7 @@ namespace Bear
 
 				for (DynamicArrayUInt j = 0; j < i; j++)
 				{
-					if (!SortFunc(*firstElement, *secondElement))
+					if (!sortFunc(*firstElement, *secondElement))
 					{
 						const T helpItem = *firstElement;
 						*firstElement = *secondElement;
@@ -760,21 +856,21 @@ namespace Bear
 		/// Swap items between this->items and "Elements"
 		/// </summary>
 		/// <param name="Elements"></param>
-		void Swap(DynamicArray<T>& Elements)
+		void Swap(DynamicArray<T>& elements)
 		{
+			const DynamicArrayUInt count = this->count;
 			T* items = new T[count];
-			DynamicArrayUInt count = this->count;
 
 			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = this->items[i];
 
 			delete[] this->items;
 
-			this->items = Elements.items;
-			Elements.items = items;
+			this->items = elements.items;
+			elements.items = items;
 
-			this->count = Elements.count;
-			Elements.count = count;
+			this->count = elements.count;
+			elements.count = count;
 		}
 
 		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
@@ -782,30 +878,30 @@ namespace Bear
 		/// Swap items between this->items and "Elements"
 		/// </summary>
 		/// <param name="Elements"></param>
-		void Swap(std::vector<T>& Elements)
+		void Swap(std::vector<T>& elements)
 		{
-			T* items = new T[count];
 			DynamicArrayUInt count = this->count;
-
+			T* items = new T[count];
+			
 			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = this->items[i];
-
+			
 			delete[] this->items;
-
-			this->count = Elements.size();
-
-			T* vectorItems = new T[Elements.size()];
-
-			for (DynamicArrayUInt i = 0; i < Elements.size(); i++)
-				vectorItems[i] = Elements[i];
-
+			
+			this->count = elements.size();
+			
+			T* vectorItems = new T[elements.size()];
+			
+			for (DynamicArrayUInt i = 0; i < elements.size(); i++)
+				vectorItems[i] = elements[i];
+			
 			this->items = vectorItems;
-
-			Elements.resize(count);
-
+			
+			elements.resize(count);
+			
 			for (DynamicArrayUInt i = 0; i < count; i++)
-				Elements[i] = items[i];
-
+				elements[i] = items[i];
+			
 			delete[] items;
 		}
 		#endif
@@ -814,14 +910,14 @@ namespace Bear
 		/// Set count to "Count" and destroy data in dynamic array
 		/// </summary>
 		/// <param name="Count"></param>
-		void Resize(const DynamicArrayUInt& Count)
+		void Resize(const DynamicArrayUInt& count)
 		{
 			if (items)
 				delete[] items;
 
-			items = new T[Count];
+			items = new T[count];
 
-			count = Count;
+			this->count = count;
 		}
 
 		/// <summary>
@@ -829,17 +925,17 @@ namespace Bear
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <param name="Value"></param>
-		void Resize(const DynamicArrayUInt& Count, const T& Value)
+		void Resize(const DynamicArrayUInt& count, const T& value)
 		{
 			if (items)
 				delete[] items;
 
-			items = new T[Count];
+			items = new T[count];
 
-			count = Count;
+			this->count = count;
 
-			for (DynamicArrayUInt i = 0; i < Count; i++)
-				items[i] = Value;
+			for (DynamicArrayUInt i = 0; i < count; i++)
+				items[i] = value;
 		}
 
 		#ifdef BEAR_DYNAMIC_ARRAY_VECTOR_ADDED
@@ -877,15 +973,15 @@ namespace Bear
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <returns></returns>
-		T* ToArray(DynamicArrayUInt* Count = nullptr)
+		T* ToArray(DynamicArrayUInt* count = nullptr)
 		{
-			T* array = new T[count];
+			T* array = new T[this->count];
 
-			for (DynamicArrayUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < this->count; i++)
 				array[i] = items[i];
 
-			if (Count)
-				*Count = count;
+			if (count)
+				*count = this->count;
 
 			return array;
 		}
@@ -895,15 +991,15 @@ namespace Bear
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <returns></returns>
-		const T* ToArray(DynamicArrayUInt* Count = nullptr) const
+		const T* ToArray(DynamicArrayUInt* count = nullptr) const
 		{
-			T* array = new T[count];
+			T* array = new T[this->count];
 
-			for (DynamicArrayUInt i = 0; i < count; i++)
+			for (DynamicArrayUInt i = 0; i < this->count; i++)
 				array[i] = items[i];
 
-			if (Count)
-				*Count = count;
+			if (count)
+				*count = this->count;
 
 			return array;
 		}

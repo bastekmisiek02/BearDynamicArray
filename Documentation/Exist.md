@@ -20,7 +20,7 @@ array.Add(4);
 array.Add(2);
 array.Add(3);
 
-DynamicArrayUint index;
+DynamicArrayUInt index;
 
 if (array.Exist(3, true, &index))
 	std::cout << index << "\n";

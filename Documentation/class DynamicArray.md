@@ -9,7 +9,6 @@ Constructors:
 - [DynamicArray<T>](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Constructors.md)
 
 Methods:
-
 - [Add](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Add.md)
 - [AddCollection](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/AddCollection.md)
 - [Clear](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Clear.md)
