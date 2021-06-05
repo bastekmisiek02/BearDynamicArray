@@ -371,7 +371,7 @@ namespace Bear
 				array[i] = elements.items[i - count];
 			}
 
-			delete[] items;
+			operator delete[](items);
 
 			items = array;
 
@@ -398,7 +398,7 @@ namespace Bear
 				array[i] = elements[i - count];
 			}
 
-			delete[] items;
+			operator delete[](items);
 
 			items = array;
 
@@ -419,7 +419,7 @@ namespace Bear
 
 			array[count] = element;
 
-			delete[] this->items;
+			operator delete[](this->items);
 
 			this->items = array;
 
@@ -473,7 +473,7 @@ namespace Bear
 					for (DynamicArrayUInt i = 0; i < count; i++)
 						array[i] = items[i];
 
-					delete[] items;
+					operator delete[](items);
 
 					items = array;
 				}
@@ -518,7 +518,7 @@ namespace Bear
 					for (DynamicArrayUInt i = 0; i < count; i++)
 						array[i] = items[i];
 
-					delete[] items;
+					operator delete[](items);
 
 					items = array;
 				}

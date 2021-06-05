@@ -1,7 +1,7 @@
 template<typename T> 
 class DynamicArray;
 
-DynamicArray is class like std::vector, but in the future will have more functionality.
+DynamicArray is class like std::vector, but in the future it will have more functionality.
 
 T - is a type to storage
 
@@ -14,8 +14,8 @@ Methods:
 - [Clear](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Clear.md)
 - [Count](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Count.md)
 - [Data](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Data.md)
-- [Delete](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Delete.md)
-- [DeleteCollection](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/DeleteCollection.md)
+- [Remove](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Remove.md)
+- [RemoveCollection](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/RemoveCollection.md)
 - [Exist](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Exist.md)
 - [GetMaxCount](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/GetMaxCount.md)
 - [Resize](https://github.com/bastekmisiek02/BearDynamicArray/blob/master/Documentation/Resize.md)
