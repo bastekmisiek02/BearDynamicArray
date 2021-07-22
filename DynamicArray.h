@@ -161,9 +161,8 @@ namespace Bear
 		/// Create an empty dynamic array of size 0
 		/// </summary>
 		constexpr DynamicArray()
-			: count(0)
+			: count(0), items(nullptr)
 		{
-			items = new T[0];
 		}
 
 		~DynamicArray()
@@ -434,7 +433,7 @@ namespace Bear
 		constexpr void RemoveCollection(const DynamicArray<T>& elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw DynamicArrayException::DynamicArrayClear;
+				return;
 
 			if (removeAll)
 			{
@@ -473,7 +472,7 @@ namespace Bear
 					for (DynamicArrayUInt i = 0; i < count; i++)
 						array[i] = items[i];
 
-					operator delete[](items);
+					delete[] items;
 
 					items = array;
 				}
@@ -518,7 +517,7 @@ namespace Bear
 					for (DynamicArrayUInt i = 0; i < count; i++)
 						array[i] = items[i];
 
-					operator delete[](items);
+					delete[] items;
 
 					items = array;
 				}
@@ -536,7 +535,7 @@ namespace Bear
 		constexpr void RemoveCollection(const std::vector<T>& elements, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw DynamicArrayException::DynamicArrayClear;
+				return;
 
 			if (removeAll)
 			{
@@ -638,7 +637,7 @@ namespace Bear
 		void Remove(const T& element, const bool& removeAll = false)
 		{
 			if (!items || !count)
-				throw DynamicArrayException::DynamicArrayClear;
+				return;
 
 			T* array = new T[count];
 
@@ -688,7 +687,7 @@ namespace Bear
 		void RemoveOnIndex(const DynamicArrayUInt& start, const DynamicArrayUInt& end)
 		{
 			if (!items || !count)
-				throw DynamicArrayException::DynamicArrayClear;
+				return;
 
 			if (start > count || end > count)
 				throw DynamicArrayException::OutOfRange;
@@ -722,7 +721,7 @@ namespace Bear
 		void RemoveOnIndex(const DynamicArrayUInt& start)
 		{
 			if (!items || !count)
-				throw DynamicArrayException::DynamicArrayClear;
+				return;
 
 			if (start > count)
 				throw DynamicArrayException::OutOfRange;
@@ -858,13 +857,20 @@ namespace Bear
 		/// <param name="Elements"></param>
 		void Swap(DynamicArray<T>& elements)
 		{
+			if (!items || !count)
+			{
+				operator=(elements);
+				elements.count = 0;
+				operator delete[](elements.items);
+			}
+
 			const DynamicArrayUInt count = this->count;
 			T* items = new T[count];
 
 			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = this->items[i];
 
-			delete[] this->items;
+			operator delete[](this->items);
 
 			this->items = elements.items;
 			elements.items = items;
@@ -880,13 +886,19 @@ namespace Bear
 		/// <param name="Elements"></param>
 		void Swap(std::vector<T>& elements)
 		{
+			if (!items || !count)
+			{
+				operator=(elements);
+				elements.clear();
+			}
+
 			DynamicArrayUInt count = this->count;
 			T* items = new T[count];
 			
 			for (DynamicArrayUInt i = 0; i < count; i++)
 				items[i] = this->items[i];
 			
-			delete[] this->items;
+			operator delete[](this->items);
 			
 			this->count = elements.size();
 			
@@ -969,7 +981,7 @@ namespace Bear
 		#endif
 
 		/// <summary>
-		/// Create array and return it with the same data and count equals List !!! REMEMBER use delete[] to destroy it !!!
+		/// Create array and return it with the same data and count equals Array !!! REMEMBER use delete[] to destroy it !!!
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <returns></returns>
@@ -987,7 +999,7 @@ namespace Bear
 		}
 
 		/// <summary>
-		/// Create array and return it with the same data and count equals List !!! REMEMBER use delete[] to destroy it !!!
+		/// Create array and return it with the same data and count equals Array !!! REMEMBER use delete[] to destroy it !!!
 		/// </summary>
 		/// <param name="Count"></param>
 		/// <returns></returns>
